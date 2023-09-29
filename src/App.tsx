@@ -7,17 +7,32 @@ import ProductCard from "./Components/ProductCard";
 
 function App() {
   const [count, setCount] = useState(0);
-  const product: Product = {
+  const product1: Product = {
     title: "Chicken Salad",
     category: "Salads",
     image:
       "https://deliverlogic-common-assets.s3.amazonaws.com/editable/images/callrc/menuitems/50748.jpg",
+    rating: 3,
     description:
       "This chicken salad is a healthy and delicious option for any meal. Packed with tender, grilled chicken breast, crisp vegetables, and a zesty vinaigrette dressing, it's a refreshing choice that's perfect for lunch or dinner. Enjoy it as a light weekday lunch or as a satisfying addition to your dinner table. Bon appétit!",
     preparationTime: "30 Min",
     type: "Kitchen",
-    price: "50$",
+    price: "25$",
   };
+
+  const product2: Product = {
+    title: "Caesar Salad",
+    category: "Salads",
+    image:
+      "https://www.seriouseats.com/thmb/Fi_FEyVa3_-_uzfXh6OdLrzal2M=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/the-best-caesar-salad-recipe-06-40e70f549ba2489db09355abd62f79a9.jpg", // Replace with the actual image URL
+    rating: 4.5, // Change the rating as needed
+    description:
+      "Our Caesar Salad is a classic favorite. Made with fresh romaine lettuce, croutons, parmesan cheese, and our signature Caesar dressing, it's a delicious and satisfying choice. Whether you're having it as a side dish or a main course, our Caesar Salad is sure to please your taste buds.",
+    preparationTime: "15 Min", // Change the preparation time as needed
+    type: "Kitchen", // Change the type as needed
+    price: "$12.99", // Change the price as needed
+  };
+  
 
   return (
     <>
@@ -29,22 +44,27 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>
-        Vite + React + GithubActions + Azure + MSSQL + .Net Core Web API ♥ ♡
-        Kübra ♥ ♡
-        This is commited with VSCODE on 29.09.2023
-      </h1>
+      <h1>Vite + React + GithubActions + Azure + MSSQL + .Net Core Web API</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
         <p>
           Latest Update: <code>ProductCard</code>
+          <br />
+          This is committed with <code>VSCode</code> on 29.09.2023 ♥ ♡ Kübra ♥ ♡
         </p>
       </div>
-      <center>
-        <ProductCard product={product} />
-      </center>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "15px",
+        }}
+      >
+        <ProductCard product={product1} />
+        <ProductCard product={product2} />
+      </div>
     </>
   );
 }
