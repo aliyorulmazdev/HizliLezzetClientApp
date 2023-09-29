@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import { Product } from "./types/interfaces";
 import ProductCard from "./Components/ProductCard";
+import { Grid } from "@mui/material";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -25,17 +26,16 @@ function App() {
     category: "Salads",
     image:
       "https://www.seriouseats.com/thmb/Fi_FEyVa3_-_uzfXh6OdLrzal2M=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/the-best-caesar-salad-recipe-06-40e70f549ba2489db09355abd62f79a9.jpg", // Replace with the actual image URL
-    rating: 4.5, // Change the rating as needed
+    rating: 4.5,
     description:
       "Our Caesar Salad is a classic favorite. Made with fresh romaine lettuce, croutons, parmesan cheese, and our signature Caesar dressing, it's a delicious and satisfying choice. Whether you're having it as a side dish or a main course, our Caesar Salad is sure to please your taste buds.",
-    preparationTime: "15 Min", // Change the preparation time as needed
-    type: "Kitchen", // Change the type as needed
-    price: "$12.99", // Change the price as needed
+    preparationTime: "15 Min",
+    type: "Kitchen",
+    price: "$12.99",
   };
-  
 
   return (
-    <>
+    <Grid container justifyContent="center" sx={{ minHeight: '100vh' }} alignItems="center">
       <div>
         <a href="https://vitejs.dev" target="_blanPNNPk">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -55,17 +55,15 @@ function App() {
           This is committed with <code>VSCode</code> on 29.09.2023 ♥ ♡ Kübra ♥ ♡
         </p>
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "15px",
-        }}
-      >
-        <ProductCard product={product1} />
-        <ProductCard product={product2} />
-      </div>
-    </>
+      <Grid container justifyContent="center" sx={{ gap: "15px" }}>
+        <Grid item>
+          <ProductCard product={product1} />
+        </Grid>
+        <Grid item>
+          <ProductCard product={product2} />
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 
