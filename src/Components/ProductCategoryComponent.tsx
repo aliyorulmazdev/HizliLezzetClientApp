@@ -20,10 +20,6 @@ const ProductCategoryComponent: React.FC = () => {
   const scrollMenu = (direction: "left" | "right") => {
     const container = categoryContainerRef.current;
     if (!container) return;
-
-    const itemWidth = 120; // Adjust the width as needed
-    const containerWidth = container.clientWidth;
-
     if (direction === "left" && startIndex > 0) {
       setStartIndex(startIndex - 1);
     } else if (direction === "right" && startIndex < categories.length - 4) {
@@ -54,7 +50,7 @@ const ProductCategoryComponent: React.FC = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "flex-start",
-          maxWidth: "80vw", // İhtiyaca göre ayarlayın
+          maxWidth: "100%", // İhtiyaca göre ayarlayın
           overflowX: "auto",
           scrollBehavior: "smooth",
         }}
@@ -63,14 +59,8 @@ const ProductCategoryComponent: React.FC = () => {
         onTouchEnd={() => setStartX(0)}
         ref={categoryContainerRef}
       >
-        {/* Sol ok */}
-        {startIndex > 0 && (
-          <div className="category-arrow" onClick={() => scrollMenu("left")}>
-            {"<"}
-          </div>
-        )}
 
-        {categories.map((category, index) => (
+        {categories.map((category) => (
           <Button
             key={category}
             variant="text"
@@ -80,13 +70,6 @@ const ProductCategoryComponent: React.FC = () => {
             {category}
           </Button>
         ))}
-
-        {/* Sağ ok */}
-        {startIndex < categories.length - 4 && (
-          <div className="category-arrow" onClick={() => scrollMenu("right")}>
-            {">"}
-          </div>
-        )}
       </div>
     </div>
   );
