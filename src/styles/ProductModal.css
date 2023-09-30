@@ -1,0 +1,18 @@
+/* ProductModal.css */
+.align-right {
+    display: flex;
+    justify-content: flex-end!important;
+  }
+  /* ProductModal.css */
+.custom-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.product-image {
+  width: 80%;
+  border-radius: 25px;
+  margin-bottom: 20px;
+}

@@ -19,8 +19,16 @@ function App() {
     preparationTime: "30 Min",
     type: "Kitchen",
     price: "25$",
+    materials: [
+      { name: "Grilled Chicken", quantity: 0 },
+      { name: "Crisp Vegetables", quantity: 0 },
+      { name: "Zesty Vinaigrette Dressing", quantity: 5 },
+      { name: "Passive Material", active: true },
+      { name: "Limited Material 1",active: true},
+      { name: "Limited Material 2" ,active: true},
+    ],
   };
-
+  
   const product2: Product = {
     title: "Caesar Salad",
     category: "Salads",
@@ -32,7 +40,19 @@ function App() {
     preparationTime: "15 Min",
     type: "Kitchen",
     price: "$12.99",
+    materials: [
+      { name: "Romaine Lettuce", quantity: 0 },
+      { name: "Croutons", quantity: 0 },
+      { name: "Parmesan Cheese", quantity: 0 },
+      { name: "Caesar Dressing", quantity: 0 },
+      { name: "Passive Material" ,active: true},
+      { name: "Limited Material 3",active: true }, 
+    ],
   };
+  
+  
+  
+  
 
   return (
     <Grid

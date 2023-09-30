@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -8,16 +8,26 @@ import Chip from "@mui/material/Chip";
 import Rating from "@mui/material/Rating";
 import CardActionArea from "@mui/material/CardActionArea"; // Import CardActionArea
 import { Product } from "../types/interfaces";
+import ProductModal from "./ProductModal";
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
   return (
     <div className="card-container">
       <Card className="card" sx={{ maxWidth: 345 }}>
-        <CardActionArea sx={{ boxShadow: "none" }}>
+        <CardActionArea sx={{ boxShadow: "none" }}  onClick={openModal}>
           <CardHeader title={product.title} subheader={product.category} />
           <Rating
             name="product-rating"
@@ -50,6 +60,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </CardContent>
         </CardActionArea>
       </Card>
+      <ProductModal
+        open={modalOpen}
+        onClose={closeModal}
+        product={product}
+      />
     </div>
   );
 };
