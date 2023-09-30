@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Stepper, Step, StepLabel, Typography, Paper } from '@mui/material';
+import { useState } from 'react';
+import { Stepper, Step, StepLabel, Paper } from '@mui/material';
 
 function StepperComponent() {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep] = useState(0);
 
   return (
     <Paper elevation={3} style={{ padding: '20px', maxWidth: '1000px', margin: '0 auto' }}>
