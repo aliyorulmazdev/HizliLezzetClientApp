@@ -1,13 +1,13 @@
-import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { Product } from "./types/interfaces";
 import ProductCard from "./Components/ProductCard";
 import { Grid } from "@mui/material";
+import StepperComponent from "./Components/StepperComponent";
+import ProductCategoryComponent from "./Components/ProductCategoryComponent";
 
 function App() {
-  const [count, setCount] = useState(0);
   const product1: Product = {
     title: "Chicken Salad",
     category: "Salads",
@@ -35,7 +35,12 @@ function App() {
   };
 
   return (
-    <Grid container justifyContent="center" sx={{ minHeight: '100vh' }} alignItems="center">
+    <Grid
+      container
+      justifyContent="center"
+      sx={{ minHeight: "100vh" }}
+      alignItems="center"
+    >
       <div>
         <a href="https://vitejs.dev" target="_blanPNNPk">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -44,17 +49,29 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React + GithubActions + Azure + MSSQL + .Net Core Web API</h1>
+      <Grid container justifyContent="center">
+      <h1>Vite + React</h1>
+      </Grid>
+      <Grid container justifyContent="center">
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
         <p>
-          Latest Update: <code>ProductCard</code>
+          Latest Update: <code>ProductCard, Stepper, ProductCategoryComponent</code>
           <br />
-          This is committed with <code>VSCode</code> on 29.09.2023 ♥ ♡ Kübra ♥ ♡
+          This is committed with <code>VSCode</code> on 30.09.2023
         </p>
       </div>
+      </Grid>
+
+      <Grid container justifyContent="center">
+        <div style={{ marginBottom: "5px" }}>
+          <StepperComponent />
+        </div>
+      </Grid>
+      <Grid container justifyContent="center">
+        <Grid item>
+          <ProductCategoryComponent />
+        </Grid>
+      </Grid>
       <Grid container justifyContent="center" sx={{ gap: "15px" }}>
         <Grid item>
           <ProductCard product={product1} />
