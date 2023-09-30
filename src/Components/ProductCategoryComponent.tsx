@@ -50,7 +50,7 @@ const ProductCategoryComponent: React.FC = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "flex-start",
-          maxWidth: "100%", // İhtiyaca göre ayarlayın
+          maxWidth: "80vw", // İhtiyaca göre ayarlayın
           overflowX: "auto",
           scrollBehavior: "smooth",
         }}
