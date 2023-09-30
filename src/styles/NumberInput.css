@@ -1,5 +1,7 @@
-/* NumberInput.css */
 .small-textfield {
-    width: 75px;
+    width: 150px;
+    text-align: center;
+    margin: 0 auto; /* Ortala */
+    display: flex;
+    justify-content: space-between;
   }
-  

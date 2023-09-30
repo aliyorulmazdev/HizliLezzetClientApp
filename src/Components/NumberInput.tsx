@@ -18,7 +18,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
   onDecrement,
 }) => {
   return (
-    <div>
+    <div className="small-textfield">
       <IconButton onClick={onDecrement}>
         <RemoveIcon />
       </IconButton>
