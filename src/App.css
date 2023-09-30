@@ -33,6 +33,14 @@
     animation: none; /* Animasyonları devre dışı bırakır */
   }
 }
+/* Mobil cihazlar için ölçekleme devre dışı bırakma */
+@media (max-width: 767px) {
+  body {
+    zoom: 1 !important;
+    transform: none !important;
+  }
+}
+
 
 .read-the-docs {
   color: #888;

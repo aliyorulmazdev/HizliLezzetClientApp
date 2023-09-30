@@ -1,0 +1,58 @@
+/* Category controls and list container */
+.category-controls {
+  display: none; /* Hide on larger screens */
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Individual category buttons */
+.category-button {
+  min-width: 120px; /* Fixed button width */
+  margin-right: 8px; /* Add some spacing between buttons */
+  padding: 8px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 18px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; /* Truncate long text */
+  flex: 0 0 calc(25% - 8px); /* 4 categories in a row */
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  /* Ensure categories stack vertically on smaller screens */
+  .category-list {
+    flex-direction: column;
+  }
+
+  /* Show category controls on mobile devices */
+  .category-controls {
+    display: flex;
+  }
+
+  /* Adjust individual category button styles for smaller screens */
+  .category-button {
+    min-width: unset;
+    margin-right: 0;
+    margin-bottom: 8px; /* Add space between categories */
+    font-size: 16px;
+    flex: 0 0 calc(33.33% - 8px); /* 3 categories in a row */
+  }
+  
+  /* Show right arrow if there are more categories to the right */
+  .category-controls .category-arrow-right {
+    display: block;
+  }
+
+  /* Show left arrow if there are more categories to the left */
+  .category-controls .category-arrow-left {
+    display: block;
+  }
+}
