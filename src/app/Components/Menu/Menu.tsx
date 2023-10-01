@@ -10,6 +10,7 @@ import CallWaiterButton from "../CallWaiterButton";
 const Menu = observer(() => {
   const { productStore } = useStore();
 
+
   return (
     <>
       <Grid
@@ -18,7 +19,7 @@ const Menu = observer(() => {
         sx={{ minHeight: "100vh" }}
         alignItems="center"
       >
-        <CallWaiterButton style={{ zIndex: 9999 }} /> {/* CallWaiterButton için z-index: 2 */}
+        <CallWaiterButton style={{ zIndex: 9999 }} />
         <Grid container justifyContent="center">
           <div style={{ marginBottom: "5px" }}>
             <StepperComponent />

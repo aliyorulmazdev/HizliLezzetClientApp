@@ -22,6 +22,7 @@ import {
 
 import "../../styles/ProductModal.css";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom"; // useParams'ı içe aktarın
 
 interface ProductModalProps {
   open: boolean;
@@ -34,6 +35,8 @@ const ProductModal: React.FC<ProductModalProps> = ({
   onClose,
   product,
 }) => {
+  const { restoranid, masaid } = useParams();
+
   const submitOrder = () => {
     const orderDetails = {
       productName: product.title,
@@ -42,7 +45,8 @@ const ProductModal: React.FC<ProductModalProps> = ({
       activeMaterials: activeMaterialsState,
       limitedMaterials: limitedMaterialsState,
     };
-    toast.success(`"${orderDetails.productName}" order placed successfully!`, {
+    const orderMessage = `"${orderDetails.productName}" ordered from Restoran: ${restoranid} - Table: ${masaid}`;
+    toast.success(orderMessage, {
       position: 'top-center',
       autoClose: 3000,
       hideProgressBar: false,
@@ -52,7 +56,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
     });
     onClose();
   };
-  
 
   const activeMaterials: ActiveOrPassiveMaterial[] = product.materials.filter(
     (material) => "quantity" in material
@@ -89,7 +92,8 @@ const ProductModal: React.FC<ProductModalProps> = ({
   };
 
   return (
-    <Dialog open={open} onClose={onClose} style={{ zIndex: 1 }}> {/* z-index ayarı */}
+    <Dialog open={open} onClose={onClose} style={{ zIndex: 1 }}>
+      {/* z-index ayarı */}
       <DialogContent className="custom-dialog-content">
         <DialogTitle>{product.title}</DialogTitle>
         <img
