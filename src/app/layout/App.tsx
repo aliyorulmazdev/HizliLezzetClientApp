@@ -24,9 +24,9 @@ function App() {
         <div className="card">
           <p>
             Latest Update:{" "}
-            <code>ProductCard, Stepper, ProductCategoryComponent</code>
+            <code>ProductModal, Toastr, Axios, Mobx</code>
             <br />
-            This is committed with VSCode on 30.09.2023
+            This is committed with VSCode on 01.10.2023
           </p>
         </div>
       </Grid>
