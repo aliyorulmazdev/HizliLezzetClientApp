@@ -8,7 +8,6 @@ interface CallWaiterButtonProps {
 }
 
 const CallWaiterButton: React.FC<CallWaiterButtonProps> = ({ style }) => {
-  const [isCallWaiterActive] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleCallWaiterClick = () => {
