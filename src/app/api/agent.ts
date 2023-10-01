@@ -6,7 +6,7 @@ const sleep = (delay: number) => {
     setTimeout(resolve, delay);
   });
 };
-axios.defaults.baseURL = "/src/app/api";
+axios.defaults.baseURL = "";
 axios.interceptors.response.use((response) => {
   return sleep(2500)
     .then(() => {
