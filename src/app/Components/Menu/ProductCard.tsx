@@ -7,8 +7,8 @@ import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import Rating from "@mui/material/Rating";
 import CardActionArea from "@mui/material/CardActionArea"; // Import CardActionArea
-import { Product } from "../types/interfaces";
-import ProductModal from "./ProductModal";
+import { Product } from "../../types/interfaces";
+import ProductModal from './ProductModal';
 
 interface ProductCardProps {
   product: Product;

@@ -19,7 +19,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
 }) => {
   return (
     <div className="small-textfield">
-      <IconButton onClick={onDecrement}>
+      <IconButton color='error' onClick={onDecrement}>
         <RemoveIcon />
       </IconButton>
       <TextField
@@ -28,8 +28,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
         inputProps={{ style: { textAlign: "center" } }}
         className="small-textfield"
       />
-
-      <IconButton onClick={onIncrement}>
+      <IconButton color='primary' onClick={onIncrement}>
         <AddIcon />
       </IconButton>
     </div>

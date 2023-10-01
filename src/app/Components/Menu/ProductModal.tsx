@@ -3,26 +3,25 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import Switch from "@mui/material/Switch";
 import AddCircle from "@mui/icons-material/AddCircle";
 import ThumbUpAlt from "@mui/icons-material/ThumbUpAlt";
 import {
   Product,
   ActiveOrPassiveMaterial,
   ActiveOrPassiveMaterialLimited,
-} from "../types/interfaces";
-import NumberInput from "./NumberInput";
+} from "../../types/interfaces";
+import NumberInput from "../NumberInput";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import {
   ButtonGroup,
   DialogContent,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
 
-import "../styles/ProductModal.css";
+import "../../styles/ProductModal.css";
+import { toast } from "react-toastify";
 
 interface ProductModalProps {
   open: boolean;
@@ -36,7 +35,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
   product,
 }) => {
   const submitOrder = () => {
-    // Sipariş bilgilerini hazırla
     const orderDetails = {
       productName: product.title,
       productDescription: product.description,
@@ -44,13 +42,17 @@ const ProductModal: React.FC<ProductModalProps> = ({
       activeMaterials: activeMaterialsState,
       limitedMaterials: limitedMaterialsState,
     };
-    alert(
-      "Product sipariş verilmiştir. Sipariş Detayları:\n\n" +
-        JSON.stringify(orderDetails, null) // Boşluk ekleyerek alt satırda göster
-    );
+    toast.success(`"${orderDetails.productName}" başarıyla sipariş verildi!`, {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
     onClose();
   };
-  
+
   const activeMaterials: ActiveOrPassiveMaterial[] = product.materials.filter(
     (material) => "quantity" in material
   ) as ActiveOrPassiveMaterial[];
@@ -118,16 +120,20 @@ const ProductModal: React.FC<ProductModalProps> = ({
                 <ThumbUpAlt color="primary" />
               </ListItemIcon>
               <ListItemText>{material.name}</ListItemText>
-              <ListItemButton
-                className="align-right"
-                disableGutters
-                disableTouchRipple
+              <Button
+                variant="contained"
+                size="large"
+                color={material.active ? "error" : "primary"}
+                onClick={() => toggleLimitedMaterial(index)}
+                style={{
+                  maxWidth: "150px",
+                  maxHeight: "50px",
+                  minWidth: "150px",
+                  minHeight: "50px",
+                }}
               >
-                <Switch
-                  checked={material.active}
-                  onChange={() => toggleLimitedMaterial(index)}
-                />
-              </ListItemButton>
+                {material.active ? "Çıkar" : "Ekle"}
+              </Button>
             </ListItem>
           ))}
         </List>
@@ -138,8 +144,12 @@ const ProductModal: React.FC<ProductModalProps> = ({
           variant="contained"
           aria-label="Disabled elevation buttons"
         >
-          <Button onClick={submitOrder}>Order</Button>
-          <Button onClick={onClose}>Close</Button>
+          <Button size="large" onClick={submitOrder}>
+            Order
+          </Button>
+          <Button size="large" color="error" onClick={onClose}>
+            Close
+          </Button>
         </ButtonGroup>
       </DialogActions>
     </Dialog>

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "1",
+    "title": "Chicken Salad",
+    "category": "Salads",
+    "image": "https://deliverlogic-common-assets.s3.amazonaws.com/editable/images/callrc/menuitems/50748.jpg",
+    "rating": 3,
+    "description": "This chicken salad is a healthy and delicious option for any meal...",
+    "preparationTime": "30 Min",
+    "type": "Kitchen",
+    "price": "25$",
+    "materials": [
+      { "name": "Grilled Chicken", "quantity": 0 },
+      { "name": "Crisp Vegetables", "quantity": 0 },
+      { "name": "Zesty Vinaigrette Dressing", "quantity": 5 },
+      { "name": "Passive Material", "active": false },
+      { "name": "Limited Material 1", "active": true },
+      { "name": "Limited Material 2", "active": true }
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Caesar Salad",
+    "category": "Salads",
+    "image": "https://www.seriouseats.com/thmb/Fi_FEyVa3_-_uzfXh6OdLrzal2M=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/the-best-caesar-salad-recipe-06-40e70f549ba2489db09355abd62f79a9.jpg",
+    "rating": 4.5,
+    "description": "Our Caesar Salad is a classic favorite. Made with fresh romaine lettuce...",
+    "preparationTime": "15 Min",
+    "type": "Kitchen",
+    "price": "$12.99",
+    "materials": [
+      { "name": "Romaine Lettuce", "quantity": 0 },
+      { "name": "Croutons", "quantity": 0 },
+      { "name": "Parmesan Cheese", "quantity": 0 },
+      { "name": "Caesar Dressing", "quantity": 0 },
+      { "name": "Passive Material", "active": true },
+      { "name": "Limited Material 3", "active": true }
+    ]
+  }
+]
