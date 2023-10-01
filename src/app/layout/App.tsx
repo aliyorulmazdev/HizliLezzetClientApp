@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import Menu from "../Components/Menu/Menu";
 import LoadingComponent from "../layout/LoadingComponent";
 import { useStore } from "../stores/store";
-import { ToastContainer } from "react-toastify"; // Toastr'ı içe aktarın
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
 
   return (
     <>
+      
       <Grid container justifyContent="center">
         <h1>Vite + React</h1>
       </Grid>

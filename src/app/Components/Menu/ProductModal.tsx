@@ -42,8 +42,8 @@ const ProductModal: React.FC<ProductModalProps> = ({
       activeMaterials: activeMaterialsState,
       limitedMaterials: limitedMaterialsState,
     };
-    toast.success(`"${orderDetails.productName}" başarıyla sipariş verildi!`, {
-      position: 'bottom-center',
+    toast.success(`"${orderDetails.productName}" order placed successfully!`, {
+      position: 'top-center',
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -52,6 +52,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
     });
     onClose();
   };
+  
 
   const activeMaterials: ActiveOrPassiveMaterial[] = product.materials.filter(
     (material) => "quantity" in material
@@ -88,7 +89,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} style={{ zIndex: 1 }}> {/* z-index ayarı */}
       <DialogContent className="custom-dialog-content">
         <DialogTitle>{product.title}</DialogTitle>
         <img

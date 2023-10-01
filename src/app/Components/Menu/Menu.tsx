@@ -3,11 +3,12 @@ import { observer } from "mobx-react-lite";
 import ProductCard from "./ProductCard";
 import StepperComponent from "./StepperComponent";
 import ProductCategoryComponent from "./ProductCategoryComponent";
-import { useStore } from "../../stores/store"; // Store kullanımını ekleyin
+import { useStore } from "../../stores/store";
 import LoadingComponent from "../../layout/LoadingComponent";
+import CallWaiterButton from "../CallWaiterButton";
 
 const Menu = observer(() => {
-  const { productStore } = useStore(); // Store'dan productStore'u alın
+  const { productStore } = useStore();
 
   return (
     <>
@@ -17,6 +18,7 @@ const Menu = observer(() => {
         sx={{ minHeight: "100vh" }}
         alignItems="center"
       >
+        <CallWaiterButton style={{ zIndex: 9999 }} /> {/* CallWaiterButton için z-index: 2 */}
         <Grid container justifyContent="center">
           <div style={{ marginBottom: "5px" }}>
             <StepperComponent />
