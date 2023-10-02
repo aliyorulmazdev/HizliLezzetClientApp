@@ -1,0 +1,70 @@
+import React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import { TypographyVariant } from '@mui/material';
+
+interface TableComponentProps {
+  variation: 'Reserved' | 'Open' | 'Maintenance';
+  content: string; // Yeni content prop'u ekledik
+}
+
+const TableComponent: React.FC<TableComponentProps> = ({ variation, content }) => {
+  let backgroundColor = '';
+  let bottomText = '';
+  let bottomBackgroundColor = '';
+  let textVariant: TypographyVariant = 'subtitle1';
+
+  switch (variation) {
+    case 'Reserved':
+      backgroundColor = '#FFE6B6';
+      bottomText = 'Reserved';
+      bottomBackgroundColor = '#FF8A00';
+      break;
+    case 'Open':
+      backgroundColor = '#C0FFA3';
+      bottomText = '$50';
+      bottomBackgroundColor = '#365EFE';
+      break;
+    case 'Maintenance':
+      backgroundColor = '#FFB6B6';
+      bottomText = 'Maintenance';
+      bottomBackgroundColor = 'black';
+      break;
+    default:
+      backgroundColor = 'white';
+      bottomText = 'Unknown';
+      bottomBackgroundColor = 'lightgray';
+  }
+
+  const cardStyle = {
+    backgroundColor,
+    borderRadius: '25px',
+    width: '100px', // 100px genişlik
+    height: '100px', // 100px yükseklik
+  };
+
+  const bottomTextStyle = {
+    backgroundColor: bottomBackgroundColor,
+    color: 'white',
+    textAlign: 'center' as 'center', // Doğru kullanım: "center" veya "left"
+    fontWeight: 'bold',
+  };
+
+  return (
+    <Card className="table-card" sx={cardStyle}>
+      <CardContent>
+        <Typography variant="h4" component="div" sx={{ textAlign: 'center', color: '#474747' }}>
+          {content}
+        </Typography>
+      </CardContent>
+      <div className="bottom-content" style={bottomTextStyle as React.CSSProperties}>
+        <Typography variant={textVariant} color="text.secondary" sx={{ textAlign: 'center', color: 'white' }}>
+          {variation === 'Open' ? '$50' : bottomText}
+        </Typography>
+      </div>
+    </Card>
+  );
+};
+
+export default TableComponent;
