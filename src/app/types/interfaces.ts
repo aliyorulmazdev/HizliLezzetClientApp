@@ -1,12 +1,13 @@
 export interface ActiveOrPassiveMaterial {
-  name: string;    // Malzeme adı (örneğin, domates, biber, patlıcan)
-  quantity?: number; // Malzeme miktarı (isteğe bağlı)
-}
-export interface ActiveOrPassiveMaterialLimited {
-  name: string;    // Malzeme adı (örneğin, domates, biber, patlıcan)
-  active: boolean;  // Malzeme aktif veya pasif mi?
+  name: string; 
+  quantity?: number; 
+  price: number; 
 }
 
+export interface ActiveOrPassiveMaterialLimited {
+  name: string; 
+  active: boolean;
+}
 
 export interface Product {
   id: number;
@@ -17,6 +18,6 @@ export interface Product {
   description: string;
   preparationTime: string;
   type: string;
-  price: string;
-  materials: (ActiveOrPassiveMaterial | ActiveOrPassiveMaterialLimited)[]; // Malzemelerin listesi
+  price: number;
+  materials: (ActiveOrPassiveMaterial | ActiveOrPassiveMaterialLimited)[];
 }

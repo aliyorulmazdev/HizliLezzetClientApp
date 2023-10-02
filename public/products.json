@@ -8,11 +8,11 @@
     "description": "This chicken salad is a healthy and delicious option for any meal...",
     "preparationTime": "30 Min",
     "type": "Kitchen",
-    "price": "25$",
+    "price": 25.0,
     "materials": [
-      { "name": "Grilled Chicken", "quantity": 0 },
-      { "name": "Crisp Vegetables", "quantity": 0 },
-      { "name": "Zesty Vinaigrette Dressing", "quantity": 5 },
+      { "name": "Grilled Chicken", "quantity": 0, "price": 5.0 },
+      { "name": "Crisp Vegetables", "quantity": 0, "price": 3.0 },
+      { "name": "Zesty Vinaigrette Dressing", "quantity": 5, "price": 100 },
       { "name": "Passive Material", "active": false },
       { "name": "Limited Material 1", "active": true },
       { "name": "Limited Material 2", "active": true }
@@ -27,12 +27,12 @@
     "description": "Our Caesar Salad is a classic favorite. Made with fresh romaine lettuce...",
     "preparationTime": "15 Min",
     "type": "Kitchen",
-    "price": "$12.99",
+    "price": 12.99,
     "materials": [
-      { "name": "Romaine Lettuce", "quantity": 0 },
-      { "name": "Croutons", "quantity": 0 },
-      { "name": "Parmesan Cheese", "quantity": 0 },
-      { "name": "Caesar Dressing", "quantity": 0 },
+      { "name": "Romaine Lettuce", "quantity": 0, "price": 2.0 },
+      { "name": "Croutons", "quantity": 0, "price": 1.5 },
+      { "name": "Parmesan Cheese", "quantity": 0, "price": 3.0 },
+      { "name": "Caesar Dressing", "quantity": 0, "price": 2.99 },
       { "name": "Passive Material", "active": true },
       { "name": "Limited Material 3", "active": true }
     ]

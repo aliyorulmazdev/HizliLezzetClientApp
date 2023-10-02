@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
@@ -22,7 +22,7 @@ import {
 
 import "../../styles/ProductModal.css";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom"; // useParams'ı içe aktarın
+import { useParams } from "react-router-dom";
 
 interface ProductModalProps {
   open: boolean;
@@ -36,26 +36,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
   product,
 }) => {
   const { restoranid, masaid } = useParams();
-
-  const submitOrder = () => {
-    const orderDetails = {
-      productName: product.title,
-      productDescription: product.description,
-      productPrice: product.price,
-      activeMaterials: activeMaterialsState,
-      limitedMaterials: limitedMaterialsState,
-    };
-    const orderMessage = `"${orderDetails.productName}" ordered from Restoran: ${restoranid} - Table: ${masaid}`;
-    toast.success(orderMessage, {
-      position: 'top-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-    });
-    onClose();
-  };
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const activeMaterials: ActiveOrPassiveMaterial[] = product.materials.filter(
     (material) => "quantity" in material
@@ -68,8 +49,25 @@ const ProductModal: React.FC<ProductModalProps> = ({
 
   const [activeMaterialsState, setActiveMaterialsState] =
     useState(activeMaterials);
+
   const [limitedMaterialsState, setLimitedMaterialsState] =
     useState(limitedMaterials);
+
+    useEffect(() => {
+      // Calculate the total price based on active materials' quantities and prices
+      const calculatedTotalPrice = activeMaterialsState.reduce(
+        (total, material) => total + (material.quantity || 0) * material.price,
+        0
+      );
+    
+      // Add the product price to the calculatedTotalPrice
+      const updatedTotalPrice = calculatedTotalPrice + product.price;
+    
+      // Ensure the updatedTotalPrice is a number
+      setTotalPrice(updatedTotalPrice);
+    }, [activeMaterialsState, product.price]);
+    
+    
 
   const incrementMaterialQuantity = (index: number) => {
     const updatedMaterials = [...activeMaterialsState];
@@ -91,16 +89,32 @@ const ProductModal: React.FC<ProductModalProps> = ({
     setLimitedMaterialsState(updatedMaterials);
   };
 
+  const submitOrder = () => {
+    const orderDetails = {
+      productName: product.title,
+      productDescription: product.description,
+      productPrice: product.price,
+      activeMaterials: activeMaterialsState,
+      limitedMaterials: limitedMaterialsState,
+    };
+
+    const orderMessage = `"${orderDetails.productName}" ordered from Restoran: ${restoranid} - Table: ${masaid}`;
+    toast.success(orderMessage, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
+    onClose();
+  };
+
   return (
     <Dialog open={open} onClose={onClose} style={{ zIndex: 1 }}>
-      {/* z-index ayarı */}
       <DialogContent className="custom-dialog-content">
         <DialogTitle>{product.title}</DialogTitle>
-        <img
-          src={product.image} // Assuming 'product.img' contains the image URL
-          alt={product.title}
-          className="product-image"
-        />
+        <img src={product.image} alt={product.title} className="product-image" />
         <DialogTitle>{product.description}</DialogTitle>
         <DialogTitle>Price: {product.price}</DialogTitle>
         <DialogTitle>Materials:</DialogTitle>
@@ -144,6 +158,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
         </List>
       </DialogContent>
       <DialogActions>
+      <DialogTitle>Total Price: ${totalPrice.toFixed(2)}</DialogTitle>
         <ButtonGroup
           disableElevation
           variant="contained"
