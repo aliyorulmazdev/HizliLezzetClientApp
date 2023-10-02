@@ -6,7 +6,7 @@ import { TypographyVariant } from '@mui/material';
 
 interface TableComponentProps {
   variation: 'Reserved' | 'Open' | 'Maintenance';
-  content: string; // Yeni content prop'u ekledik
+  content: string;
 }
 
 const TableComponent: React.FC<TableComponentProps> = ({ variation, content }) => {
@@ -39,15 +39,15 @@ const TableComponent: React.FC<TableComponentProps> = ({ variation, content }) =
 
   const cardStyle = {
     backgroundColor,
-    borderRadius: '25px',
-    width: '100px', // 100px genişlik
-    height: '100px', // 100px yükseklik
+    borderRadius: '15px',
+    width: '100px',
+    height: '100px',
   };
 
   const bottomTextStyle = {
     backgroundColor: bottomBackgroundColor,
     color: 'white',
-    textAlign: 'center' as 'center', // Doğru kullanım: "center" veya "left"
+    textAlign: 'center' as 'center',
     fontWeight: 'bold',
   };
 

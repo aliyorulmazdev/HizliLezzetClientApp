@@ -26,9 +26,9 @@ function App() {
       <Grid container justifyContent="center">
         <div className="card">
           <p>
-            Latest Update: <code>ProductModal, Toastr, Axios, Mobx</code>
+            Latest Update: <code>TableComponent,TableApp, ProductModal, Toastr, Axios, Mobx</code>
             <br />
-            This is committed with VSCode on 01.10.2023
+            This is committed with <code>VSCode</code> on 02.10.2023
           </p>
         </div>
       </Grid>
