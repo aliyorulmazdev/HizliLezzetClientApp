@@ -11,7 +11,6 @@ import {
   LimitedMaterial,
   Order,
   SelectableMaterial,
-  AdditionalSection,
 } from "../../types/interfaces";
 import NumberInput from "../NumberInput";
 import List from "@mui/material/List";
