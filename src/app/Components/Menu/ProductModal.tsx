@@ -11,6 +11,7 @@ import {
   LimitedMaterial,
   Order,
   SelectableMaterial,
+  AdditionalSection,
 } from "../../types/interfaces";
 import NumberInput from "../NumberInput";
 import List from "@mui/material/List";
@@ -60,17 +61,26 @@ const ProductModal: React.FC<ProductModalProps> = ({
     useState<ActiveMaterial[]>(activeMaterials);
   const [limitedMaterialsState, setLimitedMaterialsState] =
     useState<LimitedMaterial[]>(limitedMaterials);
-  const [selectedMaterial, setSelectedMaterial] =
-    useState<SelectableMaterial | null>(null);
+  const [selectedMaterials, setSelectedMaterials] = useState<
+    Record<string, SelectableMaterial | null>
+  >({});
 
   useEffect(() => {
     const calculatedTotalPrice = activeMaterialsState.reduce(
       (total, material) => total + (material.quantity || 0) * material.price,
       0
     );
-    const updatedTotalPrice = calculatedTotalPrice + product.price;
+    const additionalSectionsTotalPrice = product.additionalSections.reduce(
+      (total, section) => {
+        const selectedMaterial = selectedMaterials[section.title];
+        return total + (selectedMaterial ? selectedMaterial.price : 0);
+      },
+      0
+    );
+    const updatedTotalPrice =
+      calculatedTotalPrice + product.price + additionalSectionsTotalPrice;
     setTotalPrice(updatedTotalPrice);
-  }, [activeMaterialsState, product.price]);
+  }, [activeMaterialsState, product.price, selectedMaterials]);
 
   const incrementMaterialQuantity = (index: number) => {
     const updatedMaterials = [...activeMaterialsState];
@@ -96,19 +106,18 @@ const ProductModal: React.FC<ProductModalProps> = ({
     setOrderNote(e.target.value);
   };
 
-  // ...
-
-  const handleMaterialSelect = (selectedValue: string) => {
-    // Find the selected material based on the value
-    const selectedMaterial = product.selectableMaterials.find(
-      (material) => material.name === selectedValue
-    );
-
-    // Update the state with the selected material or set it to null if not found
-    setSelectedMaterial(selectedMaterial || null);
+  const handleMaterialSelect = (
+    sectionTitle: string,
+    selectedValue: string
+  ) => {
+    const selectedMaterialInSection = product.additionalSections
+      .find((section) => section.title === sectionTitle)
+      ?.items.find((material) => material.name === selectedValue);
+    setSelectedMaterials((prevSelectedMaterials) => ({
+      ...prevSelectedMaterials,
+      [sectionTitle]: selectedMaterialInSection || null,
+    }));
   };
-
-  // ...
 
   const submitOrder = () => {
     if (tempProduct) {
@@ -116,7 +125,12 @@ const ProductModal: React.FC<ProductModalProps> = ({
         productName: tempProduct.title,
         activeMaterials: activeMaterialsState,
         limitedMaterials: limitedMaterialsState,
-        selectableMaterials: selectedMaterial ? [selectedMaterial] : [],
+        additionalSections: product.additionalSections.map((section) => ({
+          title: section.title,
+          items: [selectedMaterials[section.title]].filter(
+            (item) => item !== null
+          ) as SelectableMaterial[],
+        })),
         orderPrice: totalPrice,
         orderNote: orderNote,
       };
@@ -138,10 +152,11 @@ const ProductModal: React.FC<ProductModalProps> = ({
       );
       setTotalPrice(0);
       setOrderNote("");
-      setSelectedMaterial(null);
+      setSelectedMaterials({});
       onClose();
     }
   };
+
   return (
     <Dialog open={open} onClose={onClose} style={{ zIndex: 1 }}>
       <DialogContent className="custom-dialog-content">
@@ -212,29 +227,26 @@ const ProductModal: React.FC<ProductModalProps> = ({
               </ListItem>
             ))}
           </List>
-          <FormControl fullWidth>
-            <Dropdown
-              selection
-              options={
-                product.selectableMaterials
-                  ? product.selectableMaterials.map((material, index) => ({
-                      key: index,
-                      value: material.name,
-                      text: material.name,
-                    }))
-                  : []
-              }
-              defaultValue={
-                product.selectableMaterials
-                  ? product.selectableMaterials.find(
-                      (material) => material.active
-                    )?.name
-                  : ""
-              }
-              onChange={(_, { value }) => handleMaterialSelect(value as string)}
-            />
-          </FormControl>
-          <Card style={{ marginTop: '16px' }}>
+          {product.additionalSections.map((section, sectionIndex) => (
+            <div key={sectionIndex}>
+              <DialogTitle>{section.title}</DialogTitle>
+              <FormControl fullWidth>
+                <Dropdown
+                  selection
+                  options={section.items.map((material, index) => ({
+                    key: index,
+                    value: material.name,
+                    text: `${material.name} ($${material.price})`,
+                  }))}
+                  placeholder="Seçiniz"
+                  onChange={(_, { value }) =>
+                    handleMaterialSelect(section.title, value as string)
+                  }
+                />
+              </FormControl>
+            </div>
+          ))}
+          <Card style={{ marginTop: "16px" }}>
             <TextareaAutosize
               aria-label="minimum height"
               minRows={3}

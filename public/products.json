@@ -1,54 +1,96 @@
 [
   {
-    "id": "1",
-    "title": "Chicken Salad",
+    "id": "2",
+    "title": "Greek Salad",
     "category": "Salads",
-    "image": "https://deliverlogic-common-assets.s3.amazonaws.com/editable/images/callrc/menuitems/50748.jpg",
-    "rating": 3,
-    "description": "This chicken salad is a healthy and delicious option for any meal...",
-    "preparationTime": "30 Min",
+    "image": "https://i.pinimg.com/originals/c2/b5/37/c2b5379c77cedf31b65c7169648ded5e.jpg",
+    "rating": 4,
+    "description": "Our Greek salad is a classic Mediterranean dish with fresh vegetables and feta cheese.",
+    "preparationTime": "20 Min",
     "type": "Kitchen",
-    "price": 25.0,
+    "price": 18.0,
     "activeMaterials": [
-      { "name": "Grilled Chicken", "quantity": 0, "price": 5.0 },
-      { "name": "Crisp Vegetables", "quantity": 0, "price": 3.0 },
-      { "name": "Zesty Vinaigrette Dressing", "quantity": 0, "price": 100 }
+      { "name": "Fresh Vegetables", "quantity": 0, "price": 5.0 },
+      { "name": "Feta Cheese", "quantity": 0, "price": 3.0 },
+      { "name": "Greek Dressing", "quantity": 0, "price": 100 }
     ],
     "limitedMaterials": [
       { "name": "Passive Material", "active": false },
       { "name": "Limited Material 1", "active": true },
       { "name": "Limited Material 2", "active": true }
     ],
-    "selectableMaterials": [
-      { "name": "Kola", "active": false },
-      { "name": "Fanta", "active": true },
-      { "name": "Sprite", "active": false }
+    "additionalSections": [
+      {
+        "title": "Beverages",
+        "items": [
+          { "name": "Coke", "active": false, "price": 0  },
+          { "name": "Pepsi", "active": false, "price": 0  },
+          { "name": "Lemonade", "active": false, "price": 0  }
+        ]
+      },
+      {
+        "title": "Burger Options",
+        "items": [
+          { "name": "Single Patty", "selected": false, "price": 0 },
+          { "name": "Double Patty", "selected": false, "price": 5 },
+          { "name": "Veggie Burger", "selected": false, "price": 7 }
+        ]
+      },
+      {
+        "title": "Desserts",
+        "items": [
+          { "name": "Ice Cream", "selected": false, "price": 0 },
+          { "name": "Chocolate Cake", "selected": false, "price": 6  },
+          { "name": "Cheesecake", "selected": false, "price": 5 }
+        ]
+      }
     ]
   },
   {
-    "id": "2",
+    "id": "3",
     "title": "Caesar Salad",
     "category": "Salads",
-    "image": "https://www.seriouseats.com/thmb/Fi_FEyVa3_-_uzfXh6OdLrzal2M=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/the-best-caesar-salad-recipe-06-40e70f549ba2489db09355abd62f79a9.jpg",
+    "image": "https://media-cdn.grubhub.com/image/upload/d_search:browse-images:default.jpg/w_1200,h_800,f_auto,q_auto,dpr_auto,g_auto,c_fill/tztnxzdcuz7avzray5z0",
     "rating": 4.5,
-    "description": "Our Caesar Salad is a classic favorite. Made with fresh romaine lettuce...",
+    "description": "Our Caesar salad is a classic favorite with crisp romaine lettuce, croutons, and Caesar dressing.",
     "preparationTime": "15 Min",
     "type": "Kitchen",
-    "price": 12.99,
+    "price": 12.0,
     "activeMaterials": [
-      { "name": "Grilled Chicken", "quantity": 0, "price": 5.0 },
-      { "name": "Crisp Vegetables", "quantity": 0, "price": 3.0 },
-      { "name": "Zesty Vinaigrette Dressing", "quantity": 0, "price": 100 }
+      { "name": "Romaine Lettuce", "quantity": 0, "price": 4.0 },
+      { "name": "Croutons", "quantity": 0, "price": 2.0 },
+      { "name": "Caesar Dressing", "quantity": 0, "price": 3.0 }
     ],
     "limitedMaterials": [
       { "name": "Passive Material", "active": false },
       { "name": "Limited Material 1", "active": true },
-      { "name": "Limited Material 2", "active": true }
+      { "name": "Limited Material 2", "active": false }
     ],
-    "selectableMaterials": [
-      { "name": "Kola", "active": false },
-      { "name": "Fanta", "active": false },
-      { "name": "Sprite", "active": true }
+    "additionalSections": [
+      {
+        "title": "Beverages",
+        "items": [
+          { "name": "Coke", "active": false, "price": 0  },
+          { "name": "Pepsi", "active": false, "price": 0  },
+          { "name": "Lemonade", "active": false, "price": 0  }
+        ]
+      },
+      {
+        "title": "Burger Options",
+        "items": [
+          { "name": "Single Patty", "selected": false, "price": 0 },
+          { "name": "Double Patty", "selected": false, "price": 5 },
+          { "name": "Veggie Burger", "selected": false, "price": 7 }
+        ]
+      },
+      {
+        "title": "Desserts",
+        "items": [
+          { "name": "Ice Cream", "selected": false, "price": 0 },
+          { "name": "Chocolate Cake", "selected": false, "price": 6  },
+          { "name": "Cheesecake", "selected": false, "price": 5 }
+        ]
+      }
     ]
-  }
+  }  
 ]
