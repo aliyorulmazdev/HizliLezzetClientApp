@@ -13,7 +13,6 @@ import {
   SelectableMaterial,
 } from "../../types/interfaces";
 import NumberInput from "../NumberInput";
-import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import {
   ButtonGroup,
@@ -49,7 +48,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
   useEffect(() => {
     if (open) {
       setTempProduct(product);
-      console.log(product);
     }
   }, [open, product]);
 
@@ -170,7 +168,13 @@ const ProductModal: React.FC<ProductModalProps> = ({
           Total Price: ${totalPrice.toFixed(2)}
         </DialogTitle>
         <DialogContent>
-          <List>
+          <Card
+            style={{
+              padding: "20px",
+              margin: "10px",
+              backgroundColor: "#fff5f5",
+            }}
+          >
             {activeMaterialsState.map((material, index) => (
               <ListItem key={index}>
                 <ListItemIcon>
@@ -192,7 +196,14 @@ const ProductModal: React.FC<ProductModalProps> = ({
                 />
               </ListItem>
             ))}
-
+          </Card>
+          <Card
+            style={{
+              padding: "20px",
+              margin: "10px",
+              backgroundColor: "#fffae6",
+            }}
+          >
             {limitedMaterialsState.map((material, index) => (
               <ListItem key={index}>
                 <ListItemIcon>
@@ -225,40 +236,58 @@ const ProductModal: React.FC<ProductModalProps> = ({
                 </Button>
               </ListItem>
             ))}
-          </List>
-          {product.additionalSections.map((section, sectionIndex) => (
-            <div key={sectionIndex}>
-              <DialogTitle>{section.title}</DialogTitle>
-              <FormControl fullWidth>
-                <Dropdown
-                  selection
-                  options={section.items.map((material, index) => ({
-                    key: index,
-                    value: material.name,
-                    text: `${material.name} ($${material.price})`,
-                  }))}
-                  placeholder="Seçiniz"
-                  onChange={(_, { value }) =>
-                    handleMaterialSelect(section.title, value as string)
-                  }
-                />
-              </FormControl>
-            </div>
-          ))}
-          <Card style={{ marginTop: "16px" }}>
+          </Card>
+          <Card
+            style={{
+              padding: "20px",
+              margin: "10px",
+              backgroundColor: "#e6ffff",
+              overflow: "visible",
+            }}
+          >
+            {product.additionalSections.map((section, sectionIndex) => (
+              <div key={sectionIndex} className="select-box-wrapper">
+                <DialogContentText>{section.title}</DialogContentText>
+                <FormControl fullWidth>
+                  <Dropdown
+                    className="dropdown"
+                    selection
+                    options={section.items.map((material, index) => ({
+                      key: index,
+                      value: material.name,
+                      text: `${material.name} ($${material.price})`,
+                    }))}
+                    placeholder="Select from here"
+                    onChange={(_, { value }) =>
+                      handleMaterialSelect(section.title, value as string)
+                    }
+                  />
+                </FormControl>
+              </div>
+            ))}
+          </Card>
+
+          <Card
+            style={{
+              padding: "20px",
+              margin: "10px",
+              backgroundColor: "#efefef",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <TextareaAutosize
               aria-label="minimum height"
               minRows={3}
-              placeholder="Order Note"
+              placeholder="Add Note to order here.."
               value={orderNote}
               onChange={handleOrderNoteChange}
               style={{
                 width: "100%",
-                maxWidth: "100%",
-                minWidth: "100%",
                 resize: "none",
-                borderRadius: "5px",
                 border: "none",
+                padding: "10px",
+                backgroundColor: "inherit",
               }}
             />
           </Card>

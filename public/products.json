@@ -15,9 +15,9 @@
       { "name": "Greek Dressing", "quantity": 0, "price": 100 }
     ],
     "limitedMaterials": [
-      { "name": "Passive Material", "active": false },
-      { "name": "Limited Material 1", "active": true },
-      { "name": "Limited Material 2", "active": true }
+      { "name": "Ketchup", "active": false },
+      { "name": "Ranch", "active": false },
+      { "name": "Mayonnaise", "active": false }
     ],
     "additionalSections": [
       {
@@ -62,9 +62,9 @@
       { "name": "Caesar Dressing", "quantity": 0, "price": 3.0 }
     ],
     "limitedMaterials": [
-      { "name": "Passive Material", "active": false },
-      { "name": "Limited Material 1", "active": true },
-      { "name": "Limited Material 2", "active": false }
+      { "name": "Ketchup", "active": false },
+      { "name": "Ranch", "active": false },
+      { "name": "Mayonnaise", "active": false }
     ],
     "additionalSections": [
       {
