@@ -9,6 +9,11 @@ export interface LimitedMaterial {
   active: boolean;
 }
 
+export interface SelectableMaterial {
+  name: string,
+  active: boolean
+}
+
 export interface Product {
   id: number;
   title: string;
@@ -21,11 +26,13 @@ export interface Product {
   price: number;
   activeMaterials: ActiveMaterial[]
   limitedMaterials: LimitedMaterial[]
+  selectableMaterials: SelectableMaterial[]
 }
 export interface Order {
   productName: string;
   orderPrice: number;
   activeMaterials: ActiveMaterial[]
   limitedMaterials: LimitedMaterial[]
+  selectableMaterials: SelectableMaterial[]
   orderNote: string;
 }

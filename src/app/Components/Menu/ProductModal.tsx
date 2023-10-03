@@ -10,6 +10,7 @@ import {
   ActiveMaterial,
   LimitedMaterial,
   Order,
+  SelectableMaterial,
 } from "../../types/interfaces";
 import NumberInput from "../NumberInput";
 import List from "@mui/material/List";
@@ -19,6 +20,8 @@ import {
   Card,
   DialogContent,
   DialogContentText,
+  FormControl,
+  InputLabel,
   ListItemIcon,
   ListItemText,
   TextareaAutosize,
@@ -26,6 +29,7 @@ import {
 import "../../styles/ProductModal.css";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import { Dropdown } from "semantic-ui-react";
 
 interface ProductModalProps {
   open: boolean;
@@ -42,9 +46,11 @@ const ProductModal: React.FC<ProductModalProps> = ({
   const [totalPrice, setTotalPrice] = useState(0);
   const [orderNote, setOrderNote] = useState("");
   const [tempProduct, setTempProduct] = useState<Product | null>(null);
+
   useEffect(() => {
     if (open) {
       setTempProduct(product);
+      console.log(product);
     }
   }, [open, product]);
 
@@ -55,6 +61,8 @@ const ProductModal: React.FC<ProductModalProps> = ({
     useState<ActiveMaterial[]>(activeMaterials);
   const [limitedMaterialsState, setLimitedMaterialsState] =
     useState<LimitedMaterial[]>(limitedMaterials);
+  const [selectedMaterial, setSelectedMaterial] =
+    useState<SelectableMaterial | null>(null);
 
   useEffect(() => {
     const calculatedTotalPrice = activeMaterialsState.reduce(
@@ -89,12 +97,27 @@ const ProductModal: React.FC<ProductModalProps> = ({
     setOrderNote(e.target.value);
   };
 
+  // ...
+
+  const handleMaterialSelect = (selectedValue: string) => {
+    // Find the selected material based on the value
+    const selectedMaterial = product.selectableMaterials.find(
+      (material) => material.name === selectedValue
+    );
+
+    // Update the state with the selected material or set it to null if not found
+    setSelectedMaterial(selectedMaterial || null);
+  };
+
+  // ...
+
   const submitOrder = () => {
     if (tempProduct) {
       const currentOrder: Order = {
         productName: tempProduct.title,
         activeMaterials: activeMaterialsState,
         limitedMaterials: limitedMaterialsState,
+        selectableMaterials: selectedMaterial ? [selectedMaterial] : [],
         orderPrice: totalPrice,
         orderNote: orderNote,
       };
@@ -116,10 +139,10 @@ const ProductModal: React.FC<ProductModalProps> = ({
       );
       setTotalPrice(0);
       setOrderNote("");
+      setSelectedMaterial(null);
       onClose();
     }
   };
-
   return (
     <Dialog open={open} onClose={onClose} style={{ zIndex: 1 }}>
       <DialogContent className="custom-dialog-content">
@@ -190,22 +213,44 @@ const ProductModal: React.FC<ProductModalProps> = ({
               </ListItem>
             ))}
           </List>
-          <Card>
-          <TextareaAutosize
-            aria-label="minimum height"
-            minRows={3}
-            placeholder="Order Note"
-            value={orderNote}
-            onChange={handleOrderNoteChange}
-            style={{
-              width: "100%",
-              maxWidth: "100%",
-              minWidth: "100%",
-              resize: "none",
-              borderRadius:'5px',
-              border: 'none',
-            }}
-          />
+          <FormControl fullWidth>
+            <Dropdown
+              selection
+              options={
+                product.selectableMaterials
+                  ? product.selectableMaterials.map((material, index) => ({
+                      key: index,
+                      value: material.name,
+                      text: material.name,
+                    }))
+                  : []
+              }
+              defaultValue={
+                product.selectableMaterials
+                  ? product.selectableMaterials.find(
+                      (material) => material.active
+                    )?.name
+                  : ""
+              }
+              onChange={(_, { value }) => handleMaterialSelect(value as string)}
+            />
+          </FormControl>
+          <Card style={{ marginTop: '16px' }}>
+            <TextareaAutosize
+              aria-label="minimum height"
+              minRows={3}
+              placeholder="Order Note"
+              value={orderNote}
+              onChange={handleOrderNoteChange}
+              style={{
+                width: "100%",
+                maxWidth: "100%",
+                minWidth: "100%",
+                resize: "none",
+                borderRadius: "5px",
+                border: "none",
+              }}
+            />
           </Card>
         </DialogContent>
       </DialogContent>

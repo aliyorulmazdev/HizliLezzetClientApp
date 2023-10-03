@@ -18,6 +18,11 @@
       { "name": "Passive Material", "active": false },
       { "name": "Limited Material 1", "active": true },
       { "name": "Limited Material 2", "active": true }
+    ],
+    "selectableMaterials": [
+      { "name": "Kola", "active": false },
+      { "name": "Fanta", "active": true },
+      { "name": "Sprite", "active": false }
     ]
   },
   {
@@ -39,6 +44,11 @@
       { "name": "Passive Material", "active": false },
       { "name": "Limited Material 1", "active": true },
       { "name": "Limited Material 2", "active": true }
+    ],
+    "selectableMaterials": [
+      { "name": "Kola", "active": false },
+      { "name": "Fanta", "active": false },
+      { "name": "Sprite", "active": true }
     ]
   }
 ]
