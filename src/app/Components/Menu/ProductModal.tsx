@@ -21,7 +21,6 @@ import {
   DialogContent,
   DialogContentText,
   FormControl,
-  InputLabel,
   ListItemIcon,
   ListItemText,
   TextareaAutosize,
