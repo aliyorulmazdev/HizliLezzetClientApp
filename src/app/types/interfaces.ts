@@ -21,3 +21,9 @@ export interface Product {
   price: number;
   materials: (ActiveOrPassiveMaterial | ActiveOrPassiveMaterialLimited)[];
 }
+export interface Order {
+  productName: string;
+  orderPrice: number;
+  materials: (ActiveOrPassiveMaterial | ActiveOrPassiveMaterialLimited)[];
+  orderNote: string;
+}
