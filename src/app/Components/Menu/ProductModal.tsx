@@ -15,6 +15,7 @@ import {
 import NumberInput from "../NumberInput";
 import ListItem from "@mui/material/ListItem";
 import {
+  Box,
   ButtonGroup,
   Card,
   DialogContent,
@@ -156,156 +157,173 @@ const ProductModal: React.FC<ProductModalProps> = ({
   };
 
   return (
-    <Dialog open={open} onClose={onClose} style={{ zIndex: 1 }} disableScrollLock={true}>
-      <DialogContent className="custom-dialog-content">
-        <DialogTitle>
-          {tempProduct?.title} - ${totalPrice.toFixed(2)}
-          <Divider sx={{ borderBottomWidth: 3 }} />
-        </DialogTitle>
-        <DialogContent>
-          <DialogContent className="custom-dialog-content">
-            <Image
-              src={tempProduct?.image}
-              alt={tempProduct?.title}
-              className="product-image"
-            />
-          </DialogContent>
-          <DialogContent className="custom-dialog-content">{tempProduct?.description}</DialogContent>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+    >
+      <Dialog
+        open={open}
+        onClose={onClose}
+        style={{ zIndex: 1 }}
+        disableScrollLock={true}
+      >
+        <DialogContent className="custom-dialog-content">
+          <DialogTitle>
+            {tempProduct?.title} - ${totalPrice.toFixed(2)}
+            <Divider sx={{ borderBottomWidth: 3 }} />
+          </DialogTitle>
+          <DialogContent>
+            <DialogContent className="custom-dialog-content">
+              <Image
+                src={tempProduct?.image}
+                alt={tempProduct?.title}
+                className="product-image"
+              />
+            </DialogContent>
+            <DialogContent className="custom-dialog-content">
+              {tempProduct?.description}
+            </DialogContent>
 
-          <Card
-            style={{
-              padding: "20px",
-              margin: "10px",
-              backgroundColor: "#fff5f5",
-            }}
-          >
-            {activeMaterialsState.map((material, index) => (
-              <ListItem key={index}>
-                <ListItemIcon>
-                  {material.quantity !== undefined && material.quantity <= 0 ? (
-                    <AddCircle color="error" />
-                  ) : (
-                    <ThumbUpAlt color="primary" />
-                  )}
-                </ListItemIcon>
-                <ListItemText>
-                  {material.name}
-                  <br />
-                  Price(per): ${material.price}
-                </ListItemText>
-                <NumberInput
-                  value={material.quantity ?? 0}
-                  onIncrement={() => incrementMaterialQuantity(index)}
-                  onDecrement={() => decrementMaterialQuantity(index)}
-                />
-              </ListItem>
-            ))}
-          </Card>
-          <Card
-            style={{
-              padding: "20px",
-              margin: "10px",
-              backgroundColor: "#fffae6",
-            }}
-          >
-            {limitedMaterialsState.map((material, index) => (
-              <ListItem key={index}>
-                <ListItemIcon>
-                  {material.active ? (
-                    <ThumbUpAlt color="primary" />
-                  ) : (
-                    <AddCircle color="error" />
-                  )}
-                </ListItemIcon>
-                <ListItemText
-                  style={{
-                    textDecoration: material.active ? "none" : "line-through",
-                  }}
-                >
-                  {material.name}
-                </ListItemText>
-                <Button
-                  variant="contained"
-                  size='small'
-                  color={material.active ? "primary" : "error"}
-                  onClick={() => toggleLimitedMaterial(index)}
-                >
-                  {material.active ? "Remove" : "Add"}
-                </Button>
-              </ListItem>
-            ))}
-          </Card>
-          <Card
-            style={{
-              padding: "20px",
-              margin: "10px",
-              backgroundColor: "#e6ffff",
-              overflow: "visible",
-            }}
-          >
-            {product.additionalSections.map((section, sectionIndex) => (
-              <div key={sectionIndex} className="select-box-wrapper">
-                <DialogContentText className="custom-dialog-content">{section.title}</DialogContentText>
-                <FormControl fullWidth>
-                  <Dropdown
-                    className="dropdown"
-                    selection
-                    options={section.items.map((material, index) => ({
-                      key: index,
-                      value: material.name,
-                      text: `${material.name} ($${material.price})`,
-                    }))}
-                    placeholder="Select from here"
-                    onChange={(_, { value }) =>
-                      handleMaterialSelect(section.title, value as string)
-                    }
-                  />
-                </FormControl>
-              </div>
-            ))}
-          </Card>
-
-          <Card
-            style={{
-              padding: "20px",
-              margin: "10px",
-              backgroundColor: "#efefef",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <TextareaAutosize
-              aria-label="minimum height"
-              minRows={3}
-              placeholder="Add Note to order here.."
-              value={orderNote}
-              onChange={handleOrderNoteChange}
+            <Card
               style={{
-                width: "100%",
-                resize: "none",
-                border: "none",
-                padding: "10px",
-                backgroundColor: "inherit",
+                padding: "20px",
+                margin: "10px",
+                backgroundColor: "#fff5f5",
               }}
-            />
-          </Card>
+            >
+              {activeMaterialsState.map((material, index) => (
+                <ListItem key={index}>
+                  <ListItemIcon>
+                    {material.quantity !== undefined &&
+                    material.quantity <= 0 ? (
+                      <AddCircle color="error" />
+                    ) : (
+                      <ThumbUpAlt color="primary" />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText>
+                    {material.name}
+                    <br />
+                    Price(per): ${material.price}
+                  </ListItemText>
+                  <NumberInput
+                    value={material.quantity ?? 0}
+                    onIncrement={() => incrementMaterialQuantity(index)}
+                    onDecrement={() => decrementMaterialQuantity(index)}
+                  />
+                </ListItem>
+              ))}
+            </Card>
+            <Card
+              style={{
+                padding: "20px",
+                margin: "10px",
+                backgroundColor: "#fffae6",
+              }}
+            >
+              {limitedMaterialsState.map((material, index) => (
+                <ListItem key={index}>
+                  <ListItemIcon>
+                    {material.active ? (
+                      <ThumbUpAlt color="primary" />
+                    ) : (
+                      <AddCircle color="error" />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText
+                    style={{
+                      textDecoration: material.active ? "none" : "line-through",
+                    }}
+                  >
+                    {material.name}
+                  </ListItemText>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color={material.active ? "primary" : "error"}
+                    onClick={() => toggleLimitedMaterial(index)}
+                  >
+                    {material.active ? "Remove" : "Add"}
+                  </Button>
+                </ListItem>
+              ))}
+            </Card>
+            <Card
+              style={{
+                padding: "20px",
+                margin: "10px",
+                backgroundColor: "#e6ffff",
+                overflow: "visible",
+              }}
+            >
+              {product.additionalSections.map((section, sectionIndex) => (
+                <div key={sectionIndex} className="select-box-wrapper">
+                  <DialogContentText className="custom-dialog-content">
+                    {section.title}
+                  </DialogContentText>
+                  <FormControl fullWidth>
+                    <Dropdown
+                      className="dropdown"
+                      selection
+                      options={section.items.map((material, index) => ({
+                        key: index,
+                        value: material.name,
+                        text: `${material.name} ($${material.price})`,
+                      }))}
+                      placeholder="Select from here"
+                      onChange={(_, { value }) =>
+                        handleMaterialSelect(section.title, value as string)
+                      }
+                    />
+                  </FormControl>
+                </div>
+              ))}
+            </Card>
+
+            <Card
+              style={{
+                padding: "20px",
+                margin: "10px",
+                backgroundColor: "#efefef",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <TextareaAutosize
+                aria-label="minimum height"
+                minRows={3}
+                placeholder="Add Note to order here.."
+                value={orderNote}
+                onChange={handleOrderNoteChange}
+                style={{
+                  width: "100%",
+                  resize: "none",
+                  border: "none",
+                  padding: "10px",
+                  backgroundColor: "inherit",
+                }}
+              />
+            </Card>
+          </DialogContent>
         </DialogContent>
-      </DialogContent>
-      <DialogActions>
-        <ButtonGroup
-          disableElevation
-          variant="contained"
-          aria-label="Disabled elevation buttons"
-        >
-          <Button color={"primary"} size="large" onClick={submitOrder}>
-            Order
-          </Button>
-          <Button size="large" color="error" onClick={onClose}>
-            Close
-          </Button>
-        </ButtonGroup>
-      </DialogActions>
-    </Dialog>
+        <DialogActions>
+          <ButtonGroup
+            disableElevation
+            variant="contained"
+            aria-label="Disabled elevation buttons"
+          >
+            <Button color={"primary"} size="large" onClick={submitOrder}>
+              Order
+            </Button>
+            <Button size="large" color="error" onClick={onClose}>
+              Close
+            </Button>
+          </ButtonGroup>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
 

@@ -4,8 +4,8 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  overflow: hidden!important;
-  overflow-y: hidden!important;
+  overflow: hidden !important;
+  overflow-y: hidden !important;
 }
 
 .product-image {
