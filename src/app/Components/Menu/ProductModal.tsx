@@ -19,6 +19,7 @@ import {
   Card,
   DialogContent,
   DialogContentText,
+  Divider,
   FormControl,
   ListItemIcon,
   ListItemText,
@@ -27,7 +28,7 @@ import {
 import "../../styles/ProductModal.css";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
-import { Dropdown } from "semantic-ui-react";
+import { Dropdown, Image } from "semantic-ui-react";
 
 interface ProductModalProps {
   open: boolean;
@@ -155,19 +156,22 @@ const ProductModal: React.FC<ProductModalProps> = ({
   };
 
   return (
-    <Dialog open={open} onClose={onClose} style={{ zIndex: 1 }}>
+    <Dialog open={open} onClose={onClose} style={{ zIndex: 1 }} disableScrollLock={true}>
       <DialogContent className="custom-dialog-content">
-        <DialogTitle>{tempProduct?.title}</DialogTitle>
-        <img
-          src={tempProduct?.image}
-          alt={tempProduct?.title}
-          className="product-image"
-        />
-        <DialogContentText>{tempProduct?.description}</DialogContentText>
-        <DialogTitle style={{ textAlign: "center" }}>
-          Total Price: ${totalPrice.toFixed(2)}
+        <DialogTitle>
+          {tempProduct?.title} - ${totalPrice.toFixed(2)}
+          <Divider sx={{ borderBottomWidth: 3 }} />
         </DialogTitle>
         <DialogContent>
+          <DialogContent className="custom-dialog-content">
+            <Image
+              src={tempProduct?.image}
+              alt={tempProduct?.title}
+              className="product-image"
+            />
+          </DialogContent>
+          <DialogContent className="custom-dialog-content">{tempProduct?.description}</DialogContent>
+
           <Card
             style={{
               padding: "20px",
@@ -222,17 +226,11 @@ const ProductModal: React.FC<ProductModalProps> = ({
                 </ListItemText>
                 <Button
                   variant="contained"
-                  size="large"
+                  size='small'
                   color={material.active ? "primary" : "error"}
                   onClick={() => toggleLimitedMaterial(index)}
-                  style={{
-                    maxWidth: "100px",
-                    maxHeight: "50px",
-                    minWidth: "100px",
-                    minHeight: "50px",
-                  }}
                 >
-                  {material.active ? "Çıkar" : "Ekle"}
+                  {material.active ? "Remove" : "Add"}
                 </Button>
               </ListItem>
             ))}
@@ -247,7 +245,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
           >
             {product.additionalSections.map((section, sectionIndex) => (
               <div key={sectionIndex} className="select-box-wrapper">
-                <DialogContentText>{section.title}</DialogContentText>
+                <DialogContentText className="custom-dialog-content">{section.title}</DialogContentText>
                 <FormControl fullWidth>
                   <Dropdown
                     className="dropdown"
