@@ -9,10 +9,12 @@
     "preparationTime": "30 Min",
     "type": "Kitchen",
     "price": 25.0,
-    "materials": [
+    "activeMaterials": [
       { "name": "Grilled Chicken", "quantity": 0, "price": 5.0 },
       { "name": "Crisp Vegetables", "quantity": 0, "price": 3.0 },
-      { "name": "Zesty Vinaigrette Dressing", "quantity": 5, "price": 100 },
+      { "name": "Zesty Vinaigrette Dressing", "quantity": 0, "price": 100 }
+    ],
+    "limitedMaterials": [
       { "name": "Passive Material", "active": false },
       { "name": "Limited Material 1", "active": true },
       { "name": "Limited Material 2", "active": true }
@@ -28,13 +30,15 @@
     "preparationTime": "15 Min",
     "type": "Kitchen",
     "price": 12.99,
-    "materials": [
-      { "name": "Romaine Lettuce", "quantity": 0, "price": 2.0 },
-      { "name": "Croutons", "quantity": 0, "price": 1.5 },
-      { "name": "Parmesan Cheese", "quantity": 0, "price": 3.0 },
-      { "name": "Caesar Dressing", "quantity": 0, "price": 2.99 },
-      { "name": "Passive Material", "active": true },
-      { "name": "Limited Material 3", "active": true }
+    "activeMaterials": [
+      { "name": "Grilled Chicken", "quantity": 0, "price": 5.0 },
+      { "name": "Crisp Vegetables", "quantity": 0, "price": 3.0 },
+      { "name": "Zesty Vinaigrette Dressing", "quantity": 0, "price": 100 }
+    ],
+    "limitedMaterials": [
+      { "name": "Passive Material", "active": false },
+      { "name": "Limited Material 1", "active": true },
+      { "name": "Limited Material 2", "active": true }
     ]
   }
 ]

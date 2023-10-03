@@ -1,10 +1,10 @@
-export interface ActiveOrPassiveMaterial {
+export interface ActiveMaterial {
   name: string; 
   quantity?: number; 
   price: number; 
 }
 
-export interface ActiveOrPassiveMaterialLimited {
+export interface LimitedMaterial {
   name: string; 
   active: boolean;
 }
@@ -19,11 +19,13 @@ export interface Product {
   preparationTime: string;
   type: string;
   price: number;
-  materials: (ActiveOrPassiveMaterial | ActiveOrPassiveMaterialLimited)[];
+  activeMaterials: ActiveMaterial[]
+  limitedMaterials: LimitedMaterial[]
 }
 export interface Order {
   productName: string;
   orderPrice: number;
-  materials: (ActiveOrPassiveMaterial | ActiveOrPassiveMaterialLimited)[];
+  activeMaterials: ActiveMaterial[]
+  limitedMaterials: LimitedMaterial[]
   orderNote: string;
 }

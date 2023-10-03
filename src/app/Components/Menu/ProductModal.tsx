@@ -7,8 +7,8 @@ import AddCircle from "@mui/icons-material/AddCircle";
 import ThumbUpAlt from "@mui/icons-material/ThumbUpAlt";
 import {
   Product,
-  ActiveOrPassiveMaterial,
-  ActiveOrPassiveMaterialLimited,
+  ActiveMaterial,
+  LimitedMaterial,
   Order,
 } from "../../types/interfaces";
 import NumberInput from "../NumberInput";
@@ -16,16 +16,16 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import {
   ButtonGroup,
+  Card,
   DialogContent,
   DialogContentText,
   ListItemIcon,
   ListItemText,
+  TextareaAutosize,
 } from "@mui/material";
 import "../../styles/ProductModal.css";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
-import { TextareaAutosize } from "@mui/base/TextareaAutosize";
-import { useStore } from "../../stores/store";
 
 interface ProductModalProps {
   open: boolean;
@@ -40,30 +40,21 @@ const ProductModal: React.FC<ProductModalProps> = ({
 }) => {
   const { restoranid, masaid } = useParams();
   const [totalPrice, setTotalPrice] = useState(0);
-  const [isOrderNoteOpen, setOrderNoteOpen] = useState(false);
   const [orderNote, setOrderNote] = useState("");
-  const [editNote, setEditNote] = useState(false);
   const [tempProduct, setTempProduct] = useState<Product | null>(null);
-  const {productStore} = useStore();
   useEffect(() => {
     if (open) {
       setTempProduct(product);
     }
   }, [open, product]);
 
-  const activeMaterials: ActiveOrPassiveMaterial[] = product.materials.filter(
-    (material) => "quantity" in material
-  ) as ActiveOrPassiveMaterial[];
-
-  const limitedMaterials: ActiveOrPassiveMaterialLimited[] =
-    product.materials.filter(
-      (material) => "active" in material
-    ) as ActiveOrPassiveMaterialLimited[];
+  const activeMaterials: ActiveMaterial[] = product.activeMaterials;
+  const limitedMaterials: LimitedMaterial[] = product.limitedMaterials;
 
   const [activeMaterialsState, setActiveMaterialsState] =
-    useState(activeMaterials);
+    useState<ActiveMaterial[]>(activeMaterials);
   const [limitedMaterialsState, setLimitedMaterialsState] =
-    useState(limitedMaterials);
+    useState<LimitedMaterial[]>(limitedMaterials);
 
   useEffect(() => {
     const calculatedTotalPrice = activeMaterialsState.reduce(
@@ -94,32 +85,21 @@ const ProductModal: React.FC<ProductModalProps> = ({
     setLimitedMaterialsState(updatedMaterials);
   };
 
-  const openOrderNoteDialog = () => {
-    setOrderNoteOpen(true);
-  };
-
-  const closeOrderNoteDialog = () => {
-    setOrderNoteOpen(false);
-  };
-
   const handleOrderNoteChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setOrderNote(e.target.value);
-  };
-
-  const saveOrderNote = () => {
-    setOrderNoteOpen(false);
   };
 
   const submitOrder = () => {
     if (tempProduct) {
       const currentOrder: Order = {
         productName: tempProduct.title,
-        materials: tempProduct.materials,
+        activeMaterials: activeMaterialsState,
+        limitedMaterials: limitedMaterialsState,
         orderPrice: totalPrice,
         orderNote: orderNote,
       };
 
-      const orderMessage = `"${currentOrder.productName}" ordered from Restoran: ${restoranid} - Table: ${masaid} - Total price is ${currentOrder.orderPrice}`;
+      const orderMessage = `"${currentOrder.productName}" ordered from Restoran: ${restoranid} - Table: ${masaid} - Total price is ${currentOrder.orderPrice} - OrderNote: ${orderNote}`;
       toast.success(orderMessage, {
         position: "top-center",
         autoClose: 3000,
@@ -128,16 +108,18 @@ const ProductModal: React.FC<ProductModalProps> = ({
         pauseOnHover: true,
         draggable: false,
       });
-      setActiveMaterialsState(activeMaterials);
-      setLimitedMaterialsState(limitedMaterials);
+      setActiveMaterialsState(
+        activeMaterials.map((material) => ({ ...material, quantity: 0 }))
+      );
+      setLimitedMaterialsState(
+        limitedMaterials.map((material) => ({ ...material, active: false }))
+      );
       setTotalPrice(0);
       setOrderNote("");
-      setEditNote(false);
-      setTempProduct(null);
-      productStore.loadProducts();
       onClose();
     }
   };
+
   return (
     <Dialog open={open} onClose={onClose} style={{ zIndex: 1 }}>
       <DialogContent className="custom-dialog-content">
@@ -162,12 +144,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
                     <ThumbUpAlt color="primary" />
                   )}
                 </ListItemIcon>
-                <ListItemText
-                  style={{
-                    textDecoration:
-                      (material.quantity ?? 0) <= 0 ? "line-through" : "none",
-                  }}
-                >
+                <ListItemText>
                   {material.name}
                   <br />
                   Price(per): ${material.price}
@@ -213,6 +190,23 @@ const ProductModal: React.FC<ProductModalProps> = ({
               </ListItem>
             ))}
           </List>
+          <Card>
+          <TextareaAutosize
+            aria-label="minimum height"
+            minRows={3}
+            placeholder="Order Note"
+            value={orderNote}
+            onChange={handleOrderNoteChange}
+            style={{
+              width: "100%",
+              maxWidth: "100%",
+              minWidth: "100%",
+              resize: "none",
+              borderRadius:'5px',
+              border: 'none',
+            }}
+          />
+          </Card>
         </DialogContent>
       </DialogContent>
       <DialogActions>
@@ -221,14 +215,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
           variant="contained"
           aria-label="Disabled elevation buttons"
         >
-          <Button
-            color={editNote ? "error" : "primary"}
-            size="large"
-            onClick={openOrderNoteDialog}
-          >
-            Add/Edit Order Note
-          </Button>
-          <Button size="large" onClick={submitOrder}>
+          <Button color={"primary"} size="large" onClick={submitOrder}>
             Order
           </Button>
           <Button size="large" color="error" onClick={onClose}>
@@ -236,22 +223,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
           </Button>
         </ButtonGroup>
       </DialogActions>
-      <Dialog open={isOrderNoteOpen} onClose={closeOrderNoteDialog}>
-        <DialogTitle>Order Note:</DialogTitle>
-        <DialogContent>
-          <TextareaAutosize
-            aria-label="minimum height"
-            minRows={3}
-            placeholder="Minimum 3 rows"
-            value={orderNote}
-            onChange={handleOrderNoteChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={saveOrderNote}>Save</Button>
-          <Button onClick={closeOrderNoteDialog}>Cancel</Button>
-        </DialogActions>
-      </Dialog>
     </Dialog>
   );
 };
