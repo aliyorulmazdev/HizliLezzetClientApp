@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: "npm" # Paket ekosistemi (örneğin npm, bundler, pip, etc.)
+    directory: "/" # Paket manifestosunun dizini (örneğin "/app" veya "/frontend")
+    schedule:
+      interval: "daily" # Güncellemelerin ne sıklıkla kontrol edileceği (örneğin "daily", "weekly", "monthly")
