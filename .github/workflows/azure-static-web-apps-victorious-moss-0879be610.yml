@@ -32,6 +32,8 @@ jobs:
           action: "upload"
           app_location: "dist" # Vite ile oluşturulan React uygulamasının derlenmiş dosyalarının bulunduğu klasörü belirtin (örneğin, dist)
           ###### End of Repository/Build Configurations ######
+      # Eğer deployment_token eksikse dağıtımı atlamak için aşağıdaki satırı ekleyin:
+      - run: echo "skip_deploy_on_missing_secrets=true" >> $GITHUB_ENV
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
