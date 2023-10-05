@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { TypographyVariant } from '@mui/material';
 
-interface TableComponentProps {
+export interface TableComponentProps {
   variation: 'Reserved' | 'Open' | 'Maintenance';
   content: string;
 }
