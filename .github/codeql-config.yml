@@ -1,0 +1,25 @@
+name: 'CodeQL Analysis'
+
+# Define the language for analysis (TypeScript)
+language: typescript
+
+# Define the working directories
+paths:
+  - '.'  # Root directory of your repository
+
+# Define the queries to be used for analysis
+queries:
+  - language: typescript
+    query: >
+      import types from '../javascript/ql/src/types'
+      from File file
+      select file.getPath(), file.getContents()
+      where file.hasContents() and
+            file.getName().matches('.*\\.(ts|tsx)$')
+            
+# Define additional settings and options
+properties:
+  github:
+    codeQL: true
+
+# Specify any additional setup or environment configurations as needed
