@@ -33,6 +33,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "dist"
+          skip_deploy_on_missing_secrets: true
       - run: echo "skip_deploy_on_missing_secrets=true" >> $GITHUB_ENV
 
   close_pull_request_job:
