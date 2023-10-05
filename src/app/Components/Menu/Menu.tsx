@@ -10,7 +10,6 @@ import CallWaiterButton from "../CallWaiterButton";
 const Menu = observer(() => {
   const { productStore } = useStore();
 
-
   return (
     <>
       <Grid

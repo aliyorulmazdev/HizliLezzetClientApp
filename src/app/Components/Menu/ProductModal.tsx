@@ -157,12 +157,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
   };
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="100vh"
-    >
+    <Box display="flex" justifyContent="center" alignItems="center">
       <Dialog
         open={open}
         onClose={onClose}
