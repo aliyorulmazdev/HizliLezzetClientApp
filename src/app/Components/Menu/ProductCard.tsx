@@ -8,26 +8,42 @@ import Chip from "@mui/material/Chip";
 import Rating from "@mui/material/Rating";
 import CardActionArea from "@mui/material/CardActionArea"; // Import CardActionArea
 import { Product } from "../../types/interfaces";
-import ProductModal from './ProductModal';
+import ProductModal from "./ProductModal";
+import { useStore } from "../../stores/store";
+import { observer } from "mobx-react-lite";
 
 interface ProductCardProps {
   product: Product;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const { customProductStore } = useStore();
+
+  const resetProductCardState = () => {
+    customProductStore.resetActiveMaterials();
+    customProductStore.resetLimitedMaterials();
+    customProductStore.resetSelectedMaterials();
+    customProductStore.resetTotalPrice();
+  };
 
   const openModal = () => {
+    resetProductCardState();
+    customProductStore.rollbackProduct();
+    customProductStore.createActiveProduct(product);
     setModalOpen(true);
   };
 
   const closeModal = () => {
+    resetProductCardState();
+    customProductStore.rollbackProduct();
     setModalOpen(false);
   };
+
   return (
     <div className="card-container">
       <Card className="card" sx={{ maxWidth: 345 }}>
-        <CardActionArea sx={{ boxShadow: "none" }}  onClick={openModal}>
+        <CardActionArea sx={{ boxShadow: "none" }} onClick={openModal}>
           <CardHeader title={product.title} subheader={product.category} />
           <Rating
             name="product-rating"
@@ -55,18 +71,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 label={`${product.type}`}
                 style={{ marginRight: "8px", backgroundColor: "#DAEEFF" }}
               />
-              <Chip label={`${product.price}`} style={{ backgroundColor: "#FFD3D3" }} />
+              <Chip
+                label={`${product.price}`}
+                style={{ backgroundColor: "#FFD3D3" }}
+              />
             </div>
           </CardContent>
         </CardActionArea>
       </Card>
-      <ProductModal
-        open={modalOpen}
-        onClose={closeModal}
-        product={product}
-      />
+      <ProductModal open={modalOpen} onClose={closeModal} />
     </div>
   );
-};
+});
 
 export default ProductCard;

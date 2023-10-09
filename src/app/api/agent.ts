@@ -46,7 +46,7 @@ const createProduct = async (product: Product): Promise<Product> => {
 };
 
 const updateProduct = async (
-  productId: number,
+  productId: string,
   updatedProduct: Product
 ): Promise<Product> => {
   try {
@@ -65,7 +65,7 @@ const updateProduct = async (
   }
 };
 
-const deleteProduct = async (productId: number): Promise<void> => {
+const deleteProduct = async (productId: string): Promise<void> => {
   try {
     const response = await axios.delete(`/products/${productId}.json`);
     if (response.status !== 204) {

@@ -35,7 +35,7 @@ const Menu = observer(() => {
           ) : (
             productStore.products.map((product) => (
               <Grid item key={product.id}>
-                <ProductCard product={product} />
+                <ProductCard product={product} key={product.id}  />
               </Grid>
             ))
           )}
