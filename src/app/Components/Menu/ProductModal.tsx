@@ -3,28 +3,23 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import AddCircle from "@mui/icons-material/AddCircle";
-import ThumbUpAlt from "@mui/icons-material/ThumbUpAlt";
 import { Order, SelectableMaterial } from "../../types/interfaces";
-import NumberInput from "../NumberInput";
-import ListItem from "@mui/material/ListItem";
 import {
   Box,
   ButtonGroup,
   Card,
   DialogContent,
-  DialogContentText,
   Divider,
-  FormControl,
-  ListItemIcon,
-  ListItemText,
   TextareaAutosize,
 } from "@mui/material";
 import "../../styles/ProductModal.css";
 import { toast } from "react-toastify";
-import { Dropdown, Image } from "semantic-ui-react";
+import { Image } from "semantic-ui-react";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
+import ActiveProductMaterial from "./ActiveProductMaterial";
+import LimitedProductMaterial from "./LimitedProductMaterial";
+import AddionalProductSection from "./AddionalProductSection";
 
 const ProductModal: React.FC = observer(() => {
   const { productStore, orderStore } = useStore();
@@ -113,31 +108,27 @@ const ProductModal: React.FC = observer(() => {
                 backgroundColor: "#fff5f5",
               }}
             >
-              {productStore.activeProduct?.activeMaterials?.map(
-                (material, index) => (
-                  <ListItem key={index}>
-                    <ListItemIcon>
-                      {material.quantity !== undefined &&
-                      material.quantity <= 0 ? (
-                        <AddCircle color="error" />
-                      ) : (
-                        <ThumbUpAlt color="primary" />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText>
-                      {material.name}
-                      <br />
-                      Price(per): ${material.price}
-                    </ListItemText>
-                    <NumberInput
-                      value={material.quantity ?? 0}
-                      onIncrement={() => incrementMaterialQuantity(index)}
-                      onDecrement={() => decrementMaterialQuantity(index)}
+              <Card
+                style={{
+                  padding: "20px",
+                  margin: "10px",
+                  backgroundColor: "#fff5f5",
+                }}
+              >
+                {productStore.activeProduct?.activeMaterials?.map(
+                  (material, index) => (
+                    <ActiveProductMaterial
+                      key={index}
+                      material={material}
+                      index={index}
+                      incrementMaterialQuantity={incrementMaterialQuantity}
+                      decrementMaterialQuantity={decrementMaterialQuantity}
                     />
-                  </ListItem>
-                )
-              )}
+                  )
+                )}
+              </Card>
             </Card>
+
             <Card
               style={{
                 padding: "20px",
@@ -147,32 +138,12 @@ const ProductModal: React.FC = observer(() => {
             >
               {productStore.activeProduct?.limitedMaterials?.map(
                 (material, index) => (
-                  <ListItem key={index}>
-                    <ListItemIcon>
-                      {material.active ? (
-                        <ThumbUpAlt color="primary" />
-                      ) : (
-                        <AddCircle color="error" />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText
-                      style={{
-                        textDecoration: material.active
-                          ? "none"
-                          : "line-through",
-                      }}
-                    >
-                      {material.name}
-                    </ListItemText>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      color={material.active ? "primary" : "error"}
-                      onClick={() => toggleLimitedMaterial(index)}
-                    >
-                      {material.active ? "Remove" : "Add"}
-                    </Button>
-                  </ListItem>
+                  <LimitedProductMaterial
+                    key={index}
+                    material={material}
+                    index={index}
+                    toggleLimitedMaterial={toggleLimitedMaterial}
+                  />
                 )
               )}
             </Card>
@@ -186,26 +157,11 @@ const ProductModal: React.FC = observer(() => {
             >
               {productStore.activeProduct?.additionalSections?.map(
                 (section, sectionIndex) => (
-                  <div key={sectionIndex} className="select-box-wrapper">
-                    <DialogContentText className="custom-dialog-content">
-                      {section.title}
-                    </DialogContentText>
-                    <FormControl fullWidth>
-                      <Dropdown
-                        className="dropdown"
-                        selection
-                        options={section.items.map((material, index) => ({
-                          key: index,
-                          value: material.name,
-                          text: `${material.name} ($${material.price})`,
-                        }))}
-                        placeholder="Select from here"
-                        onChange={(_, { value }) =>
-                          handleMaterialSelect(section.title, value as string)
-                        }
-                      />
-                    </FormControl>
-                  </div>
+                  <AddionalProductSection
+                    key={sectionIndex}
+                    section={section}
+                    handleMaterialSelect={handleMaterialSelect}
+                  />
                 )
               )}
             </Card>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -11,19 +11,25 @@ import ProductModal from "./ProductModal";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
 import { Product } from "../../types/interfaces";
+import { runInAction } from "mobx";
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
-
   const { productStore } = useStore();
+  const [modalKey, setModalKey] = useState(0);
 
   const openModal = () => {
-    productStore.openModal(product);
+    runInAction(() => {
+      productStore.activeProduct = null;
+      const productCopy = { ...product };
+      productStore.activeProduct = productCopy;
+      productStore.openModal(productCopy);
+    });
+    setModalKey((prevKey) => prevKey + 1); // Eğer burada modalKey'i kullanıyorsanız, bu güncellemeyi yapabilirsiniz
   };
-
   return (
     <div className="card-container">
       <Card className="card" sx={{ maxWidth: 345 }}>
@@ -63,8 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
           </CardContent>
         </CardActionArea>
       </Card>
-      <ProductModal key={product.id} />
-
+      <ProductModal key={modalKey} />
     </div>
   );
 });

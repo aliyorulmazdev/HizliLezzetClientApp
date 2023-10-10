@@ -21,7 +21,6 @@ export default class ProductStore {
 
     try {
       const products = await agent.Products.list();
-
       runInAction(() => {
         this.products = products;
         this.loading = false;
@@ -66,131 +65,160 @@ export default class ProductStore {
   };
 
   clearSelectedProduct = () => {
-    this.activeProduct = null;
+    runInAction(() => {
+      this.activeProduct = null;
+    });
   };
+
   createActiveProduct = (product: Product) => {
-    if (this.activeProduct !== null) {
-      const confirmUseDraft = window.confirm(
-        'Daha önce oluşturulmuş bir taslak ürün bulunuyor. Bu taslağı kullanmak ister misiniz?'
-      );
+    runInAction(() => {
+      if (this.activeProduct !== null) {
+        const confirmUseDraft = window.confirm(
+          "Daha önce oluşturulmuş bir taslak ürün bulunuyor. Bu taslağı kullanmak ister misiniz?"
+        );
 
-      if (confirmUseDraft) {
-        this.activeProduct = {
-          ...this.activeProduct,
-          activeMaterials: this.activeProduct.activeMaterials || [],
-          limitedMaterials: this.activeProduct.limitedMaterials || [],
-          additionalSections: this.activeProduct.additionalSections || [],
-        };
-        this.calculateTotalPrice();
-        return;
+        if (confirmUseDraft) {
+          this.activeProduct = {
+            ...this.activeProduct,
+            activeMaterials: this.activeProduct.activeMaterials || [],
+            limitedMaterials: this.activeProduct.limitedMaterials || [],
+            additionalSections: this.activeProduct.additionalSections || [],
+          };
+          this.calculateTotalPrice();
+          return;
+        }
       }
-    }
 
-    this.activeProduct = {
-      ...product,
-      activeMaterials: product.activeMaterials || [],
-      limitedMaterials: product.limitedMaterials || [],
-      additionalSections: product.additionalSections || [],
-    };
-    this.totalPrice = product.price;
+      this.activeProduct = {
+        ...product,
+        activeMaterials: product.activeMaterials || [],
+        limitedMaterials: product.limitedMaterials || [],
+        additionalSections: product.additionalSections || [],
+      };
+      this.totalPrice = product.price;
+    });
   };
   incrementMaterialQuantity = (index: number) => {
-    if (this.activeProduct) {
-      const updatedMaterials = [...this.activeProduct.activeMaterials];
-      updatedMaterials[index].quantity! += 1;
-      this.activeProduct.activeMaterials = updatedMaterials;
-      this.calculateTotalPrice();
-    }
-  };
-
-  decrementMaterialQuantity = (index: number) => {
-    if (this.activeProduct) {
-      const updatedMaterials = [...this.activeProduct.activeMaterials];
-      if (updatedMaterials[index].quantity! > 0) {
-        updatedMaterials[index].quantity! -= 1;
+    runInAction(() => {
+      if (this.activeProduct) {
+        const updatedMaterials = [...this.activeProduct.activeMaterials];
+        updatedMaterials[index].quantity! += 1;
         this.activeProduct.activeMaterials = updatedMaterials;
         this.calculateTotalPrice();
       }
-    }
+    });
   };
-  setMaterialSelection(
+
+  decrementMaterialQuantity = (index: number) => {
+    runInAction(() => {
+      if (this.activeProduct) {
+        const updatedMaterials = [...this.activeProduct.activeMaterials];
+        if (updatedMaterials[index].quantity! > 0) {
+          updatedMaterials[index].quantity! -= 1;
+          this.activeProduct.activeMaterials = updatedMaterials;
+          this.calculateTotalPrice();
+        }
+      }
+    });
+  };
+  setMaterialSelection = (
     sectionTitle: string,
     selectedMaterial: SelectableMaterial | undefined
-  ) {
-    this.selectedMaterials[sectionTitle] = selectedMaterial ?? null;
-    this.calculateTotalPrice();
-  }
+  ) => {
+    runInAction(() => {
+      this.selectedMaterials[sectionTitle] = selectedMaterial ?? null;
+      this.calculateTotalPrice();
+    });
+  };
+
   toggleLimitedMaterial = (index: number) => {
     if (this.activeProduct) {
       const updatedMaterials = [...this.activeProduct.limitedMaterials];
       updatedMaterials[index].active = !updatedMaterials[index].active;
-      this.activeProduct.limitedMaterials = updatedMaterials;
-      this.calculateTotalPrice();
+      runInAction(() => {
+        this.activeProduct!.limitedMaterials = updatedMaterials;
+        this.calculateTotalPrice();
+      });
     }
   };
   handleMaterialSelect = (sectionTitle: string, selectedValue: string) => {
-    const selectedMaterialInSection = this.activeProduct?.additionalSections
-      .find((section) => section.title === sectionTitle)
-      ?.items.find((material) => material.name === selectedValue);
+    runInAction(() => {
+      const selectedMaterialInSection = this.activeProduct?.additionalSections
+        .find((section) => section.title === sectionTitle)
+        ?.items.find((material) => material.name === selectedValue);
 
-    if (selectedMaterialInSection) {
-      this.setMaterialSelection(sectionTitle, selectedMaterialInSection);
-    } else {
-      this.setMaterialSelection(sectionTitle, undefined);
-    }
+      if (selectedMaterialInSection) {
+        this.setMaterialSelection(sectionTitle, selectedMaterialInSection);
+      } else {
+        this.setMaterialSelection(sectionTitle, undefined);
+      }
+    });
   };
-
   resetActiveMaterials = () => {
-    if (this.activeProduct) {
-      this.activeProduct.activeMaterials = [];
-    }
+    runInAction(() => {
+      if (this.activeProduct) {
+        this.activeProduct.activeMaterials = [];
+        this.calculateTotalPrice();
+      }
+    });
   };
 
   resetLimitedMaterials = () => {
-    if (this.activeProduct) {
-      this.activeProduct.limitedMaterials = [];
-    }
+    runInAction(() => {
+      if (this.activeProduct) {
+        this.activeProduct.limitedMaterials = [];
+        this.calculateTotalPrice();
+      }
+    });
   };
 
   resetSelectedMaterials = () => {
-    if (this.activeProduct) {
-      this.activeProduct.additionalSections.forEach((section) => {
-        section.items = [];
-      });
-    }
+    runInAction(() => {
+      if (this.activeProduct) {
+        this.activeProduct.additionalSections.forEach((section) => {
+          section.items = [];
+        });
+        this.calculateTotalPrice();
+      }
+    });
   };
-
   resetTotalPrice = () => {
-    this.totalPrice = 0;
+    runInAction(() => {
+      this.totalPrice = 0;
+    });
   };
 
   calculateTotalPrice = () => {
-    let totalPrice = this.activeProduct?.price || 0;
+    runInAction(() => {
+      let totalPrice = this.activeProduct?.price || 0;
 
-    if (this.activeProduct) {
-      this.activeProduct.activeMaterials.forEach((material) => {
-        totalPrice += material.price * (material.quantity || 0);
-      });
+      if (this.activeProduct) {
+        this.activeProduct.activeMaterials.forEach((material) => {
+          totalPrice += material.price * (material.quantity || 0);
+        });
 
-      Object.values(this.selectedMaterials).forEach((selectedMaterial) => {
-        if (selectedMaterial) {
-          totalPrice += selectedMaterial.price;
-        }
-      });
-    }
-    this.totalPrice = totalPrice;
+        Object.values(this.selectedMaterials).forEach((selectedMaterial) => {
+          if (selectedMaterial) {
+            totalPrice += selectedMaterial.price;
+          }
+        });
+      }
+      this.totalPrice = totalPrice;
+    });
   };
-    
   openModal = (product: Product) => {
-    this.clearSelectedProduct();
-    this.createActiveProduct(product);
-    this.isModalOpen = true;
+    runInAction(() => {
+      this.clearSelectedProduct();
+      this.createActiveProduct(product);
+      this.isModalOpen = true;
+    });
   };
-
+  
   closeModal = () => {
-    this.clearSelectedProduct();
-    this.isModalOpen = false;
-    this.activeProduct = null;
+    runInAction(() => {
+      this.clearSelectedProduct();
+      this.isModalOpen = false;
+      this.activeProduct = null;
+    });
   };
-  //#endregion
 }
