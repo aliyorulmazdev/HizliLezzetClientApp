@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -6,38 +6,22 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import Rating from "@mui/material/Rating";
-import CardActionArea from "@mui/material/CardActionArea"; // Import CardActionArea
-import { Product } from "../../types/interfaces";
+import CardActionArea from "@mui/material/CardActionArea";
 import ProductModal from "./ProductModal";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
+import { Product } from "../../types/interfaces";
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const { customProductStore } = useStore();
 
-  const resetProductCardState = () => {
-    customProductStore.resetActiveMaterials();
-    customProductStore.resetLimitedMaterials();
-    customProductStore.resetSelectedMaterials();
-    customProductStore.resetTotalPrice();
-  };
+  const { productStore } = useStore();
 
   const openModal = () => {
-    resetProductCardState();
-    customProductStore.rollbackProduct();
-    customProductStore.createActiveProduct(product);
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    resetProductCardState();
-    customProductStore.rollbackProduct();
-    setModalOpen(false);
+    productStore.openModal(product);
   };
 
   return (
@@ -79,7 +63,8 @@ const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
           </CardContent>
         </CardActionArea>
       </Card>
-      <ProductModal open={modalOpen} onClose={closeModal} />
+      <ProductModal key={product.id} />
+
     </div>
   );
 });

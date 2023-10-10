@@ -1,15 +1,12 @@
 import { makeAutoObservable } from "mobx";
-import { Order, Product } from "../types/interfaces";
-import CustomProductStore from "./customProductStore";
+import { Order } from "../types/interfaces";
 
 export default class OrderStore {
   orders: Order[] = [];
   orderNote: string = "";
-  customProductStore: CustomProductStore;
 
-  constructor(customProductStore: CustomProductStore) {
+  constructor() {
     makeAutoObservable(this);
-    this.customProductStore = customProductStore;
   }
 
   createOrder = (order: Order) => {
