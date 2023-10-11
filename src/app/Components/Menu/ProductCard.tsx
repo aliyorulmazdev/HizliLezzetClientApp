@@ -18,25 +18,38 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
-  const { productStore } = useStore();
+  const { productStore, userSettingsStore } = useStore();
   const [modalKey, setModalKey] = useState(0);
 
-  //#region ModalKey
   const openModal = () => {
     runInAction(() => {
-      productStore.activeProduct = null
+      productStore.activeProduct = null;
       const productCopy = { ...product };
       productStore.activeProduct = productCopy;
       productStore.openModal(productCopy);
     });
     setModalKey((prevKey) => prevKey + 1);
   };
-  //#endregion
+
+  const cardBackgroundColor = userSettingsStore.productCardBackgroundColor;
+  const cardTitleColor = userSettingsStore.productCardTitleColor;
+  const cardDescriptionColor = userSettingsStore.productCardDescriptionColor;
+
   return (
     <div className="card-container">
-      <Card className="card" sx={{ maxWidth: 345 }}>
+      <Card
+        className="card"
+        sx={{
+          maxWidth: 345,
+          backgroundColor: cardBackgroundColor,
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          borderRadius:'25px'
+        }}
+      >
         <CardActionArea sx={{ boxShadow: "none" }} onClick={openModal}>
-          <CardHeader title={product.title} />
+          <CardHeader title={product.title} sx={{ color: cardTitleColor }} />
           <Rating
             name="product-rating"
             value={product.rating}
@@ -50,8 +63,11 @@ const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
             alt={product.title}
             sx={{ borderRadius: "20px" }}
           />
-          <CardContent>
-            <Typography variant="body2" color="text.secondary">
+          <CardContent sx={{ flex: "1 0 auto" }}>
+            <Typography
+              variant="body2"
+              color={cardDescriptionColor} // Açıklama rengini burada ayarlayın
+            >
               {product.description}😊
             </Typography>
             <div style={{ marginTop: "20px" }}>

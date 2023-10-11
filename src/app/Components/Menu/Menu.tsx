@@ -49,7 +49,9 @@ const Menu: React.FC = observer(() => {
     <>
       <Grid container justifyContent="center" sx={{ minHeight: "100vh" }} alignItems="center">
         <CallWaiterButton style={{ zIndex: 9999 }} />
+        
         <Grid container justifyContent="center">
+
           <div style={{ marginBottom: "5px" }}>
             <StepperComponent />
           </div>
@@ -61,6 +63,7 @@ const Menu: React.FC = observer(() => {
               handleCategoryChange={handleCategoryChange}
             />
           </Grid>
+
         </Grid>
         <Grid container justifyContent="center" sx={{ gap: "15px" }}>
           {productStore.loading ? (
@@ -91,6 +94,7 @@ const Menu: React.FC = observer(() => {
           )}
         </Grid>
       </Grid>
+
     </>
   );
 });

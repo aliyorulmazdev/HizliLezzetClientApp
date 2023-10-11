@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import RGBColorSelector from "../Components/RestaurantSettings/RGBColorSelector";
 
 function App() {
   const { productStore, productCategoryStore } = useStore();
@@ -57,6 +58,9 @@ function App() {
         <Button as={Link} variant="contained" to={"/tables"}>
           Try table view as well
         </Button>
+      </Box>
+      <Box display="flex" justifyContent="center" marginTop="20px"  marginBottom="20px">
+        <RGBColorSelector />
       </Box>
       <ToastContainer />
       {productStore.loading ? (
