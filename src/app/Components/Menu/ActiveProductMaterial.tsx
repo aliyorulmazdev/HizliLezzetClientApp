@@ -21,7 +21,7 @@ const ActiveProductMaterial: React.FC<ActiveProductMaterialProps> = ({
   decrementMaterialQuantity,
 }) => {
   return (
-    <ListItem key={index}>
+    <ListItem>
       <ListItemIcon>
         {material.quantity !== undefined && material.quantity <= 0 ? (
           <AddCircle color="error" />

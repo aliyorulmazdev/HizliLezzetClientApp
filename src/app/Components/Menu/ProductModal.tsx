@@ -70,6 +70,7 @@ const ProductModal: React.FC = observer(() => {
         draggable: false,
       });
       closeModal();
+      orderStore.orderNote = "";
     }
   };
 

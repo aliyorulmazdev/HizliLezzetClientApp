@@ -72,32 +72,12 @@ export default class ProductStore {
 
   createActiveProduct = (product: Product) => {
     runInAction(() => {
-      if (this.activeProduct !== null) {
-        const confirmUseDraft = window.confirm(
-          "Daha önce oluşturulmuş bir taslak ürün bulunuyor. Bu taslağı kullanmak ister misiniz?"
-        );
-
-        if (confirmUseDraft) {
-          this.activeProduct = {
-            ...this.activeProduct,
-            activeMaterials: this.activeProduct.activeMaterials || [],
-            limitedMaterials: this.activeProduct.limitedMaterials || [],
-            additionalSections: this.activeProduct.additionalSections || [],
-          };
-          this.calculateTotalPrice();
-          return;
-        }
-      }
-
-      this.activeProduct = {
-        ...product,
-        activeMaterials: product.activeMaterials || [],
-        limitedMaterials: product.limitedMaterials || [],
-        additionalSections: product.additionalSections || [],
-      };
-      this.totalPrice = product.price;
+      this.activeProduct = JSON.parse(JSON.stringify(product));
+      this.totalPrice = this.activeProduct!.price;
     });
   };
+  
+
   incrementMaterialQuantity = (index: number) => {
     runInAction(() => {
       if (this.activeProduct) {
@@ -108,7 +88,6 @@ export default class ProductStore {
       }
     });
   };
-
   decrementMaterialQuantity = (index: number) => {
     runInAction(() => {
       if (this.activeProduct) {
@@ -154,34 +133,6 @@ export default class ProductStore {
       }
     });
   };
-  resetActiveMaterials = () => {
-    runInAction(() => {
-      if (this.activeProduct) {
-        this.activeProduct.activeMaterials = [];
-        this.calculateTotalPrice();
-      }
-    });
-  };
-
-  resetLimitedMaterials = () => {
-    runInAction(() => {
-      if (this.activeProduct) {
-        this.activeProduct.limitedMaterials = [];
-        this.calculateTotalPrice();
-      }
-    });
-  };
-
-  resetSelectedMaterials = () => {
-    runInAction(() => {
-      if (this.activeProduct) {
-        this.activeProduct.additionalSections.forEach((section) => {
-          section.items = [];
-        });
-        this.calculateTotalPrice();
-      }
-    });
-  };
   resetTotalPrice = () => {
     runInAction(() => {
       this.totalPrice = 0;
@@ -213,12 +164,11 @@ export default class ProductStore {
       this.isModalOpen = true;
     });
   };
-  
+
   closeModal = () => {
     runInAction(() => {
       this.clearSelectedProduct();
       this.isModalOpen = false;
-      this.activeProduct = null;
     });
   };
 }

@@ -22,8 +22,7 @@ const AddionalProductSection: React.FC<AddionalProductSectionProps> = ({
         <Dropdown
           className="dropdown"
           selection
-          options={section.items.map((material, index) => ({
-            key: index,
+          options={section.items.map((material) => ({
             value: material.name,
             text: `${material.name} ($${material.price})`,
           }))}

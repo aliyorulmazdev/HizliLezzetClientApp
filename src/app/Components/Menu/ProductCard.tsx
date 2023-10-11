@@ -21,15 +21,17 @@ const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
   const { productStore } = useStore();
   const [modalKey, setModalKey] = useState(0);
 
+  //#region ModalKey
   const openModal = () => {
     runInAction(() => {
-      productStore.activeProduct = null;
+      productStore.activeProduct = null
       const productCopy = { ...product };
       productStore.activeProduct = productCopy;
       productStore.openModal(productCopy);
     });
-    setModalKey((prevKey) => prevKey + 1); // Eğer burada modalKey'i kullanıyorsanız, bu güncellemeyi yapabilirsiniz
+    setModalKey((prevKey) => prevKey + 1);
   };
+  //#endregion
   return (
     <div className="card-container">
       <Card className="card" sx={{ maxWidth: 345 }}>
