@@ -9,7 +9,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { Product, ProductCategory } from "../types/interfaces";
 
 function App() {
   const { productStore, productCategoryStore } = useStore();
@@ -18,20 +17,24 @@ function App() {
     productStore.loadProducts().then(() => {});
   }, [productStore]);
 
+  // useEffect(() => {
+  //   productCategoryStore.loadProductCategories().then(() => {});
+  // }, [productCategoryStore]);
+  // const productsByCategory: { [categoryId: string]: Product[] } = {};
+  // productStore.products.forEach((product) => {
+  //   if (!productsByCategory[product.categoryId]) {
+  //     productsByCategory[product.categoryId] = [];
+  //   }
+  //   productsByCategory[product.categoryId].push(product);
+  // });
+  // const categoriesById: { [categoryId: string]: ProductCategory } = {};
+  // productCategoryStore.productCategories.forEach((category) => {
+  //   categoriesById[category.id] = category;
+  // });
+
   useEffect(() => {
     productCategoryStore.loadProductCategories().then(() => {});
   }, [productCategoryStore]);
-  const productsByCategory: { [categoryId: string]: Product[] } = {};
-  productStore.products.forEach((product) => {
-    if (!productsByCategory[product.categoryId]) {
-      productsByCategory[product.categoryId] = [];
-    }
-    productsByCategory[product.categoryId].push(product);
-  });
-  const categoriesById: { [categoryId: string]: ProductCategory } = {};
-  productCategoryStore.productCategories.forEach((category) => {
-    categoriesById[category.id] = category;
-  });
 
   return (
     <>
