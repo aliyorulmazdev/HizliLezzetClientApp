@@ -6,7 +6,7 @@ const sleep = (delay: number) => {
     setTimeout(resolve, delay);
   });
 };
-axios.defaults.baseURL = "";
+axios.defaults.baseURL = "https://raw.githubusercontent.com/aliyorulmazdev/HizliLezzetClientApp/main/public";
 axios.interceptors.response.use((response) => {
   return sleep(10)
     .then(() => {
