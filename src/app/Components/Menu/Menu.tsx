@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+
+import React, { useState } from "react";
 import { Grid, Divider, Typography, Button } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import ProductCard from "./ProductCard";
@@ -12,8 +13,6 @@ import { Product, ProductCategory } from "../../types/interfaces";
 const Menu: React.FC = observer(() => {
   const { productStore, productCategoryStore } = useStore();
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
-  const [showAllProducts] = useState(false);
-  const endOfPageRef = useRef(null);
 
   const productsByCategory: { [categoryId: string]: Product[] } = {};
 
@@ -23,6 +22,7 @@ const Menu: React.FC = observer(() => {
     }
     productsByCategory[product.categoryId].push(product);
   });
+  //Add all products to "0" Category(All Products)
   productsByCategory["0"] = productStore.products;
 
   const categoriesById: { [categoryId: string]: ProductCategory } = {};
@@ -35,37 +35,15 @@ const Menu: React.FC = observer(() => {
   };
 
   const showMoreProducts = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
     setSelectedCategoryIndex((prevIndex) => (prevIndex + 1) % productCategoryStore.productCategories.length);
   };
+  
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            showMoreProducts();
-          }
-        });
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.1, 
-      }
-    );
-
-    if (endOfPageRef.current) {
-      observer.observe(endOfPageRef.current);
-    }
-
-    return () => {
-      if (endOfPageRef.current) {
-        observer.unobserve(endOfPageRef.current);
-      }
-    };
-  }, [endOfPageRef]);
-
-  const selectedCategory = showAllProducts ? null : productCategoryStore.productCategories[selectedCategoryIndex];
+  const selectedCategory = productCategoryStore.productCategories[selectedCategoryIndex];
 
   return (
     <>
@@ -89,36 +67,22 @@ const Menu: React.FC = observer(() => {
             <LoadingComponent content="Loading products" />
           ) : (
             <Grid item>
-              {showAllProducts ? (
+              {selectedCategory ? (
                 <Typography variant="h6" color="primary">
-                  Tüm Ürünler
+                  {selectedCategory.title}
                 </Typography>
               ) : (
-                selectedCategory ? (
-                  <Typography variant="h6" color="primary">
-                    {selectedCategory.title}
-                  </Typography>
-                ) : (
-                  <Typography variant="h6">Kategori bulunamadı</Typography>
-                )
+                <Typography variant="h6">Kategori bulunamadı</Typography>
               )}
               <Grid container justifyContent="center" sx={{ gap: "15px" }}>
-                {showAllProducts ? (
-                  Object.values(productsByCategory).map((categoryProducts) =>
-                    categoryProducts.map((product) => (
-                      <Grid item key={product.id}>
-                        <ProductCard key={product.id} product={product} />
-                      </Grid>
-                    ))
-                  )
-                ) : (
-                  selectedCategory &&
-                  productsByCategory[selectedCategory.id] &&
+                {selectedCategory && productsByCategory[selectedCategory.id] ? (
                   productsByCategory[selectedCategory.id].map((product) => (
                     <Grid item key={product.id}>
                       <ProductCard key={product.id} product={product} />
                     </Grid>
                   ))
+                ) : (
+                  <Typography variant="h6">Ürünler bulunamadı</Typography>
                 )}
               </Grid>
               <Divider sx={{ marginTop: 5, marginBottom: 0 }} />
@@ -127,7 +91,6 @@ const Menu: React.FC = observer(() => {
           )}
         </Grid>
       </Grid>
-      <div ref={endOfPageRef} /> {/* Sayfanın sonu */}
     </>
   );
 });
