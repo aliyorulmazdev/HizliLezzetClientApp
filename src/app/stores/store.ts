@@ -1,15 +1,18 @@
 import { createContext, useContext } from "react";
 import ProductStore from "./productStore";
 import OrderStore from "./orderStore";
+import productCategoryStore from "./productCategoryStore";
 
 interface Store {
     productStore: ProductStore,
-    orderStore: OrderStore
+    orderStore: OrderStore,
+    productCategoryStore: productCategoryStore
 }
 
 export const store: Store = {
     productStore: new ProductStore(),
-    orderStore: new OrderStore()
+    orderStore: new OrderStore(),
+    productCategoryStore: new productCategoryStore
 }
 
 

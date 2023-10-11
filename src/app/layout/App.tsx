@@ -9,24 +9,42 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { Product, ProductCategory } from "../types/interfaces";
 
 function App() {
-  const { productStore } = useStore();
+  const { productStore, productCategoryStore } = useStore();
 
   useEffect(() => {
     productStore.loadProducts().then(() => {});
   }, [productStore]);
 
+  useEffect(() => {
+    productCategoryStore.loadProductCategories().then(() => {});
+  }, [productCategoryStore]);
+  const productsByCategory: { [categoryId: string]: Product[] } = {};
+  productStore.products.forEach((product) => {
+    if (!productsByCategory[product.categoryId]) {
+      productsByCategory[product.categoryId] = [];
+    }
+    productsByCategory[product.categoryId].push(product);
+  });
+  const categoriesById: { [categoryId: string]: ProductCategory } = {};
+  productCategoryStore.productCategories.forEach((category) => {
+    categoriesById[category.id] = category;
+  });
+
   return (
     <>
-
       <Grid container justifyContent="center">
         <h1>Vite + React</h1>
       </Grid>
       <Grid container justifyContent="center">
         <div className="card">
           <p>
-            Latest Update: <code>TableComponent,TableApp, ProductModal, Toastr, Axios, Mobx</code>
+            Latest Update:{" "}
+            <code>
+              TableComponent,TableApp, ProductModal, Toastr, Axios, Mobx
+            </code>
             <br />
             This is committed with <code>VSCode</code> on 02.10.2023
           </p>

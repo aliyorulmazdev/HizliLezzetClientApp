@@ -36,7 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
     <div className="card-container">
       <Card className="card" sx={{ maxWidth: 345 }}>
         <CardActionArea sx={{ boxShadow: "none" }} onClick={openModal}>
-          <CardHeader title={product.title} subheader={product.category} />
+          <CardHeader title={product.title} />
           <Rating
             name="product-rating"
             value={product.rating}

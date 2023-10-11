@@ -1,38 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import { useStore } from "../../stores/store";
 
-const categories = [
-  "Salads",
-  "Snacks",
-  "Coffees",
-  "Burgers",
-  "Meats",
-  "Teas",
-  "Soups",
-  "Kebabs",
-];
+interface ProductCategoryComponentProps {
+  selectedCategoryIndex: number;
+  handleCategoryChange: (event: React.SyntheticEvent, newIndex: number) => void;
+}
 
-const ProductCategoryComponent: React.FC = () => {
-  const [value, setValue] = useState(0);
+const ProductCategoryComponent: React.FC<ProductCategoryComponentProps> = ({ selectedCategoryIndex, handleCategoryChange }) => {
+  const { productCategoryStore } = useStore();
 
-  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-  
   return (
-    <Box sx={{ maxWidth: { xs: 320, sm: 480 }, bgcolor: 'background.paper' }}>
+    <Box sx={{ maxWidth: { xs: 320, sm: 480 }, bgcolor: "background.paper" }}>
       <Tabs
-        value={value}
-        onChange={handleChange}
+        value={selectedCategoryIndex}
+        onChange={handleCategoryChange}
         variant="scrollable"
-        scrollButtons
-        allowScrollButtonsMobile
+        scrollButtons="auto"
         aria-label="scrollable auto tabs example"
       >
-        {categories.map((category, index) => (
-          <Tab key={index} label={category} />
+        {productCategoryStore.productCategories.map((category, index) => (
+          <Tab key={index} label={category.title} />
         ))}
       </Tabs>
     </Box>

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "0",
+    "title": "Tümü",
+    "image": "kahvalti.jpg",
+    "description": "Güne enerjik başlamak için mükemmel kahvaltı seçenekleri.",
+    "type": "mutfak",
+    "products": []
+  },
+  {
+    "id": "6",
+    "title": "Tatlılar",
+    "image": "tatlilar.jpg",
+    "description": "Lezzetli tatlılar ve pastalarla tatlı bir sona ulaşın.",
+    "type": "mutfak",
+    "products": []
+  },
+  {
+    "id": "7",
+    "title": "Salatalar",
+    "image": "salatalar.jpg",
+    "description": "Lezzetli tatlılar ve pastalarla tatlı bir sona ulaşın.",
+    "type": "mutfak",
+    "products": []
+  }
+]

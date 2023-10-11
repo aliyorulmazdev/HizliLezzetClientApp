@@ -1,13 +1,12 @@
 [
   {
-    "id": "2",
+    "id": "1",
     "title": "Greek Salad",
-    "category": "Salads",
+    "categoryId": "7",
     "image": "https://i.pinimg.com/originals/c2/b5/37/c2b5379c77cedf31b65c7169648ded5e.jpg",
     "rating": 4,
     "description": "Our Greek salad is a classic Mediterranean dish with fresh vegetables and feta cheese.",
     "preparationTime": "20 Min",
-    "type": "Kitchen",
     "price": 18.0,
     "activeMaterials": [
       { "name": "Fresh Vegetables", "quantity": 0, "price": 5.0 },
@@ -43,18 +42,25 @@
           { "name": "Chocolate Cake", "selected": false, "price": 6  },
           { "name": "Cheesecake", "selected": false, "price": 5 }
         ]
+      },
+      {
+        "title": "Rabialar",
+        "items": [
+          { "name": "Ice Cream", "selected": false, "price": 0 },
+          { "name": "Chocolate Cake", "selected": false, "price": 6  },
+          { "name": "Cheesecake", "selected": false, "price": 5 }
+        ]
       }
     ]
   },
   {
-    "id": "3",
+    "id": "2",
     "title": "Caesar Salad",
-    "category": "Salads",
+    "categoryId": "7",
     "image": "https://media-cdn.grubhub.com/image/upload/d_search:browse-images:default.jpg/w_1200,h_800,f_auto,q_auto,dpr_auto,g_auto,c_fill/tztnxzdcuz7avzray5z0",
     "rating": 4.5,
     "description": "Our Caesar salad is a classic favorite with crisp romaine lettuce, croutons, and Caesar dressing.",
     "preparationTime": "15 Min",
-    "type": "Kitchen",
     "price": 12.0,
     "activeMaterials": [
       { "name": "Romaine Lettuce", "quantity": 0, "price": 4.0 },
@@ -92,5 +98,58 @@
         ]
       }
     ]
-  }  
+  }  ,{
+    "id": "3",
+    "title": "Ice Cream",
+    "categoryId": "6",
+    "image": "https://s.hdnux.com/photos/01/25/17/72/22347441/4/rawImage.jpg",
+    "rating": 3,
+    "description": "Sıcak günlerin vazgeçilmezi, dondurma çeşitleri ile serinleyin.",
+    "preparationTime": "0 Min",
+    "price": 20,
+    "activeMaterials": [
+      { "name": "Top Sayısı", "quantity": 0, "price": 15 }
+    ],
+    "limitedMaterials": [
+      { "name": "Çikolata Sosu", "active": false},
+      { "name": "Fındık Parçacıkları", "active": false}
+    ],
+    "additionalSections": [
+      {
+        "title": "Ekstralar",
+        "items": [
+          { "name": "Çikolatalı Sos", "active": false, "price": 1.0 },
+          { "name": "Karamel Sos", "active": false, "price": 1.0 },
+          { "name": "Meyve Topping", "active": false, "price": 1.0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "title": "Chocolate Cake",
+    "categoryId": "6",
+    "image": "https://cdn.shopify.com/s/files/1/0073/9734/3341/articles/Laager-1200x627-Cake.jpg?v=1566550401",
+    "rating": 4,
+    "description": "Çikolata severler için muhteşem bir çikolatalı kek.",
+    "preparationTime": "0 Min",
+    "price": 6.0,
+    "activeMaterials": [
+      { "name": "Çikolatalı Kek", "quantity": 0, "price": 6.0 }
+    ],
+    "limitedMaterials": [
+      { "name": "Çikolata Sosu", "active": false},
+      { "name": "Çilek Sosu", "active": false}
+    ],
+    "additionalSections": [
+      {
+        "title": "Ekstralar",
+        "items": [
+          { "name": "Vanilyalı Dondurma", "active": false, "price": 3.0 },
+          { "name": "Çikolatalı Sos", "active": false, "price": 1.0 },
+          { "name": "Meyve Topping", "active": false, "price": 1.0 }
+        ]
+      }
+    ]
+  }
 ]

@@ -9,7 +9,6 @@ export default class ProductStore {
   selectedMaterials: Record<string, SelectableMaterial | null> = {};
   totalPrice: number = 0;
   isModalOpen: boolean = false;
-
   constructor() {
     makeAutoObservable(this);
   }
@@ -18,7 +17,6 @@ export default class ProductStore {
     runInAction(() => {
       this.loading = true;
     });
-
     try {
       const products = await agent.Products.list();
       runInAction(() => {

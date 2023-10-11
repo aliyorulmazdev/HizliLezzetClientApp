@@ -1,4 +1,4 @@
-import { Product } from "../types/interfaces";
+import { Product, ProductCategory } from "../types/interfaces";
 import axios from "axios"; // axios kütüphanesini projeye ekleyin
 
 const sleep = (delay: number) => {
@@ -17,9 +17,10 @@ axios.interceptors.response.use((response) => {
       return Promise.reject(error);
     });
 });
+//#region PRODUCTS
 const fetchProducts = async (): Promise<Product[]> => {
   try {
-    const response = await axios.get("/products.json"); // axios ile GET isteği gönderin
+    const response = await axios.get("/products.json");
     if (response.status !== 200) {
       throw new Error("Error fetching products");
     }
@@ -76,6 +77,69 @@ const deleteProduct = async (productId: string): Promise<void> => {
     throw new Error("Error deleting product");
   }
 };
+//#endregion
+
+//#region PRODUCT CATEGORY
+const fetchProductCategories = async (): Promise<ProductCategory[]> => {
+  try {
+    const response = await axios.get("/productCategories.json");
+    if (response.status !== 200) {
+      throw new Error("Error fetching productcategories");
+    }
+    const productCategoriesfromagent: ProductCategory[] = response.data;
+    return productCategoriesfromagent;
+  } catch (error) {
+    console.error("Error fetching productcategories:", error);
+    throw new Error("Error fetching productcategories");
+  }
+};
+
+const createProductCategory = async (productCategory: ProductCategory): Promise<ProductCategory> => {
+  try {
+    const response = await axios.post("/productCategories.json", productCategory);
+    if (response.status !== 201) {
+      throw new Error("Error creating product category");
+    }
+    const createdProductCategory: ProductCategory = response.data;
+    return createdProductCategory;
+  } catch (error) {
+    console.error("Error creating productCategory:", error);
+    throw new Error("Error creating productCategory");
+  }
+};
+
+const updateProductCategory = async (
+  productCategoryId: string,
+  updatedProductCategory: ProductCategory
+): Promise<ProductCategory> => {
+  try {
+    const response = await axios.put(
+      `/products/${productCategoryId}.json`,
+      updatedProductCategory
+    );
+    if (response.status !== 200) {
+      throw new Error("Error updating productCategory");
+    }
+    const updatedProductData: ProductCategory = response.data;
+    return updatedProductData;
+  } catch (error) {
+    console.error("Error updating productCategory:", error);
+    throw new Error("Error updating productCategory");
+  }
+};
+
+const deleteProductCategory = async (productCategoryId: string): Promise<void> => {
+  try {
+    const response = await axios.delete(`/products/${productCategoryId}.json`);
+    if (response.status !== 204) {
+      throw new Error("Error deleting productCategory");
+    }
+  } catch (error) {
+    console.error("Error deleting productCategory:", error);
+    throw new Error("Error deleting productCategory");
+  }
+};
+//#endregion
 
 const agent = {
   Products: {
@@ -83,6 +147,12 @@ const agent = {
     create: createProduct,
     update: updateProduct,
     delete: deleteProduct,
+  },
+  ProductCategories: {
+    list: fetchProductCategories,
+    create: createProductCategory,
+    update: updateProductCategory,
+    delete: deleteProductCategory,
   },
 };
 export default agent;
