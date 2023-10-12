@@ -1,14 +1,14 @@
 #root {
-  max-width: 100%; /* Mobil cihazlarda genişliği tam ekran yapar */
+  max-width: 100%;
   margin: 0;
-  padding: 1rem; /* Daha küçük bir iç kenar boşluğu */
-  text-align: center; /* Metin sol kenara hizalanır */
+  padding: 1rem;
+  text-align: center;
 }
 
 
 .logo {
-  height: 4em; /* Mobil cihazlarda daha küçük bir logo boyutu */
-  padding: 0.5em; /* Daha küçük bir iç kenar boşluğu */
+  height: 4em;
+  padding: 0.5em;
 }
 
 .logo:hover {
@@ -30,10 +30,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   a:nth-of-type(2) .logo {
-    animation: none; /* Animasyonları devre dışı bırakır */
+    animation: none;
   }
 }
-/* Mobil cihazlar için ölçekleme devre dışı bırakma */
+
 @media (max-width: 767px) {
   body {
     zoom: 1 !important;

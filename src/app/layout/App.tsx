@@ -17,22 +17,7 @@ function App() {
   useEffect(() => {
     productStore.loadProducts().then(() => {});
   }, [productStore]);
-
-  // useEffect(() => {
-  //   productCategoryStore.loadProductCategories().then(() => {});
-  // }, [productCategoryStore]);
-  // const productsByCategory: { [categoryId: string]: Product[] } = {};
-  // productStore.products.forEach((product) => {
-  //   if (!productsByCategory[product.categoryId]) {
-  //     productsByCategory[product.categoryId] = [];
-  //   }
-  //   productsByCategory[product.categoryId].push(product);
-  // });
-  // const categoriesById: { [categoryId: string]: ProductCategory } = {};
-  // productCategoryStore.productCategories.forEach((category) => {
-  //   categoriesById[category.id] = category;
-  // });
-
+  
   useEffect(() => {
     productCategoryStore.loadProductCategories().then(() => {});
   }, [productCategoryStore]);
@@ -47,10 +32,10 @@ function App() {
           <p>
             Latest Update:{" "}
             <code>
-              TableComponent,TableApp, ProductModal, Toastr, Axios, Mobx
+              userSettingsStore,TableComponent,TableApp, ProductModal, Toastr, Axios, Mobx
             </code>
             <br />
-            This is committed with <code>VSCode</code> on 02.10.2023
+            This is committed with <code>VSCode</code> on 12.10.2023
           </p>
         </div>
       </Grid>

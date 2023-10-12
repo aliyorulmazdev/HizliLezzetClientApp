@@ -67,7 +67,8 @@ const Menu: React.FC = observer(() => {
                   {selectedCategory.title}
                 </Typography>
               ) : (
-                <Typography variant="h6">Kategori bulunamadı</Typography>
+                <Typography variant="h6">Category not found</Typography>
+                
               )}
               <Grid container justifyContent="center" sx={{ gap: "15px" }}>
                 {selectedCategory && productsByCategory[selectedCategory.id] ? (
@@ -77,11 +78,13 @@ const Menu: React.FC = observer(() => {
                     </Grid>
                   ))
                 ) : (
-                  <Typography variant="h6">Ürünler bulunamadı</Typography>
+                  <Typography variant="h6">Products not found</Typography>
+                  
                 )}
               </Grid>
               <Divider sx={{ marginTop: 5, marginBottom: 0 }} />
-              <Button onClick={showMoreProducts}>Devamını Göster</Button>
+              <Button onClick={showMoreProducts}>Show More</Button>
+              
             </Grid>
           )}
         </Grid>
