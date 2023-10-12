@@ -40,8 +40,8 @@ const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
         className="card"
         sx={{
           maxWidth: 345,
-          maxHeight: 380,
-          minHeight: 380,
+          maxHeight: 375,
+          minHeight: 375,
           backgroundColor: cardBackgroundColor,
           height: "100%",
           display: "flex",
