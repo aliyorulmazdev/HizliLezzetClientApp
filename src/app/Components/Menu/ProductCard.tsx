@@ -5,7 +5,6 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
-import Rating from "@mui/material/Rating";
 import CardActionArea from "@mui/material/CardActionArea";
 import ProductModal from "./ProductModal";
 import { useStore } from "../../stores/store";
