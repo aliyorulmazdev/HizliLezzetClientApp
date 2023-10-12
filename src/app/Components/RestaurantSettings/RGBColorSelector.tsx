@@ -3,12 +3,23 @@ import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
 import Block from "react-color/lib/components/block/Block";
 import { SliderPicker } from "react-color";
-import { Card, Button, Dialog, DialogContent } from "@mui/material"; // MUI'den Dialog eklemeyi unutmayın!
+import {
+  Card,
+  Button,
+  Dialog,
+  DialogContent,
+  Grid,
+  Typography,
+} from "@mui/material";
 
 const RGBColorSelector: React.FC = observer(() => {
   const { userSettingsStore } = useStore();
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const [selectedColorType, setSelectedColorType] = useState<"background" | "title" | "description" | null>(null);
+  const [selectedColorType, setSelectedColorType] = useState<
+    "background" | "title" | "description" | null
+  >();
+  const [isBlockVisible, setBlockVisible] = useState(false);
+  const [isSliderVisible, setSliderVisible] = useState(false);
 
   const openDialog = () => {
     setDialogOpen(true);
@@ -16,10 +27,17 @@ const RGBColorSelector: React.FC = observer(() => {
 
   const closeDialog = () => {
     setDialogOpen(false);
+    setSelectedColorType(null);
+    setBlockVisible(false);
+    setSliderVisible(false);
   };
 
-  const openColorSelector = (colorType: "background" | "title" | "description") => {
+  const openColorSelector = (
+    colorType: "background" | "title" | "description"
+  ) => {
     setSelectedColorType(colorType);
+    setBlockVisible(true);
+    setSliderVisible(true);
   };
 
   const handleColorChange = (color: any) => {
@@ -28,51 +46,100 @@ const RGBColorSelector: React.FC = observer(() => {
     }
   };
 
+  const closeColorSelector = () => {
+    setBlockVisible(false);
+    setSliderVisible(false);
+  };
+
   return (
     <Card>
-      <Button variant="contained" onClick={openDialog} color='secondary'>
+      <Button variant="contained" onClick={openDialog} color="secondary">
         Open Color Selector
       </Button>
       <Dialog open={isDialogOpen} onClose={closeDialog}>
         <DialogContent>
-          <Button variant="outlined" onClick={() => openColorSelector("background")}>
-            Change Background Color
-          </Button>
-          <Button variant="outlined" onClick={() => openColorSelector("title")}>
-            Change Title Color
-          </Button>
-          <Button variant="outlined" onClick={() => openColorSelector("description")}>
-            Change Description Color
-          </Button>
-          {selectedColorType && (
-            <>
-              <Block
-                width="100%"
-                color={
-                  selectedColorType === "background"
-                    ? userSettingsStore.productCardBackgroundColor
-                    : selectedColorType === "title"
-                    ? userSettingsStore.productCardTitleColor
-                    : userSettingsStore.productCardDescriptionColor
-                }
-                onChange={(color: any) => {
-                  handleColorChange(color);
-                }}
-              />
-              <SliderPicker
-                color={
-                  selectedColorType === "background"
-                    ? userSettingsStore.productCardBackgroundColor
-                    : selectedColorType === "title"
-                    ? userSettingsStore.productCardTitleColor
-                    : userSettingsStore.productCardDescriptionColor
-                }
-                onChange={(color: any) => {
-                  handleColorChange(color);
-                }}
-              />
-            </>
-          )}
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              {selectedColorType && isBlockVisible && isSliderVisible && (
+                <>
+                  <Block
+                    width="100%"
+                    color={
+                      selectedColorType === "background"
+                        ? userSettingsStore.productCardBackgroundColor
+                        : selectedColorType === "title"
+                        ? userSettingsStore.productCardTitleColor
+                        : userSettingsStore.productCardDescriptionColor
+                    }
+                    onChange={(color: any) => {
+                      handleColorChange(color);
+                    }}
+                  />
+                  <SliderPicker
+                    color={
+                      selectedColorType === "background"
+                        ? userSettingsStore.productCardBackgroundColor
+                        : selectedColorType === "title"
+                        ? userSettingsStore.productCardTitleColor
+                        : userSettingsStore.productCardDescriptionColor
+                    }
+                    onChange={(color: any) => {
+                      handleColorChange(color);
+                    }}
+                  />
+                  <Button
+                    variant="contained"
+                    onClick={closeColorSelector}
+                    sx={{
+                      marginTop: "10px",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      display: "block",
+                    }}
+                  >
+                    Apply
+                  </Button>
+                </>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              {!isBlockVisible &&
+                !isSliderVisible &&
+                ["background", "title", "description"].map((colorType) => (
+                  <div
+                    key={colorType}
+                    onClick={() => openColorSelector(colorType as any)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginBottom: "10px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <Typography variant="body1" component="span">
+                      {colorType.toUpperCase()} COLOR:
+                    </Typography>
+
+                    <div
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "15px",
+                        marginLeft: "auto",
+                        backgroundColor:
+                          colorType === "background"
+                            ? userSettingsStore.productCardBackgroundColor
+                            : colorType === "title"
+                            ? userSettingsStore.productCardTitleColor
+                            : userSettingsStore.productCardDescriptionColor,
+                        cursor: "pointer",
+                        border: "1px solid #000",
+                      }}
+                    />
+                  </div>
+                ))}
+            </Grid>
+          </Grid>
         </DialogContent>
       </Dialog>
     </Card>

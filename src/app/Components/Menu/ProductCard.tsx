@@ -41,47 +41,70 @@ const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
         className="card"
         sx={{
           maxWidth: 345,
+          maxHeight: 380,
+          minHeight: 380,
           backgroundColor: cardBackgroundColor,
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          borderRadius:'25px'
+          borderRadius: "25px",
         }}
       >
         <CardActionArea sx={{ boxShadow: "none" }} onClick={openModal}>
           <CardHeader title={product.title} sx={{ color: cardTitleColor }} />
-          <Rating
-            name="product-rating"
-            value={product.rating}
-            readOnly
-            precision={0.5}
-          />
           <CardMedia
             component="img"
             height="194"
             image={product.image}
             alt={product.title}
-            sx={{ borderRadius: "20px" }}
+            sx={{ borderRadius: "20px", position: "relative" }}
           />
-          <CardContent sx={{ flex: "1 0 auto" }}>
+          <div
+            style={{
+              position: "absolute",
+              bottom: "130px",
+              right: "10px",
+              width: "100px",
+              height: "50px",
+              backgroundColor: "white",
+              borderRadius: '20px',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)",
+            }}
+          >
             <Typography
               variant="body2"
-              color={cardDescriptionColor} // Açıklama rengini burada ayarlayın
+              color="textPrimary"
+              sx={{ fontWeight: "bold" }}
+            >
+              PRICE: ${product.price}
+            </Typography>
+          </div>
+          <CardContent
+            sx={{
+              flex: "1 0 auto",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Typography
+              variant="body2"
+              color={cardDescriptionColor}
+              style={{
+                height: "4em",
+                display: "flex",
+                alignItems: "center",
+                overflow: "hidden",
+              }}
             >
               {product.description}😊
             </Typography>
-            <div style={{ marginTop: "20px" }}>
+            <div>
               <Chip
                 label={`${product.preparationTime} Preparation Time`}
-                style={{ marginRight: "8px", backgroundColor: "#DAEEFF" }}
-              />
-              <Chip
-                label={`${product.type}`}
-                style={{ marginRight: "8px", backgroundColor: "#DAEEFF" }}
-              />
-              <Chip
-                label={`${product.price}`}
-                style={{ backgroundColor: "#FFD3D3" }}
+                style={{ marginBottom: "8px", backgroundColor: "#DAEEFF" }}
               />
             </div>
           </CardContent>
