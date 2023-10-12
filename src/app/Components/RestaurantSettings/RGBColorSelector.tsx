@@ -15,11 +15,11 @@ import Slider from "@mui/material/Slider";
 import ProductCard from "../Menu/ProductCard";
 
 const RGBColorSelector: React.FC = observer(() => {
-  const { userSettingsStore,productStore } = useStore();
+  const { userSettingsStore, productStore } = useStore();
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [selectedColorType, setSelectedColorType] = useState<
     "background" | "title" | "description" | null
-  >();
+  >(null);
   const [isBlockVisible, setBlockVisible] = useState(false);
   const [isSliderVisible, setSliderVisible] = useState(false);
   const [borderRadius, setBorderRadius] = useState(
@@ -54,18 +54,12 @@ const RGBColorSelector: React.FC = observer(() => {
     }
   };
 
-  const handleBorderRadiusChange = (
-    event: Event,
-    newValue: number | number[]
-  ) => {
+  const handleBorderRadiusChange = (newValue: number | number[]) => {
     setBorderRadius(newValue as number);
     userSettingsStore.setProductCardBorderRadius(newValue as number);
   };
 
-  const handlePhotoHeightChange = (
-    event: Event,
-    newValue: number | number[]
-  ) => {
+  const handlePhotoHeightChange = (newValue: number | number[]) => {
     setPhotoHeight(newValue as number);
     userSettingsStore.setProductCardPhotoHeight(newValue as number);
   };
@@ -78,7 +72,7 @@ const RGBColorSelector: React.FC = observer(() => {
   return (
     <Card>
       <Button variant="contained" onClick={openDialog} color="secondary">
-      Restaurant Settings
+        Restaurant Settings
       </Button>
       <Dialog open={isDialogOpen} onClose={closeDialog}>
         <DialogContent>
@@ -127,10 +121,15 @@ const RGBColorSelector: React.FC = observer(() => {
               )}
             </Grid>
             <Grid item xs={12}>
-            <Grid container justifyContent="center" sx={{ gap: "15px", marginBottom:'25px'}} alignItems="center">
-                    <Grid item>
-                      <ProductCard product={productStore.products[0]} />
-                    </Grid>
+              <Grid
+                container
+                justifyContent="center"
+                sx={{ gap: "15px", marginBottom: "25px" }}
+                alignItems="center"
+              >
+                <Grid item>
+                  <ProductCard product={productStore.products[0]} />
+                </Grid>
               </Grid>
               {!isBlockVisible &&
                 !isSliderVisible &&
@@ -176,7 +175,7 @@ const RGBColorSelector: React.FC = observer(() => {
                   min={0}
                   max={100}
                   onChange={(_, newValue) =>
-                    handleBorderRadiusChange(_, newValue as number)
+                    handleBorderRadiusChange(newValue as number)
                   }
                   valueLabelDisplay="auto"
                   valueLabelFormat={(value) => value.toString()}
@@ -192,7 +191,7 @@ const RGBColorSelector: React.FC = observer(() => {
                   min={90}
                   max={200}
                   onChange={(_, newValue) =>
-                    handlePhotoHeightChange(_, newValue as number)
+                    handlePhotoHeightChange(newValue as number)
                   }
                   valueLabelDisplay="auto"
                   valueLabelFormat={(value) => value.toString()}
