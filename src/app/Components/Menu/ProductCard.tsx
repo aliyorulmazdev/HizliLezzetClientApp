@@ -29,44 +29,48 @@ const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
     });
     setModalKey((prevKey) => prevKey + 1);
   };
-
   const cardBackgroundColor = userSettingsStore.productCardBackgroundColor;
   const cardTitleColor = userSettingsStore.productCardTitleColor;
   const cardDescriptionColor = userSettingsStore.productCardDescriptionColor;
+  const cardBorderRadius = userSettingsStore.productCardBorderRadius;
+  const cardPhotoHeight = userSettingsStore.productCardPhotoHeight;
 
   return (
     <div className="card-container">
       <Card
         className="card"
         sx={{
-          maxWidth: 345,
+          maxWidth: 300,
           maxHeight: 375,
           minHeight: 375,
           backgroundColor: cardBackgroundColor,
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          borderRadius: "25px",
+          borderRadius: `${cardBorderRadius}px`,
         }}
       >
         <CardActionArea sx={{ boxShadow: "none" }} onClick={openModal}>
-          <CardHeader title={product.title} sx={{ color: cardTitleColor }} />
+          <CardHeader
+            title={product.title}
+            sx={{ color: cardTitleColor, textAlign: "center" }}
+          />
           <CardMedia
             component="img"
-            height="194"
+            height={cardPhotoHeight}
             image={product.image}
             alt={product.title}
-            sx={{ borderRadius: "20px", position: "relative" }}
+            sx={{ borderRadius: "50px", position: "relative" }}
           />
           <div
             style={{
               position: "absolute",
-              bottom: "130px",
-              right: "10px",
+              bottom: "140px",
+              right: "20px",
               width: "100px",
               height: "50px",
               backgroundColor: "white",
-              borderRadius: '20px',
+              borderRadius: "20px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -100,9 +104,9 @@ const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
             >
               {product.description}😊
             </Typography>
-            <div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
               <Chip
-                label={`${product.preparationTime} Preparation Time`}
+                label={`Ready in ${product.preparationTime}`}
                 style={{ marginBottom: "8px", backgroundColor: "#DAEEFF" }}
               />
             </div>

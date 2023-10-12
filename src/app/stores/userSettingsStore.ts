@@ -1,9 +1,11 @@
 import { makeAutoObservable, runInAction } from "mobx";
 
 export default class UserSettingsStore {
-  productCardBackgroundColor: string = "white";
+  productCardBackgroundColor: string = '#eeeeee';
   productCardTitleColor: string = "gray";
   productCardDescriptionColor: string = "green";
+  productCardBorderRadius: number = 50;
+  productCardPhotoHeight: number = 200;
 
   constructor() {
     makeAutoObservable(this);
@@ -22,10 +24,21 @@ export default class UserSettingsStore {
           this.productCardDescriptionColor = color;
           break;
         default:
-          // Bilinmeyen colorType durumu
           console.error("Geçersiz colorType");
           break;
       }
+    });
+  };
+
+  setProductCardBorderRadius = (radius: number) => {
+    runInAction(() => {
+      this.productCardBorderRadius = radius;
+    });
+  };
+
+  setProductCardPhotoHeight = (height: number) => {
+    runInAction(() => {
+      this.productCardPhotoHeight = height;
     });
   };
 }

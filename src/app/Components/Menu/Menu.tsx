@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Grid, Divider, Typography, Button } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import ProductCard from "./ProductCard";
-import StepperComponent from "./StepperComponent";
 import ProductCategoryComponent from "./ProductCategoryComponent";
 import { useStore } from "../../stores/store";
 import LoadingComponent from "../../layout/LoadingComponent";
@@ -49,13 +48,6 @@ const Menu: React.FC = observer(() => {
     <>
       <Grid container justifyContent="center" sx={{ minHeight: "100vh" }} alignItems="center">
         <CallWaiterButton style={{ zIndex: 9999 }} />
-        
-        <Grid container justifyContent="center">
-
-          <div style={{ marginBottom: "5px" }}>
-            <StepperComponent />
-          </div>
-        </Grid>
         <Grid container justifyContent="center">
           <Grid item>
             <ProductCategoryComponent
