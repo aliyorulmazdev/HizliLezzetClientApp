@@ -28,7 +28,7 @@ function App() {
         <h1>Vite + React</h1>
       </Grid>
       <Grid container justifyContent="center">
-        <div className="card">
+        <div>
           <p>
             Latest Update:{" "}
             <code>

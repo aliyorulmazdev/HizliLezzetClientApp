@@ -1,0 +1,35 @@
+@property --x {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #222;
+}
+
+.shine-effect {
+  height: 30vh;
+  width: 60vw;
+  margin: auto;
+  border-radius: 10px;
+  background: radial-gradient(ellipse farthest-corner at var(--x) 0%, #f756f7 0%, #ff33ff 25%, #800080 62.5%, #b300b3 100%);
+  animation: colorChange 2s infinite alternate;
+}
+
+@keyframes colorChange {
+  0% {
+    --x: 0%;
+  }
+  50% {
+    --x: 50%;
+  }
+  100% {
+    --x: 100%;
+  }
+}
