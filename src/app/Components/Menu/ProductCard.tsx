@@ -30,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
     });
     setModalKey((prevKey) => prevKey + 1);
   };
-  const cardBackgroundColor = userSettingsStore.productCardBackgroundColor;
+  // const cardBackgroundColor = userSettingsStore.productCardBackgroundColor;
   const cardTitleColor = userSettingsStore.productCardTitleColor;
   const cardDescriptionColor = userSettingsStore.productCardDescriptionColor;
   const cardBorderRadius = userSettingsStore.productCardBorderRadius;
