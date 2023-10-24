@@ -28,14 +28,14 @@ function App() {
         <h1>Vite + React</h1>
       </Grid>
       <Grid container justifyContent="center">
-        <div>
+        <div className="card">
           <p>
             Latest Update:{" "}
             <code>
               userSettingsStore,TableComponent,TableApp, ProductModal, Toastr, Axios, Mobx
             </code>
             <br />
-            This is committed with <code>VSCode</code> on 12.10.2023
+            This is committed with <code>VSCode</code> on 24.10.2023
           </p>
         </div>
       </Grid>

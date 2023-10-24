@@ -2,8 +2,8 @@ import { makeAutoObservable, runInAction } from "mobx";
 
 export default class UserSettingsStore {
   productCardBackgroundColor: string = '#eeeeee';
-  productCardTitleColor: string = "white";
-  productCardDescriptionColor: string = "white";
+  productCardTitleColor: string = "black";
+  productCardDescriptionColor: string = "black";
   productCardBorderRadius: number = 50;
   productCardPhotoHeight: number = 200;
 
