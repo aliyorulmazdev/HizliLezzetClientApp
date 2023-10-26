@@ -48,6 +48,14 @@ export interface Restaurant {
   isActiveTrendyolYemek: boolean;
 }
 
+export interface RestaurantSection {
+  id: string;
+  restaurantId: string;
+  tableKeyword: string;
+  title: string;
+  thumbnail: string;
+}
+
 
 
 export interface ActiveMaterial {
