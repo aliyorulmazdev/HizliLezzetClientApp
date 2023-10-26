@@ -1,4 +1,6 @@
 import { TileLayer, MapContainer, Marker, Popup } from "react-leaflet";
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import {Icon} from 'leaflet'
 import 'leaflet/dist/leaflet.css';
 import { observer } from "mobx-react-lite";
 
@@ -22,7 +24,7 @@ function RestaurantMap({ longitude, latitude }: RestaurantMapProps) {
           attribution='aydev coding'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[latitude, longitude]}>
+        <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})} position={[latitude, longitude]}>
           <Popup>
             To<br />
             be <br />

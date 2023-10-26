@@ -46,7 +46,7 @@ const Menu: React.FC = observer(() => {
 
   return (
     <>
-      <Grid container justifyContent="center" sx={{ minHeight: "100vh" }} alignItems="center">
+      <Grid container justifyContent="center" alignItems="center">
         <CallWaiterButton style={{ zIndex: 9999 }} />
         <Grid container justifyContent="center">
           <Grid item>
