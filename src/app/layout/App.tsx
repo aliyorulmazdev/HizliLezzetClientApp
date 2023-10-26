@@ -39,7 +39,7 @@ function App() {
           </p>
         </div>
       </Grid>
-      <Box display="flex" justifyContent="center" marginTop="200px">
+      <Box display="flex" justifyContent="center" marginTop="50px">
         <Button as={Link} variant="contained" to={"/tables"}>
           Try table view as well
         </Button>
