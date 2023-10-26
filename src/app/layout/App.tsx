@@ -46,6 +46,9 @@ function App() {
         <Button as={Link} variant="contained" to={"/restaurants"}>
           Try restaurant view
         </Button>
+        <Button as={Link} variant="contained" to={"/restaurantPos"}>
+          Try POS
+        </Button>
       </Box>
       <Box display="flex" justifyContent="center" marginTop="20px"  marginBottom="20px">
         <RGBColorSelector />

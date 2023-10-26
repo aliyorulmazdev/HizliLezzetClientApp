@@ -46,7 +46,7 @@ function TableApp() {
           >
             <TableComponent
               variation="Open"
-              content={`${section.tableKeyword}1`} // content'i M + tableKeyword olarak ayarlıyoruz
+              content={`${section.tableKeyword}1`} 
             />
             <TableComponent
               variation="Reserved"
