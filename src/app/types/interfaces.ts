@@ -22,6 +22,33 @@ export interface ProductCategory {
   products: Product[];
 }
 
+export interface Restaurant {
+  id: string;
+  restaurantOwnerId: string;
+  title: string;
+  description: string;
+  thumbnail: string;
+  longitude: number;
+  latitude: number;
+  phoneNumber: string;
+  email: string;
+  address: string;
+  workingStatus: string;
+  isActive: boolean;
+  dayOfWeek: string;
+  openingTime: string;
+  closingTime: string;
+  creationDate: string;
+  lastModifiedDate: string;
+  isActiveWeb: boolean;
+  isActiveLocal: boolean;
+  isActiveGetirYemek: boolean;
+  isActiveYemekSepeti: boolean;
+  isActiveMigrosYemek: boolean;
+  isActiveTrendyolYemek: boolean;
+}
+
+
 
 export interface ActiveMaterial {
   name: string;
