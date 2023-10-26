@@ -15,7 +15,7 @@ import {
   CardMedia,
 } from "@mui/material";
 import { useStore } from "../../stores/store";
-import { Product, ProductCategory } from "../../types/interfaces";
+import { Product, ProductCategory } from "../../types/interfaces"; // Removed Product import
 import { CardContent } from "semantic-ui-react";
 import ProductModal from "../Menu/ProductModal"; // Make sure ProductModal is correctly implemented
 import { runInAction } from "mobx";
@@ -28,11 +28,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-interface ProductPosProps {
-  product: Product;
-}
-
-const RestaurantPos: React.FC<ProductPosProps> = observer(() => {
+const RestaurantPos: React.FC = observer(() => { // Removed ProductPosProps
   const { productStore, productCategoryStore } = useStore();
   const [searchText, setSearchText] = useState("");
 
@@ -111,18 +107,16 @@ const RestaurantPos: React.FC<ProductPosProps> = observer(() => {
                     <Card
                       className="card"
                       sx={{
-                        maxWidth: "100%", // Sabit genişlik sınırlamasını kaldırın
+                        maxWidth: "100%",
                         height: "100%",
                         display: "flex",
                         flexDirection: "column",
                         minWidth: "200px",
-                        // Mobil cihazlar için stil
                         "@media (max-width: 600px)": {
-                          flexDirection: "row", // Kartları yatay düzende sırala
-                          height: "auto", // Sabit yükseklik sınırlamasını kaldırın
-                          marginBottom: "10px", // Kartlar arasında boşluk bırak
-                          // Min genişlik belirle
-                          minWidth: "200px", // İstediğiniz genişliği ayarlayabilirsiniz
+                          flexDirection: "row",
+                          height: "auto",
+                          marginBottom: "10px",
+                          minWidth: "200px",
                         },
                       }}
                     >
@@ -136,7 +130,7 @@ const RestaurantPos: React.FC<ProductPosProps> = observer(() => {
                           alt={product.title}
                           sx={{
                             position: "relative",
-                            height: "150px", // Set the desired height here
+                            height: "150px",
                           }}
                         />
                         <div
