@@ -9,7 +9,6 @@ import CardActionArea from "@mui/material/CardActionArea";
 import ProductModal from "./ProductModal";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
-import "../../styles/ProductCard.css";
 import { Product } from "../../types/interfaces";
 import { runInAction } from "mobx";
 
@@ -30,7 +29,7 @@ const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
     });
     setModalKey((prevKey) => prevKey + 1);
   };
-  // const cardBackgroundColor = userSettingsStore.productCardBackgroundColor;
+  const cardBackgroundColor = userSettingsStore.productCardBackgroundColor;
   const cardTitleColor = userSettingsStore.productCardTitleColor;
   const cardDescriptionColor = userSettingsStore.productCardDescriptionColor;
   const cardBorderRadius = userSettingsStore.productCardBorderRadius;
@@ -39,11 +38,12 @@ const ProductCard: React.FC<ProductCardProps> = observer(({ product }) => {
   return (
     <div className="card-container">
       <Card
-        className="shine-effect"
+        className="card"
         sx={{
           maxWidth: 300,
           maxHeight: 375,
           minHeight: 375,
+          backgroundColor: cardBackgroundColor,
           height: "100%",
           display: "flex",
           flexDirection: "column",
