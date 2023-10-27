@@ -3,13 +3,15 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { TypographyVariant } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 
 export interface TableComponentProps {
   variation: 'Reserved' | 'Open' | 'Maintenance';
   content: string;
+  onClick: () => void;
 }
 
-const TableComponent: React.FC<TableComponentProps> = ({ variation, content }) => {
+const TableComponent: React.FC<TableComponentProps> = ({ variation, content, onClick }) => {
   let backgroundColor = '';
   let bottomText = '';
   let bottomBackgroundColor = '';
@@ -52,7 +54,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ variation, content }) =
   };
 
   return (
-    <Card className="table-card" sx={cardStyle}>
+    <Card className="table-card" sx={cardStyle} onClick={onClick}>
       <CardContent>
         <Typography variant="h4" component="div" sx={{ textAlign: 'center', color: '#474747' }}>
           {content}
@@ -65,6 +67,6 @@ const TableComponent: React.FC<TableComponentProps> = ({ variation, content }) =
       </div>
     </Card>
   );
-};
+}
 
-export default TableComponent;
+export default observer(TableComponent);
