@@ -11,10 +11,10 @@ import {
   Card,
   CardActionArea,
   CardMedia,
+  CardContent,
 } from "@mui/material";
 import { useStore } from "../../stores/store";
 import { Product, ProductCategory } from "../../types/interfaces";
-import { CardContent } from "semantic-ui-react";
 import ProductModal from "../Menu/ProductModal";
 import { runInAction } from "mobx";
 import TableApp from "../../layout/TableApp";
@@ -119,6 +119,7 @@ const RestaurantPos: React.FC = observer(() => {
       thumbnail: "thumbnail3.jpg",
     },
   ];
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -255,15 +256,27 @@ const RestaurantPos: React.FC = observer(() => {
           </Grid>
         )}
         <Grid item xs={3}>
-          <MenuList>
-            <MenuItem
-              sx={{ textAlign: "left" }}
-              onClick={handleNegativeTableClick}
-            >
-              <Typography variant="body2">Select Another Table</Typography>
-            </MenuItem>
-            <Divider />
-          </MenuList>
+          {tableClicked ? (
+            <MenuList>
+              <MenuItem
+                sx={{ textAlign: "left" }}
+                onClick={handleNegativeTableClick}
+              >
+                <Typography variant="body2">Select Another Table</Typography>
+              </MenuItem>
+              <Divider />
+            </MenuList>
+          ) : (
+            <MenuList>
+              <MenuItem
+                sx={{ textAlign: "left" }}
+                onClick={handleNegativeTableClick}
+              >
+                <Typography variant="body2">Select a table first</Typography>
+              </MenuItem>
+              <Divider />
+            </MenuList>
+          )}
         </Grid>
       </Grid>
     </Box>

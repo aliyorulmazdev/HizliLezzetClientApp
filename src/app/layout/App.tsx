@@ -55,6 +55,7 @@ function App() {
         <LoadingComponent content="Loading app" />
       ) : (
         <Menu />
+
       )}
     </>
   );
