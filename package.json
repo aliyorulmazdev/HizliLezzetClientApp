@@ -22,6 +22,7 @@
     "leaflet": "^1.9.4",
     "mobx": "^6.10.2",
     "mobx-react-lite": "^4.0.5",
+    "mui-numpad": "^0.1.4-alpha",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",

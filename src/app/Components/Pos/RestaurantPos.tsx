@@ -6,14 +6,12 @@ import {
   Grid,
   MenuItem,
   MenuList,
-  Paper,
   Typography,
   TextField,
   Divider,
   Card,
   CardActionArea,
   CardMedia,
-  Button,
 } from "@mui/material";
 import { useStore } from "../../stores/store";
 import { Product, ProductCategory } from "../../types/interfaces";
@@ -21,14 +19,6 @@ import { CardContent } from "semantic-ui-react";
 import ProductModal from "../Menu/ProductModal";
 import { runInAction } from "mobx";
 import TableApp from "../../layout/TableApp";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 const RestaurantPos: React.FC = observer(() => {
   const { productStore, productCategoryStore } = useStore();

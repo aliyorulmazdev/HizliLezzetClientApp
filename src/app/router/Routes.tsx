@@ -15,10 +15,6 @@ export const routes: RouteObject[] = [
     ],
   },
   {
-    path: '/tables',
-    element: <TableApp />, // TableApp bileşenini ekrana getirin
-  },
-  {
     path: '/restaurants',
     element: <RestaurantApp />, // TableApp bileşenini ekrana getirin
   },
