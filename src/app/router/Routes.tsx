@@ -1,6 +1,5 @@
 import { RouteObject, createBrowserRouter } from "react-router-dom";
 import App from "../layout/App";
-import TableApp from "../layout/TableApp";
 import RestaurantApp from "../layout/RestaurantApp";
 import RestaurantPos from "../Components/Pos/RestaurantPos";
 
