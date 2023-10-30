@@ -56,8 +56,6 @@ export interface RestaurantSection {
   thumbnail: string;
 }
 
-
-
 export interface ActiveMaterial {
   name: string;
   quantity: number;
@@ -78,6 +76,14 @@ export interface SelectableMaterial {
   name: string;
   active: boolean;
   price: number;
+}
+
+export interface RestaurantTable {
+  id: string;
+  restaurantTableSectionId: string;
+  name: string;
+  title: string;
+  thumbnail: string;
 }
 
 export interface Order {
