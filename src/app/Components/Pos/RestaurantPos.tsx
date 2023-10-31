@@ -12,6 +12,10 @@ import {
   CardActionArea,
   CardMedia,
   CardContent,
+  List,
+  ListItem,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import { useStore } from "../../stores/store";
 import { Product, ProductCategory } from "../../types/interfaces";
@@ -20,7 +24,13 @@ import { runInAction } from "mobx";
 import TableApp from "../../layout/TableApp";
 
 const RestaurantPos: React.FC = observer(() => {
-  const { productStore, productCategoryStore } = useStore();
+  const {
+    productStore,
+    productCategoryStore,
+    restaurantSectionStore,
+    orderStore,
+    restaurantTableStore,
+  } = useStore();
   const [searchText, setSearchText] = useState("");
   const [tableClicked, setTableClicked] = useState(false);
 
@@ -68,58 +78,6 @@ const RestaurantPos: React.FC = observer(() => {
     });
   };
 
-  const restaurantSections = [
-    {
-      id: "0",
-      restaurantId: "1",
-      tableKeyword: "B",
-      title: "Bahçe",
-      thumbnail: "thumbnail1.jpg",
-    },
-    {
-      id: "1",
-      restaurantId: "1",
-      tableKeyword: "T",
-      title: "Teras",
-      thumbnail: "thumbnail2.jpg",
-    },
-    {
-      id: "2",
-      restaurantId: "1",
-      tableKeyword: "H",
-      title: "Havuz",
-      thumbnail: "thumbnail3.jpg",
-    },
-    {
-      id: "3",
-      restaurantId: "1",
-      tableKeyword: "R",
-      title: "Reserved",
-      thumbnail: "thumbnail3.jpg",
-    },
-    {
-      id: "4",
-      restaurantId: "1",
-      tableKeyword: "MN",
-      title: "Maintenance",
-      thumbnail: "thumbnail3.jpg",
-    },
-    {
-      id: "54",
-      restaurantId: "1",
-      tableKeyword: "o",
-      title: "Open",
-      thumbnail: "thumbnail3.jpg",
-    },
-    {
-      id: "6",
-      restaurantId: "1",
-      tableKeyword: "A",
-      title: "Available",
-      thumbnail: "thumbnail3.jpg",
-    },
-  ];
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -140,7 +98,7 @@ const RestaurantPos: React.FC = observer(() => {
             </MenuList>
           ) : (
             <MenuList>
-              {restaurantSections.map((section) => (
+              {restaurantSectionStore.restaurantSections.map((section) => (
                 <div key={section.title}>
                   <MenuItem sx={{ textAlign: "left" }}>
                     <Typography variant="body2">{section.title}</Typography>
@@ -265,6 +223,18 @@ const RestaurantPos: React.FC = observer(() => {
                 <Typography variant="body2">Select Another Table</Typography>
               </MenuItem>
               <Divider />
+              {orderStore
+                .getOrdersByTableId(restaurantTableStore.activeTable!.id)
+                .map((order) => (
+                  <List>
+                    <ListItem>
+                    <FormControlLabel control={<Checkbox />} label={`${order.productName} - ₺${order.orderPrice}`} />
+
+                      
+                    </ListItem>
+                    <Divider />
+                  </List>
+                ))}
             </MenuList>
           ) : (
             <MenuList>

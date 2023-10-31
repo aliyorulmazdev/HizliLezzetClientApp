@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import RestaurantSection from '../Components/Restaurants/RestaurantSection';
 import { useStore } from '../stores/store';
+import { RestaurantTable } from '../types/interfaces';
 
 interface TableAppProps {
   tableClicked: boolean;
@@ -13,6 +14,12 @@ interface TableAppProps {
 
 function TableApp({ tableClicked, handleTableClick }: TableAppProps) {
   const { restaurantSectionStore, restaurantTableStore } = useStore();
+
+  const handleActiveTable = (table:RestaurantTable) => {
+    restaurantTableStore.activeTable = table;
+    // console.log(restaurantTableStore.activeTable.id);
+    handleTableClick();
+  };
 
   return (
     <>
@@ -32,8 +39,8 @@ function TableApp({ tableClicked, handleTableClick }: TableAppProps) {
               <TableComponent
                 key={table.id}
                 variation={table.variation}
-                content={`${table.title}`}
-                onClick={handleTableClick}
+                content={`${section.tableKeyword}${table.title}`}
+                onClick={() => handleActiveTable(table)}
               />
             ))}
           </Box>

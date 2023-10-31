@@ -20,5 +20,8 @@ export default class OrderStore {
   resetOrders = () => {
     this.orders = [];
   };
-}
 
+  getOrdersByTableId = (tableId: string) => {
+    return this.orders.filter((order) => order.tableId === tableId);
+  };
+}

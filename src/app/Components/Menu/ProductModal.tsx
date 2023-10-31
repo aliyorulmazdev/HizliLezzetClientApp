@@ -22,7 +22,7 @@ import LimitedProductMaterial from "./LimitedProductMaterial";
 import AddionalProductSection from "./AddionalProductSection";
 
 const ProductModal: React.FC = observer(() => {
-  const { productStore, orderStore } = useStore();
+  const { productStore, orderStore,restaurantSectionStore,restaurantTableStore,restaurantStore } = useStore();
 
   const {
     handleMaterialSelect,
@@ -55,11 +55,15 @@ const ProductModal: React.FC = observer(() => {
             ) as SelectableMaterial[],
           })
         ),
+        restaurantId: restaurantStore.activeRestaurant?.id || "",
+        sectionId: restaurantSectionStore.activeSection?.id || "",
+        tableId: restaurantTableStore.activeTable?.id || "",
         orderPrice: productStore.totalPrice,
         orderNote: orderStore.orderNote || "",
       };
 
       orderStore.createOrder(currentOrder);
+      console.log(currentOrder);
       const orderMessage = `"${currentOrder.productName}" Total price is ${currentOrder.orderPrice} - OrderNote: ${orderStore.orderNote}`;
       toast.success(orderMessage, {
         position: "top-center",

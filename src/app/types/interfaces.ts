@@ -89,6 +89,9 @@ export interface RestaurantTable {
 export interface Order {
   productName: string;
   orderPrice: number;
+  restaurantId: string;
+  tableId: string;
+  sectionId: string;
   activeMaterials: ActiveMaterial[];
   limitedMaterials: LimitedMaterial[];
   additionalSections: AdditionalSection[];
