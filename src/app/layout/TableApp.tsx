@@ -4,41 +4,18 @@ import TableComponent from '../Components/Table/TableComponent';
 import { Link } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import RestaurantSection from '../Components/Restaurants/RestaurantSection';
+import { useStore } from '../stores/store';
 
 
 interface TableAppProps {
   tableClicked: boolean;
   handleTableClick: () => void;
 }
-
-const restaurantSections = [
-  {
-    id: '0',
-    restaurantId: '1',
-    tableKeyword: 'B',
-    title: 'Bahçe',
-    thumbnail: 'thumbnail1.jpg',
-  },
-  {
-    id: '1',
-    restaurantId: '1',
-    tableKeyword: 'T',
-    title: 'Teras',
-    thumbnail: 'thumbnail2.jpg',
-  },
-  {
-    id: '2',
-    restaurantId: '1',
-    tableKeyword: 'H',
-    title: 'Havuz',
-    thumbnail: 'thumbnail3.jpg',
-  },
-];
-
 function TableApp({ tableClicked, handleTableClick }: TableAppProps) {
+  const { restaurantSectionStore } = useStore();
   return (
     <>
-      {restaurantSections.map((section) => (
+      {restaurantSectionStore.restaurantSections.map((section) => (
         <div key={section.id}>
           <Box marginTop="20px">
             <RestaurantSection restaurantSection={section} />

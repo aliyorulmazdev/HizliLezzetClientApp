@@ -102,8 +102,6 @@ export default class RestaurantStore {
     }
   };
 
-  // Diğer işlevler (güncelleme ve silme) için benzer metotlar ekleyebilirsiniz.
-
   clearSelectedRestaurant = () => {
     runInAction(() => {
       this.activeRestaurant = null;

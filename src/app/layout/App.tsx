@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import RGBColorSelector from "../Components/RestaurantSettings/RGBColorSelector";
 
 function App() {
-  const { productStore, productCategoryStore, restaurantStore } = useStore();
+  const { productStore, productCategoryStore, restaurantStore, restaurantSectionStore } = useStore();
 
   useEffect(() => {
     productStore.loadProducts().then(() => {});
@@ -25,6 +25,10 @@ function App() {
   useEffect(() => {
     restaurantStore.loadRestaurants().then(() => {});
   }, [restaurantStore]);
+
+  useEffect(() => {
+    restaurantSectionStore.loadRestaurantSections().then(() => {});
+  }, [restaurantSectionStore]);
 
   return (
     <>

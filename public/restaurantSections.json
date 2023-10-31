@@ -1,0 +1,24 @@
+[
+    {
+      "id": "0",
+      "restaurantId": "1",
+      "tableKeyword": "B",
+      "title": "Bahçe",
+      "thumbnail": "thumbnail1.jpg"
+    },
+    {
+      "id": "1",
+      "restaurantId": "1",
+      "tableKeyword": "T",
+      "title": "Teras",
+      "thumbnail": "thumbnail2.jpg"
+    },
+    {
+      "id": "2",
+      "restaurantId": "1",
+      "tableKeyword": "H",
+      "title": "Havuz",
+      "thumbnail": "thumbnail3.jpg"
+    }
+  ]
+  
