@@ -81,7 +81,7 @@ export interface SelectableMaterial {
 export interface RestaurantTable {
   id: string;
   restaurantTableSectionId: string;
-  name: string;
+  variation: string;
   title: string;
   thumbnail: string;
 }

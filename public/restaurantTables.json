@@ -1,0 +1,191 @@
+[
+    {
+      "id": "0",
+      "restaurantTableSectionId": "0",
+      "variation": "Open",
+      "title": "1",
+      "thumbnail": "thumbnail1.jpg"
+    },
+    {
+      "id": "1",
+      "restaurantTableSectionId": "0",
+      "variation": "Reserved",
+      "title": "2",
+      "thumbnail": "thumbnail2.jpg"
+    },
+    {
+      "id": "2",
+      "restaurantTableSectionId": "0",
+      "variation": "Maintenance",
+      "title": "3",
+      "thumbnail": "thumbnail3.jpg"
+    },
+    {
+      "id": "3",
+      "restaurantTableSectionId": "1",
+      "variation": "Open",
+      "title": "1",
+      "thumbnail": "thumbnail4.jpg"
+    },
+    {
+      "id": "4",
+      "restaurantTableSectionId": "1",
+      "variation": "Reserved",
+      "title": "2",
+      "thumbnail": "thumbnail5.jpg"
+    },
+    {
+      "id": "5",
+      "restaurantTableSectionId": "1",
+      "variation": "Maintenance",
+      "title": "3",
+      "thumbnail": "thumbnail6.jpg"
+    },
+    {
+      "id": "6",
+      "restaurantTableSectionId": "2",
+      "variation": "Open",
+      "title": "1",
+      "thumbnail": "thumbnail7.jpg"
+    },
+    {
+      "id": "7",
+      "restaurantTableSectionId": "2",
+      "variation": "Reserved",
+      "title": "2",
+      "thumbnail": "thumbnail8.jpg"
+    },
+    {
+      "id": "8",
+      "restaurantTableSectionId": "2",
+      "variation": "Maintenance",
+      "title": "3",
+      "thumbnail": "thumbnail9.jpg"
+    },
+    {
+      "id": "9",
+      "restaurantTableSectionId": "0",
+      "variation": "Open",
+      "title": "1",
+      "thumbnail": "thumbnail10.jpg"
+    },
+    {
+      "id": "10",
+      "restaurantTableSectionId": "0",
+      "variation": "Reserved",
+      "title": "2",
+      "thumbnail": "thumbnail11.jpg"
+    },
+    {
+      "id": "11",
+      "restaurantTableSectionId": "0",
+      "variation": "Maintenance",
+      "title": "3",
+      "thumbnail": "thumbnail12.jpg"
+    },
+    {
+      "id": "12",
+      "restaurantTableSectionId": "1",
+      "variation": "Open",
+      "title": "1",
+      "thumbnail": "thumbnail13.jpg"
+    },
+    {
+      "id": "13",
+      "restaurantTableSectionId": "1",
+      "variation": "Reserved",
+      "title": "2",
+      "thumbnail": "thumbnail14.jpg"
+    },
+    {
+      "id": "14",
+      "restaurantTableSectionId": "1",
+      "variation": "Maintenance",
+      "title": "3",
+      "thumbnail": "thumbnail15.jpg"
+    },
+    {
+      "id": "15",
+      "restaurantTableSectionId": "2",
+      "variation": "Open",
+      "title": "1",
+      "thumbnail": "thumbnail16.jpg"
+    },
+    {
+      "id": "16",
+      "restaurantTableSectionId": "2",
+      "variation": "Reserved",
+      "title": "2",
+      "thumbnail": "thumbnail17.jpg"
+    },
+    {
+      "id": "17",
+      "restaurantTableSectionId": "2",
+      "variation": "Maintenance",
+      "title": "3",
+      "thumbnail": "thumbnail18.jpg"
+    },
+    {
+      "id": "18",
+      "restaurantTableSectionId": "0",
+      "variation": "Open",
+      "title": "1",
+      "thumbnail": "thumbnail19.jpg"
+    },
+    {
+      "id": "19",
+      "restaurantTableSectionId": "0",
+      "variation": "Reserved",
+      "title": "2",
+      "thumbnail": "thumbnail20.jpg"
+    },
+    {
+      "id": "20",
+      "restaurantTableSectionId": "0",
+      "variation": "Maintenance",
+      "title": "3",
+      "thumbnail": "thumbnail21.jpg"
+    },
+    {
+      "id": "21",
+      "restaurantTableSectionId": "1",
+      "variation": "Open",
+      "title": "1",
+      "thumbnail": "thumbnail22.jpg"
+    },
+    {
+      "id": "22",
+      "restaurantTableSectionId": "1",
+      "variation": "Reserved",
+      "title": "2",
+      "thumbnail": "thumbnail23.jpg"
+    },
+    {
+      "id": "23",
+      "restaurantTableSectionId": "1",
+      "variation": "Maintenance",
+      "title": "3",
+      "thumbnail": "thumbnail24.jpg"
+    },
+    {
+      "id": "24",
+      "restaurantTableSectionId": "2",
+      "variation": "Open",
+      "title": "1",
+      "thumbnail": "thumbnail25.jpg"
+    },
+    {
+      "id": "25",
+      "restaurantTableSectionId": "2",
+      "variation": "Reserved",
+      "title": "2",
+      "thumbnail": "thumbnail26.jpg"
+    },
+    {
+      "id": "26",
+      "restaurantTableSectionId": "2",
+      "variation": "Maintenance",
+      "title": "3",
+      "thumbnail": "thumbnail27.jpg"
+    }
+  ]

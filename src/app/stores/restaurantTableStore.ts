@@ -31,6 +31,10 @@ export default class RestaurantTableStore {
     }
   };
 
+  getTablesBySectionId = (restaurantSectionId: string) => {
+    return this.restaurantTables.filter((table) => table.restaurantTableSectionId === restaurantSectionId);
+  };
+
   createRestaurantTable = async (table: RestaurantTable) => {
     try {
       const createdTable = await agent.RestaurantTables.create(table);

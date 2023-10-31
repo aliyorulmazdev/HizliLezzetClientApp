@@ -10,9 +10,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import RGBColorSelector from "../Components/RestaurantSettings/RGBColorSelector";
+import RestaurantTableStore from "../stores/restaurantTableStore";
 
 function App() {
-  const { productStore, productCategoryStore, restaurantStore, restaurantSectionStore } = useStore();
+  const { productStore, productCategoryStore, restaurantStore, restaurantSectionStore,restaurantTableStore } = useStore();
 
   useEffect(() => {
     productStore.loadProducts().then(() => {});
@@ -29,6 +30,10 @@ function App() {
   useEffect(() => {
     restaurantSectionStore.loadRestaurantSections().then(() => {});
   }, [restaurantSectionStore]);
+
+  useEffect(() => {
+    restaurantTableStore.loadRestaurantTables().then(() => {});
+  }, [restaurantTableStore]);
 
   return (
     <>

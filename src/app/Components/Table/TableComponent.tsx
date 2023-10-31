@@ -6,7 +6,7 @@ import { TypographyVariant } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 
 export interface TableComponentProps {
-  variation: 'Reserved' | 'Open' | 'Maintenance';
+  variation: string;
   content: string;
   onClick: () => void;
 }
