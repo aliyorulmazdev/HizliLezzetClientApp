@@ -18,7 +18,6 @@ import {
   Divider,
   Card,
   CardActionArea,
-  CardMedia,
   CardContent,
   List,
   ListItem,
