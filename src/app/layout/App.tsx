@@ -33,7 +33,10 @@ function App() {
   useEffect(() => {
     restaurantTableStore.loadRestaurantTables().then(() => {});
   }, [restaurantTableStore]);
-
+  
+  const toastContainerStyle = {
+    zIndex: 9999, // Set a high z-index value
+  };
   return (
     <>
       <Grid container justifyContent="center">
@@ -62,7 +65,7 @@ function App() {
       <Box display="flex" justifyContent="center" marginTop="20px"  marginBottom="20px">
         <RGBColorSelector />
       </Box>
-      <ToastContainer />
+      <ToastContainer style={toastContainerStyle} />
       {productStore.loading ? (
         <LoadingComponent content="Loading app" />
       ) : (

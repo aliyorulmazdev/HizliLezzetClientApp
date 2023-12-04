@@ -36,6 +36,14 @@ const ProductModal: React.FC = observer(() => {
     orderStore.setOrderNote(e.target.value);
   };
 
+  function generateGUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      const r = (Math.random() * 16) | 0;
+      const v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  }
+
   const submitOrder = () => {
     if (
       productStore.activeProduct &&
@@ -44,6 +52,8 @@ const ProductModal: React.FC = observer(() => {
       productStore.activeProduct.additionalSections
     ) {
       const currentOrder: Order = {
+        isSelected: false,
+        id: generateGUID(),
         productName: productStore.activeProduct.title || "",
         activeMaterials: productStore.activeProduct.activeMaterials,
         limitedMaterials: productStore.activeProduct.limitedMaterials,
@@ -64,10 +74,10 @@ const ProductModal: React.FC = observer(() => {
 
       orderStore.createOrder(currentOrder);
       console.log(currentOrder);
-      const orderMessage = `"${currentOrder.productName}" Total price is ${currentOrder.orderPrice} - OrderNote: ${orderStore.orderNote}`;
+      const orderMessage = `"${currentOrder.productName}" succesfully ordered for table ${currentOrder.tableId} `;
       toast.success(orderMessage, {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

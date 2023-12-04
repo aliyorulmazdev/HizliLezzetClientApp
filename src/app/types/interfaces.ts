@@ -87,6 +87,7 @@ export interface RestaurantTable {
 }
 
 export interface Order {
+  id: string;
   productName: string;
   orderPrice: number;
   restaurantId: string;
@@ -96,4 +97,5 @@ export interface Order {
   limitedMaterials: LimitedMaterial[];
   additionalSections: AdditionalSection[];
   orderNote: string;
+  isSelected: boolean;
 }

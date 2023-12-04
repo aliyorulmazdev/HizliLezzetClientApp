@@ -16,12 +16,15 @@ import {
   ListItem,
   Checkbox,
   FormControlLabel,
+  Button,
+  ButtonGroup,
 } from "@mui/material";
 import { useStore } from "../../stores/store";
 import { Product, ProductCategory } from "../../types/interfaces";
 import ProductModal from "../Menu/ProductModal";
 import { runInAction } from "mobx";
 import TableApp from "../../layout/TableApp";
+import { ToastContainer } from "react-toastify";
 
 const RestaurantPos: React.FC = observer(() => {
   const {
@@ -78,10 +81,21 @@ const RestaurantPos: React.FC = observer(() => {
     });
   };
 
+  const handleCheckboxChange = (orderId: string) => {
+    // Find the order in the orders array
+    const updatedOrders = orderStore.orders.map((order) =>
+      order.id === orderId ? { ...order, isSelected: !order.isSelected } : order
+    );
+
+    // Update the orders in the store
+    orderStore.orders = updatedOrders;
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={2}>
+          <ToastContainer />
           {tableClicked ? (
             <MenuList>
               {productCategoryStore.productCategories.map((category) => (
@@ -223,18 +237,94 @@ const RestaurantPos: React.FC = observer(() => {
                 <Typography variant="body2">Select Another Table</Typography>
               </MenuItem>
               <Divider />
-              {orderStore
-                .getOrdersByTableId(restaurantTableStore.activeTable!.id)
-                .map((order) => (
-                  <List>
-                    <ListItem>
-                    <FormControlLabel control={<Checkbox />} label={`${order.productName} - ₺${order.orderPrice}`} />
+              <List>
+                {orderStore
+                  .getOrdersByTableId(restaurantTableStore.activeTable!.id)
+                  .map((order) => (
+                    <React.Fragment key={order.id}>
+                      <ListItem>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={order.isSelected}
+                              onChange={() => handleCheckboxChange(order.id)}
+                            />
+                          }
+                          label={`${order.productName} - ₺${order.orderPrice}`}
+                        />
+                      </ListItem>
+                      <Divider />
+                    </React.Fragment>
+                  ))}
+              </List>
 
-                      
-                    </ListItem>
-                    <Divider />
-                  </List>
-                ))}
+              <ButtonGroup>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() =>
+                    orderStore.processPayment(
+                      restaurantTableStore.activeTable!.id
+                    )
+                  }
+                  disabled={
+                    orderStore.getOrdersByTableId(
+                      restaurantTableStore.activeTable!.id
+                    ).length === 0
+                  }
+                >
+                  Take a Full Payment
+                </Button>
+
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => orderStore.processSelectedItemsPayment()}
+                  disabled={
+                    !orderStore
+                      .getOrdersByTableId(restaurantTableStore.activeTable!.id)
+                      .some((order) => order.isSelected)
+                  }
+                >
+                  Take a Pay for Selected Items
+                </Button>
+              </ButtonGroup>
+              <Divider sx={{ marginTop: "10px" }} />
+              <ListItem>
+                {orderStore
+                  .getOrdersByTableId(restaurantTableStore.activeTable!.id)
+                  .some((order) => order.isSelected) && (
+                  <Typography variant="h6">
+                    Total Price for Selected Orders:
+                    <Typography variant="h5" color="secondary" component="span">
+                      ₺
+                      {orderStore
+                        .getOrdersByTableId(
+                          restaurantTableStore.activeTable!.id
+                        )
+                        .filter((order) => order.isSelected)
+                        .reduce((total, order) => total + order.orderPrice, 0)}
+                    </Typography>
+                  </Typography>
+                )}
+              </ListItem>
+              <ListItem>
+                {orderStore.getOrdersByTableId(
+                  restaurantTableStore.activeTable!.id
+                ).length > 0 && (
+                  <Typography variant="h6">
+                    Total Price for All Orders:
+                    <Typography variant="h5" color="secondary" component="span">
+                      ₺
+                      {orderStore
+                        .getOrdersByTableId(
+                          restaurantTableStore.activeTable!.id
+                        )
+                        .reduce((total, order) => total + order.orderPrice, 0)}
+                    </Typography>
+                  </Typography>
+                )}
+              </ListItem>
             </MenuList>
           ) : (
             <MenuList>
