@@ -26,13 +26,30 @@ export default class OrderStore {
     return this.orders.filter((order) => order.tableId === tableId);
   };
 
+  deleteOrder = (orderId: string) => {
+    // Filter out the order to be deleted
+    this.orders = this.orders.filter((order) => order.id !== orderId);
+
+    toast.success(`Order deleted successfully.`, {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
+  };
+
   processPayment = (tableId: string) => {
     const ordersToPay = this.getOrdersByTableId(tableId);
-    const totalAmount = ordersToPay.reduce((acc, order) => acc + order.orderPrice, 0);
-  
+    const totalAmount = ordersToPay.reduce(
+      (acc, order) => acc + order.orderPrice,
+      0
+    );
+
     if (this.orders.length === 0) {
-      toast.warning('No orders to pay for', {
-        position: 'top-center',
+      toast.warning("No orders to pay for", {
+        position: "top-center",
         autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -41,25 +58,28 @@ export default class OrderStore {
       });
       return;
     }
-  
-    toast.success(`Payment processed for table ${tableId}. Total amount: ₺${totalAmount}`, {
-      position: 'top-center',
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-    });
-  
+
+    toast.success(
+      `Payment processed for table ${tableId}. Total amount: ₺${totalAmount}`,
+      {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+      }
+    );
+
     this.resetOrders();
   };
-  
+
   processSelectedItemsPayment = () => {
     const selectedOrders = this.orders.filter((order) => order.isSelected);
-  
+
     if (selectedOrders.length === 0) {
-      toast.warning('No selected items to pay for', {
-        position: 'top-center',
+      toast.warning("No selected items to pay for", {
+        position: "top-center",
         autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -68,19 +88,24 @@ export default class OrderStore {
       });
       return;
     }
-  
-    const totalAmount = selectedOrders.reduce((acc, order) => acc + order.orderPrice, 0);
-  
-    toast.success(`Payment processed for selected items. Total amount: ₺${totalAmount}`, {
-      position: 'top-center',
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-    });
-  
+
+    const totalAmount = selectedOrders.reduce(
+      (acc, order) => acc + order.orderPrice,
+      0
+    );
+
+    toast.success(
+      `Payment processed for selected items. Total amount: ₺${totalAmount}`,
+      {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+      }
+    );
+
     this.orders = this.orders.filter((order) => !order.isSelected);
   };
-  
 }
