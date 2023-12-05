@@ -11,6 +11,7 @@ import {
   DialogContent,
   Divider,
   TextareaAutosize,
+  Typography,
 } from "@mui/material";
 import "../../styles/ProductModal.css";
 import { toast } from "react-toastify";
@@ -22,7 +23,13 @@ import LimitedProductMaterial from "./LimitedProductMaterial";
 import AddionalProductSection from "./AddionalProductSection";
 
 const ProductModal: React.FC = observer(() => {
-  const { productStore, orderStore,restaurantSectionStore,restaurantTableStore,restaurantStore } = useStore();
+  const {
+    productStore,
+    orderStore,
+    restaurantSectionStore,
+    restaurantTableStore,
+    restaurantStore,
+  } = useStore();
 
   const {
     handleMaterialSelect,
@@ -37,11 +44,14 @@ const ProductModal: React.FC = observer(() => {
   };
 
   function generateGUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      const r = (Math.random() * 16) | 0;
-      const v = c === 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function (c) {
+        const r = (Math.random() * 16) | 0;
+        const v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      }
+    );
   }
 
   const submitOrder = () => {
@@ -57,14 +67,16 @@ const ProductModal: React.FC = observer(() => {
         productName: productStore.activeProduct.title || "",
         activeMaterials: productStore.activeProduct.activeMaterials,
         limitedMaterials: productStore.activeProduct.limitedMaterials,
-        additionalSections: productStore.activeProduct.additionalSections.map(
-          (section) => ({
+        additionalSections: productStore.activeProduct.additionalSections
+          .filter(
+            (section) => productStore.selectedMaterials[section.title] !== null
+          )
+          .map((section) => ({
             title: section.title,
             items: [productStore.selectedMaterials[section.title]].filter(
               (item) => item !== null
             ) as SelectableMaterial[],
-          })
-        ),
+          })),
         restaurantId: restaurantStore.activeRestaurant?.id || "",
         sectionId: restaurantSectionStore.activeSection?.id || "",
         tableId: restaurantTableStore.activeTable?.id || "",
@@ -73,8 +85,7 @@ const ProductModal: React.FC = observer(() => {
       };
 
       orderStore.createOrder(currentOrder);
-      console.log(currentOrder);
-      const orderMessage = `"${currentOrder.productName}" succesfully ordered for table ${currentOrder.tableId} `;
+      const orderMessage = `"${currentOrder.productName}" successfully ordered for table ${currentOrder.tableId} `;
       toast.success(orderMessage, {
         position: "top-center",
         autoClose: 1000,
@@ -83,8 +94,10 @@ const ProductModal: React.FC = observer(() => {
         pauseOnHover: true,
         draggable: false,
       });
-      closeModal();
       orderStore.orderNote = "";
+      productStore.activeProduct = null;
+      productStore.selectedMaterials = {};
+      closeModal();
     }
   };
 
@@ -100,10 +113,15 @@ const ProductModal: React.FC = observer(() => {
       >
         <DialogContent className="custom-dialog-content">
           <DialogTitle>
-            {productStore.activeProduct?.title} - $
-            {productStore.totalPrice.toFixed(2)}
-            <Divider sx={{ borderBottomWidth: 3 }} />
+            <div>
+              <Typography>
+                {productStore.activeProduct?.title} - $
+                {productStore.totalPrice.toFixed(2)}
+              </Typography>
+              <Divider sx={{ borderBottomWidth: 3 }} />
+            </div>
           </DialogTitle>
+
           <DialogContent>
             <DialogContent className="custom-dialog-content">
               <Image

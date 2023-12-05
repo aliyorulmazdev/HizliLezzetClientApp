@@ -161,126 +161,116 @@ const RestaurantPos: React.FC = observer(() => {
           <ToastContainer />
           {tableClicked ? (
             <MenuList>
-              {productCategoryStore.productCategories.map((category) => (
-                <div key={category.id}>
-                  <MenuItem
-                    sx={{ textAlign: "left" }}
-                    onClick={() => handleCategorySelect(category)}
-                  >
-                    <Typography variant="body2">{category.title}</Typography>
-                  </MenuItem>
-                  <Divider />
-                </div>
-              ))}
+              {productCategoryStore.productCategories.map((category) => [
+                <MenuItem
+                  key={category.id}
+                  sx={{ textAlign: "left" }}
+                  onClick={() => handleCategorySelect(category)}
+                >
+                  <Typography variant="body2">{category.title}</Typography>
+                </MenuItem>,
+                <Divider key={`divider-${category.id}`} />,
+              ])}
             </MenuList>
           ) : (
             <MenuList>
-              {restaurantSectionStore.restaurantSections.map((section) => (
-                <div key={section.title}>
-                  <MenuItem sx={{ textAlign: "left" }}>
-                    <Typography variant="body2">{section.title}</Typography>
-                  </MenuItem>
-                  <Divider />
-                </div>
-              ))}
+              {restaurantSectionStore.restaurantSections.map((section) => [
+                <MenuItem key={section.title} sx={{ textAlign: "left" }}>
+                  <Typography variant="body2">{section.title}</Typography>
+                </MenuItem>,
+                <Divider key={`divider-${section.title}`} />,
+              ])}
             </MenuList>
           )}
         </Grid>
         {tableClicked ? (
           <Grid item xs={7} justifyContent="center">
-            <div>
-              <TextField
-                label="Arama"
-                variant="outlined"
-                fullWidth
-                value={searchText}
-                onChange={handleSearch}
-              />
-              {selectedCategory && (
-                <Grid container justifyContent="center">
-                  {productsByCategory[selectedCategory.id]
-                    ?.filter((product) =>
-                      product.title
-                        .toLowerCase()
-                        .includes(searchText.toLowerCase())
-                    )
-                    .map((product) => (
-                      <div key={product.id} style={{ margin: "10px", flex: 1 }}>
-                        <Card
-                          key={product.id}
-                          sx={{ minWidth: 275, borderRadius: 5 }}
+            <TextField
+              label="Arama"
+              variant="outlined"
+              fullWidth
+              value={searchText}
+              onChange={handleSearch}
+            />
+            {selectedCategory && (
+              <Grid container justifyContent="center">
+                {productsByCategory[selectedCategory.id]
+                  ?.filter((product) =>
+                    product.title
+                      .toLowerCase()
+                      .includes(searchText.toLowerCase())
+                  )
+                  .map((product) => (
+                    <React.Fragment key={product.id}>
+                      <Card
+                        key={product.id}
+                        sx={{
+                          minWidth: 275,
+                          borderRadius: 5,
+                          margin: "10px",
+                          flex: 1,
+                        }}
+                      >
+                        <CardActionArea
+                          sx={{ boxShadow: "none" }}
+                          onClick={() => openModal(product)}
                         >
-                          <CardActionArea
-                            sx={{ boxShadow: "none" }}
-                            onClick={() => openModal(product)}
-                          >
-                            <CardHeader>
-                              <Image
-                                src={product.image}
-                                size="large"
-                                style={{
-                                  height: "200px", // Set the desired height here
-                                  objectFit: "cover",
-                                  width: "100%",
-                                }}
-                              />
-                            </CardHeader>
-                            <CardContent>
-                              <Typography variant="h5" component="div">
-                                {product.title}
+                          <CardHeader>
+                            <Image
+                              src={product.image}
+                              size="large"
+                              style={{
+                                height: "200px", // Set the desired height here
+                                objectFit: "cover",
+                                width: "100%",
+                              }}
+                            />
+                          </CardHeader>
+                          <CardContent>
+                            <Typography variant="h5" component="div">
+                              {product.title}
+                            </Typography>
+                            <Typography
+                              sx={{ fontSize: 14 }}
+                              color="text.secondary"
+                              gutterBottom
+                            ></Typography>
+                            <Typography variant="body2">
+                              {product.description}
+                            </Typography>
+                            <Stack
+                              direction="row"
+                              alignItems="center"
+                              justifyContent="space-between"
+                            >
+                              <Typography variant="subtitle1" color="primary">
+                                {generateStarIcons(product.rating)}
                               </Typography>
                               <Typography
-                                sx={{ fontSize: 14 }}
+                                variant="subtitle1"
                                 color="text.secondary"
-                                gutterBottom
-                              ></Typography>
-                              <Typography variant="body2">
-                                {product.description}
-                              </Typography>
-                              <Stack
-                                direction="row"
-                                alignItems="center"
-                                justifyContent="space-between"
                               >
-                                <Typography variant="subtitle1" color="primary">
-                                  {generateStarIcons(product.rating)}
-                                </Typography>
-                                <Typography
-                                  variant="subtitle1"
-                                  color="text.secondary"
-                                >
-                                  {product.price}$ / piece
-                                </Typography>
-                              </Stack>
-                              <Typography
-                                sx={{
-                                  color: "text.secondary",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "flex-end", // Align content to the right
-                                }}
-                              >
-                                <Avatar
-                                  sx={{
-                                    backgroundColor: "transparent",
-                                  }}
-                                >
-                                  <AccessTimeIcon
-                                    color="primary"
-                                    fontSize="small"
-                                  />
-                                </Avatar>
-                                Ready in {product.preparationTime}
+                                {product.price}$ / piece
                               </Typography>
-                            </CardContent>
-                          </CardActionArea>
-                        </Card>
-                        <ProductModal />
-                      </div>
-                    ))}
-                </Grid>
-              )}
-            </div>
+                            </Stack>
+                            <Typography
+                              sx={{
+                                color: "text.secondary",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "flex-end", // Align content to the right
+                              }}
+                            >
+                              Ready in {product.preparationTime}
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                      <ProductModal />
+                    </React.Fragment>
+                  ))}
+              </Grid>
+            )}
           </Grid>
         ) : (
           <Grid item xs={7} justifyContent="center">
@@ -312,7 +302,6 @@ const RestaurantPos: React.FC = observer(() => {
                       // Handle the case where the product is not found
                       return null;
                     }
-
                     return (
                       <React.Fragment key={order.id}>
                         <HtmlTooltip
@@ -333,9 +322,12 @@ const RestaurantPos: React.FC = observer(() => {
                               <Typography variant="body2" color="inherit">
                                 Order Price: ₺{order.orderPrice}
                               </Typography>
-                              <Typography variant="body2" color="inherit">
-                                Order Note: {order.orderNote}
-                              </Typography>
+                              {order.orderNote && (
+                                <Typography variant="body2" color="inherit">
+                                  Order Note: {order.orderNote}
+                                </Typography>
+                              )}
+
                               {/* Add details for ActiveMaterials with quantity >= 1 only if true */}
                               {order.activeMaterials?.filter(
                                 (material) => material.quantity >= 1
@@ -348,11 +340,12 @@ const RestaurantPos: React.FC = observer(() => {
                                     )
                                     .map(
                                       (material) =>
-                                        `${material.name} (${material.quantity})`
+                                        `${material.name} (${material.quantity} * ₺${material.price})`
                                     )
                                     .join(", ")}
                                 </Typography>
                               )}
+
                               {order.limitedMaterials?.filter(
                                 (material) => material.active
                               ).length > 0 && (
@@ -364,24 +357,40 @@ const RestaurantPos: React.FC = observer(() => {
                                     .join(", ")}
                                 </Typography>
                               )}
-                              {/* Add details for AdditionalSections */}
-                              {order.additionalSections?.length > 0 && (
-                                <Typography variant="body2" color="inherit">
-                                  Additional Sections:{" "}
-                                  {order.additionalSections
-                                    .map((section) => {
-                                      const itemsText =
-                                        section.items?.length > 0
-                                          ? section.items
-                                              .map((item) => item.name)
-                                              .join(", ")
-                                          : "No items";
+                              {order.additionalSections &&
+                                order.additionalSections.length > 0 && (
+                                  <>
+                                    <Typography variant="body2" color="inherit">
+                                      {order.additionalSections
+                                        .map((section, index) => {
+                                          const itemsText =
+                                            section.items &&
+                                            section.items
+                                              .filter(
+                                                (item) =>
+                                                  item &&
+                                                  item.name !== null &&
+                                                  item.name.trim() !== ""
+                                              )
+                                              .map((item) => {
+                                                if (item.price) {
+                                                  return `${item.name} - ₺${item.price}`;
+                                                }
+                                                return item.name;
+                                              })
+                                              .join(", ");
 
-                                      return `${section.title} - ${itemsText}`;
-                                    })
-                                    .join(", ")}
-                                </Typography>
-                              )}
+                                          return itemsText
+                                            ? index === 0
+                                              ? `Additional Sections: ${section.title} - ${itemsText}`
+                                              : `${section.title} - ${itemsText}`
+                                            : null;
+                                        })
+                                        .filter(Boolean) // Filtrelenen boş değerleri temizle
+                                        .join(", ")}
+                                    </Typography>
+                                  </>
+                                )}
 
                               {/* Add more order details as needed */}
                             </React.Fragment>
@@ -402,16 +411,15 @@ const RestaurantPos: React.FC = observer(() => {
                               }
                               label={`${product.title} - ₺${order.orderPrice}`}
                             />
-                            <div style={{ marginLeft: "auto" }}>
-                              <IconButton
-                                aria-label="delete"
-                                size="large"
-                                color="primary"
-                                onClick={() => orderStore.deleteOrder(order.id)}
-                              >
-                                <DeleteIcon fontSize="small" />
-                              </IconButton>
-                            </div>
+                            <IconButton
+                              aria-label="delete"
+                              size="large"
+                              color="primary"
+                              onClick={() => orderStore.deleteOrder(order.id)}
+                              style={{ marginLeft: "auto" }}
+                            >
+                              <DeleteIcon fontSize="small" />
+                            </IconButton>
                           </ListItem>
                         </HtmlTooltip>
                         <Divider />
