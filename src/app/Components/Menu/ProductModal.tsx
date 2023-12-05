@@ -62,6 +62,7 @@ const ProductModal: React.FC = observer(() => {
       productStore.activeProduct.additionalSections
     ) {
       const currentOrder: Order = {
+        ticketId:"1",
         isSelected: false,
         id: generateGUID(),
         productName: productStore.activeProduct.title || "",
@@ -97,7 +98,7 @@ const ProductModal: React.FC = observer(() => {
       orderStore.orderNote = "";
       productStore.activeProduct = null;
       productStore.selectedMaterials = {};
-      closeModal();
+      closeModal();     
     }
   };
 

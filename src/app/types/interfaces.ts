@@ -88,6 +88,7 @@ export interface RestaurantTable {
 
 export interface Order {
   id: string;
+  ticketId: string;
   productName: string;
   orderPrice: number;
   restaurantId: string;

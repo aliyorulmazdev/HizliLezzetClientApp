@@ -2,6 +2,7 @@ import { RouteObject, createBrowserRouter } from "react-router-dom";
 import App from "../layout/App";
 import RestaurantApp from "../layout/RestaurantApp";
 import RestaurantPos from "../Components/Pos/RestaurantPos";
+import RegisterScreen from "../Components/Register/RegisterScreen";
 
 export const routes: RouteObject[] = [
   {
@@ -20,6 +21,10 @@ export const routes: RouteObject[] = [
   {
     path: '/restaurantPos',
     element: <RestaurantPos />, // TableApp bileşenini ekrana getirin
+  },
+  {
+    path: '/register',
+    element: <RegisterScreen />, // TableApp bileşenini ekrana getirin
   },
 ];
 
