@@ -35,6 +35,11 @@ import { runInAction } from "mobx";
 import TableApp from "../../layout/TableApp";
 import { ToastContainer } from "react-toastify";
 import { CardHeader, Image } from "semantic-ui-react";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import PaymentDialog from "./PaymentDialog";
 
 const RestaurantPos: React.FC = observer(() => {
   const {
@@ -46,6 +51,8 @@ const RestaurantPos: React.FC = observer(() => {
   } = useStore();
   const [searchText, setSearchText] = useState("");
   const [tableClicked, setTableClicked] = useState(false);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
 
   const defaultCategory = productCategoryStore.productCategories[0] || null;
   const [selectedCategory, setSelectedCategory] =
@@ -81,6 +88,11 @@ const RestaurantPos: React.FC = observer(() => {
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
   };
+
+  const openPaymentModal = () => {
+    setPaymentModalOpen(true);
+  };
+  
 
   const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -151,7 +163,17 @@ const RestaurantPos: React.FC = observer(() => {
 
     // Update the orders in the store
     orderStore.orders = updatedOrders;
+    
   };
+
+  const handlePaymentMethodSelect = (method: number | null) => {
+    setSelectedPaymentMethod(method as null);
+    setPaymentModalOpen(false);
+  
+    // Perform the payment logic based on the selected method
+    // You can add your payment processing logic here
+  };
+  
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -432,10 +454,13 @@ const RestaurantPos: React.FC = observer(() => {
                   <Button
                     variant="outlined"
                     color="primary"
-                    onClick={() =>
+                    onClick={() => {
+                      openPaymentModal();
                       orderStore.processPayment(
                         restaurantTableStore.activeTable!.id
                       )
+                    }
+                      
                     }
                     disabled={
                       !orderStore.getOrdersByTableId(
@@ -461,7 +486,10 @@ const RestaurantPos: React.FC = observer(() => {
                   <Button
                     variant="outlined"
                     color="primary"
-                    onClick={() => orderStore.processSelectedItemsPayment()}
+                    onClick={() => {
+                      openPaymentModal();
+                      orderStore.processSelectedItemsPayment()
+                    } }
                     disabled={
                       !orderStore
                         .getOrdersByTableId(
@@ -498,7 +526,13 @@ const RestaurantPos: React.FC = observer(() => {
           )}
         </Grid>
       </Grid>
+      <PaymentDialog
+        open={paymentModalOpen}
+        onClose={() => setPaymentModalOpen(false)}
+        handlePaymentMethodSelect={handlePaymentMethodSelect}
+      />
     </Box>
+    
   );
 });
 

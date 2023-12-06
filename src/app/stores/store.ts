@@ -6,6 +6,8 @@ import UserSettingsStore from "./userSettingsStore";
 import RestaurantStore from "./restaurantStore"; // Eklenen satır
 import RestaurantSectionStore from "./restaurantSectionStore"; // Eklenen satır
 import RestaurantTableStore from "./restaurantTableStore"; // Eklenen satır
+import UserStore from "./userStore";
+import CommonStore from "./commonStore";
 
 interface Store {
     productStore: ProductStore,
@@ -15,6 +17,8 @@ interface Store {
     restaurantStore: RestaurantStore, // Eklenen satır
     restaurantSectionStore: RestaurantSectionStore, // Eklenen satır
     restaurantTableStore: RestaurantTableStore, // Eklenen satır
+    userStore: UserStore,
+    commonStore: CommonStore,
 }
 
 export const store: Store = {
@@ -25,6 +29,8 @@ export const store: Store = {
     restaurantStore: new RestaurantStore(), // Eklenen satır
     restaurantSectionStore: new RestaurantSectionStore(), // Eklenen satır
     restaurantTableStore: new RestaurantTableStore(), // Eklenen satır
+    userStore: new UserStore(),
+    commonStore: new CommonStore(),
 }
 
 export const StoreContext = createContext(store);

@@ -1,4 +1,13 @@
-import { Product, ProductCategory, Restaurant, RestaurantSection, RestaurantTable } from "../types/interfaces";
+import {
+  LoginFormValues,
+  Product,
+  ProductCategory,
+  RegisterFormValues,
+  Restaurant,
+  RestaurantSection,
+  RestaurantTable,
+  User,
+} from "../types/interfaces";
 import axios from "axios"; // axios kütüphanesini projeye ekleyin
 
 const sleep = (delay: number) => {
@@ -6,7 +15,8 @@ const sleep = (delay: number) => {
     setTimeout(resolve, delay);
   });
 };
-axios.defaults.baseURL = "https://raw.githubusercontent.com/aliyorulmazdev/HizliLezzetClientApp/main/public";
+
+// axios.defaults.baseURL = "https://raw.githubusercontent.com/aliyorulmazdev/HizliLezzetClientApp/main/public";
 axios.interceptors.response.use((response) => {
   return sleep(10)
     .then(() => {
@@ -94,9 +104,14 @@ const fetchProductCategories = async (): Promise<ProductCategory[]> => {
   }
 };
 
-const createProductCategory = async (productCategory: ProductCategory): Promise<ProductCategory> => {
+const createProductCategory = async (
+  productCategory: ProductCategory
+): Promise<ProductCategory> => {
   try {
-    const response = await axios.post("/productCategories.json", productCategory);
+    const response = await axios.post(
+      "/productCategories.json",
+      productCategory
+    );
     if (response.status !== 201) {
       throw new Error("Error creating product category");
     }
@@ -128,7 +143,9 @@ const updateProductCategory = async (
   }
 };
 
-const deleteProductCategory = async (productCategoryId: string): Promise<void> => {
+const deleteProductCategory = async (
+  productCategoryId: string
+): Promise<void> => {
   try {
     const response = await axios.delete(`/products/${productCategoryId}.json`);
     if (response.status !== 204) {
@@ -156,7 +173,9 @@ const fetchRestaurants = async (): Promise<Restaurant[]> => {
   }
 };
 
-const createRestaurant = async (restaurant: Restaurant): Promise<Restaurant> => {
+const createRestaurant = async (
+  restaurant: Restaurant
+): Promise<Restaurant> => {
   try {
     const response = await axios.post("/restaurants.json", restaurant);
     if (response.status !== 201) {
@@ -175,7 +194,10 @@ const updateRestaurant = async (
   updatedRestaurant: Restaurant
 ): Promise<Restaurant> => {
   try {
-    const response = await axios.put(`/restaurants/${restaurantId}.json`, updatedRestaurant);
+    const response = await axios.put(
+      `/restaurants/${restaurantId}.json`,
+      updatedRestaurant
+    );
     if (response.status !== 200) {
       throw new Error("Error updating restaurant");
     }
@@ -215,9 +237,14 @@ const fetchRestaurantSections = async (): Promise<RestaurantSection[]> => {
   }
 };
 
-const createRestaurantSection = async (restaurantSection: RestaurantSection): Promise<RestaurantSection> => {
+const createRestaurantSection = async (
+  restaurantSection: RestaurantSection
+): Promise<RestaurantSection> => {
   try {
-    const response = await axios.post("/restaurantSections.json", restaurantSection);
+    const response = await axios.post(
+      "/restaurantSections.json",
+      restaurantSection
+    );
     if (response.status !== 201) {
       throw new Error("Error creating restaurant section");
     }
@@ -234,7 +261,10 @@ const updateRestaurantSection = async (
   updatedRestaurantSection: RestaurantSection
 ): Promise<RestaurantSection> => {
   try {
-    const response = await axios.put(`/restaurantSections/${sectionId}.json`, updatedRestaurantSection);
+    const response = await axios.put(
+      `/restaurantSections/${sectionId}.json`,
+      updatedRestaurantSection
+    );
     if (response.status !== 200) {
       throw new Error("Error updating restaurant section");
     }
@@ -248,7 +278,9 @@ const updateRestaurantSection = async (
 
 const deleteRestaurantSection = async (sectionId: string): Promise<void> => {
   try {
-    const response = await axios.delete(`/restaurantSections/${sectionId}.json`);
+    const response = await axios.delete(
+      `/restaurantSections/${sectionId}.json`
+    );
     if (response.status !== 204) {
       throw new Error("Error deleting restaurant section");
     }
@@ -274,9 +306,14 @@ const fetchRestaurantTables = async (): Promise<RestaurantTable[]> => {
   }
 };
 
-const createRestaurantTable = async (restaurantTable: RestaurantTable): Promise<RestaurantTable> => {
+const createRestaurantTable = async (
+  restaurantTable: RestaurantTable
+): Promise<RestaurantTable> => {
   try {
-    const response = await axios.post("/restaurantTables.json", restaurantTable);
+    const response = await axios.post(
+      "/restaurantTables.json",
+      restaurantTable
+    );
     if (response.status !== 201) {
       throw new Error("Error creating restaurant table");
     }
@@ -293,7 +330,10 @@ const updateRestaurantTable = async (
   updatedRestaurantTable: RestaurantTable
 ): Promise<RestaurantTable> => {
   try {
-    const response = await axios.put(`/restaurantTables/${tableId}.json`, updatedRestaurantTable);
+    const response = await axios.put(
+      `/restaurantTables/${tableId}.json`,
+      updatedRestaurantTable
+    );
     if (response.status !== 200) {
       throw new Error("Error updating restaurant table");
     }
@@ -318,6 +358,55 @@ const deleteRestaurantTable = async (tableId: string): Promise<void> => {
 };
 //#endregion
 
+const Current = async (): Promise<User> => {
+  try {
+    const response = await axios.get("http://localhost:5000/api/v1/Authentication/WhoAmI");
+    if (response.status !== 200) {
+      throw new Error("Error fetching user information");
+    }
+    const user: User = response.data; // Make sure to replace <User> with the actual type of your user object
+    return user;
+  } catch (error) {
+    console.error("Error fetching user information:", error);
+    throw new Error("Error fetching user information");
+  }
+};
+
+// Function to handle login
+const Login = async (loginFormValues: LoginFormValues): Promise<User> => {
+  try {
+    const response = await axios.post("http://localhost:5000/api/v1/Authentication/Login", loginFormValues);
+
+    if (response.status !== 200) {
+      throw new Error("Error during login");
+    }
+
+    const user: User = response.data;
+    return user;
+  } catch (error) {
+    console.error("Error during login:", error);
+    throw new Error("Error during login");
+  }
+};
+
+const Register = async (
+  registerFormValues: RegisterFormValues
+): Promise<User> => {
+  try {
+    const response = await axios.post(
+      "/Authentication/Register",
+      registerFormValues
+    );
+    if (response.status !== 200) {
+      throw new Error("Error during registration");
+    }
+    const user: User = response.data; // Make sure to replace <User> with the actual type of your user object
+    return user;
+  } catch (error) {
+    console.error("Error during registration:", error);
+    throw new Error("Error during registration");
+  }
+};
 
 const agent = {
   Products: {
@@ -325,6 +414,12 @@ const agent = {
     create: createProduct,
     update: updateProduct,
     delete: deleteProduct,
+  },
+
+  Account: {
+    register: Register,
+    login: Login,
+    current: Current,
   },
   ProductCategories: {
     list: fetchProductCategories,

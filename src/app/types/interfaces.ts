@@ -86,6 +86,26 @@ export interface RestaurantTable {
   thumbnail: string;
 }
 
+export interface User {
+  username: string;
+  firstName: string;
+  lastName: string;
+  token: string;
+}
+
+export interface RegisterFormValues {
+  Email: string;
+  Password: string;
+  FirstName: string;
+  LastName: string;
+  UserName: string;
+}
+
+export interface LoginFormValues {
+  email: string;
+  password: string;
+}
+
 export interface Order {
   id: string;
   ticketId: string;
