@@ -1,5 +1,6 @@
 import {
   LoginFormValues,
+  LoginResponse,
   Product,
   ProductCategory,
   RegisterFormValues,
@@ -358,19 +359,44 @@ const deleteRestaurantTable = async (tableId: string): Promise<void> => {
 };
 //#endregion
 
+//#region  USER
+
 const Current = async (): Promise<User> => {
   try {
-    const response = await axios.get("http://localhost:5000/api/v1/Authentication/WhoAmI");
+    // Get the token from localStorage
+    const token = localStorage.getItem("jwt");
+
+    // Check if the token exists
+    if (!token) {
+      throw new Error("No token found");
+    }
+
+    // Set the authorization header with the Bearer token
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    // Make the request with the headers
+    const response = await axios.get("http://localhost:5000/api/v1/Authentication/WhoAmI", { headers });
+
+    // Check if the response status is 200
     if (response.status !== 200) {
       throw new Error("Error fetching user information");
     }
-    const user: User = response.data; // Make sure to replace <User> with the actual type of your user object
+
+    // Save the user data as per your requirements
+    const user: User = response.data.value; // Assuming the user data is under "value" property
+
+    // You can save the user data to your store or wherever needed
+    // For example, store.commonStore.setUser(user);
+
     return user;
   } catch (error) {
     console.error("Error fetching user information:", error);
     throw new Error("Error fetching user information");
   }
 };
+
 
 // Function to handle login
 const Login = async (loginFormValues: LoginFormValues): Promise<User> => {
@@ -381,7 +407,18 @@ const Login = async (loginFormValues: LoginFormValues): Promise<User> => {
       throw new Error("Error during login");
     }
 
-    const user: User = response.data;
+    // Save the JWT token in localStorage
+    const jwtToken = response.data.value;
+    console.log(jwtToken);
+    localStorage.setItem("jwt", jwtToken);
+
+    // Use the Current function to get user details
+    const user = await Current();
+    console.log(user);
+
+    // You can save the user data to your store or wherever needed
+    // For example, store.commonStore.setUser(user);
+
     return user;
   } catch (error) {
     console.error("Error during login:", error);
@@ -389,24 +426,31 @@ const Login = async (loginFormValues: LoginFormValues): Promise<User> => {
   }
 };
 
-const Register = async (
-  registerFormValues: RegisterFormValues
-): Promise<User> => {
+
+// Function to handle registration
+const Register = async (registerFormValues: RegisterFormValues): Promise<User> => {
   try {
-    const response = await axios.post(
-      "/Authentication/Register",
-      registerFormValues
-    );
+    const response = await axios.post("http://localhost:5000/api/v1/Authentication/Register", registerFormValues);
+
     if (response.status !== 200) {
       throw new Error("Error during registration");
     }
-    const user: User = response.data; // Make sure to replace <User> with the actual type of your user object
+
+    // Proceed to login after successful registration
+    const user = await Login({
+      email: registerFormValues.email,
+      password: registerFormValues.password,
+    });
+
     return user;
   } catch (error) {
     console.error("Error during registration:", error);
     throw new Error("Error during registration");
   }
 };
+
+
+//#endregion
 
 const agent = {
   Products: {

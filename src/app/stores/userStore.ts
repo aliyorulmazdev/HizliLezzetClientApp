@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { LoginFormValues, User } from "../types/interfaces";
+import { LoginFormValues, RegisterFormValues, User } from "../types/interfaces";
 import agent from "../api/agent";
 import { store } from "./store";
 import { router } from "../router/Routes";
@@ -16,9 +16,18 @@ export default class UserStore {
   }
 
   login = async (creds: LoginFormValues) => {
-    const user = await agent.Account.login(creds);
-    store.commonStore.setToken(user.token)
-    runInAction(() => this.user = user);
+    try {
+      const loginresponse = await agent.Account.login(creds);
+      console.log(loginresponse);
+      router.navigate('/');
+    } catch (error) {
+      // Handle login error
+      console.error("Error during login:", error);
+    }
+  };  
+
+  register = async (creds: RegisterFormValues) => {
+    const user = await agent.Account.register(creds);
     console.log(user);
     router.navigate('/');
   };

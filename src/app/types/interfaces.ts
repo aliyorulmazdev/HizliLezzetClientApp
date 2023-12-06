@@ -87,24 +87,44 @@ export interface RestaurantTable {
 }
 
 export interface User {
-  username: string;
+  id: string;
+  userName: string;
   firstName: string;
   lastName: string;
+  bio: string;
+  restaurantOwner: any; // Adjust the type according to the actual structure
+  email: string;
+  emailConfirmed: boolean;
+  passwordHash: string;
+  securityStamp: string;
+  concurrencyStamp: string;
+  phoneNumber: string | null;
+  phoneNumberConfirmed: boolean;
+  twoFactorEnabled: boolean;
+  lockoutEnd: Date | null;
+  lockoutEnabled: boolean;
+  accessFailedCount: number;
   token: string;
 }
 
+
 export interface RegisterFormValues {
-  Email: string;
-  Password: string;
-  FirstName: string;
-  LastName: string;
-  UserName: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  password: string;
 }
 
 export interface LoginFormValues {
   email: string;
   password: string;
 }
+
+export interface LoginResponse {
+  token: string;
+}
+
 
 export interface Order {
   id: string;

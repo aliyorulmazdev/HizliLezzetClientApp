@@ -14,6 +14,7 @@ import * as Yup from "yup";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Image } from "semantic-ui-react";
+import { useStore } from "../../stores/store";
 
 const CenteredContainer = styled(Container)({
   display: "flex",
@@ -44,7 +45,9 @@ const StyledButton = styled(Button)({
 });
 
 const validationSchema = Yup.object({
-  username: Yup.string()
+  firstName: Yup.string().required("First name is required"),
+  lastName: Yup.string().required("Last name is required"),
+  userName: Yup.string()
     .required("Username is required")
     .min(4, "Username must be at least 4 characters"),
   email: Yup.string()
@@ -59,18 +62,23 @@ const validationSchema = Yup.object({
     .required("Password is required"),
 });
 
+
 const RegisterScreen: React.FC = observer(() => {
   const [showPassword, setShowPassword] = useState(false);
+  const { userStore } = useStore();
 
   const formik = useFormik({
     initialValues: {
-      username: "",
+      firstName: "",
+      lastName: "",
+      userName: "",
       email: "",
       password: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      const toastrMessage = `Registration successful for ${values.username} (${values.email})!`;
+      userStore.register(values);
+      const toastrMessage = `Registration successful for ${values.userName} (${values.email})!`;
       toast.success(toastrMessage);
     },
   });
@@ -82,13 +90,24 @@ const RegisterScreen: React.FC = observer(() => {
   return (
     <CenteredContainer>
       <StyledContainer>
-        <Typography variant="h4" align="center" style={{ marginBottom: 20, fontWeight: 'bold' }}>
+        <Typography
+          variant="h4"
+          align="center"
+          style={{ marginBottom: 20, fontWeight: "bold" }}
+        >
           Sign Up to Hızlı Lezzet
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <div style={{ width: '100%', height: '100%', borderRadius: 25, overflow: 'hidden' }}>
-              <Image src='https://i.ibb.co/rcqrXjv/kevin-grieve-Q-5-COo-D1k4-I-unsplash.jpg'/>
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                borderRadius: 25,
+                overflow: "hidden",
+              }}
+            >
+              <Image src="https://i.ibb.co/rcqrXjv/kevin-grieve-Q-5-COo-D1k4-I-unsplash.jpg" />
             </div>
           </Grid>
           <Grid item xs={6}>
@@ -97,12 +116,40 @@ const RegisterScreen: React.FC = observer(() => {
                 fullWidth
                 variant="outlined"
                 margin="normal"
-                label="Username"
-                name="username"
-                value={formik.values.username}
+                label="First Name"
+                name="firstName"
+                value={formik.values.firstName}
                 onChange={formik.handleChange}
-                error={formik.touched.username && Boolean(formik.errors.username)}
-                helperText={formik.touched.username && formik.errors.username}
+                error={
+                  formik.touched.firstName && Boolean(formik.errors.firstName)
+                }
+                helperText={formik.touched.firstName && formik.errors.firstName}
+              />
+              <TextField
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                label="Last Name"
+                name="lastName"
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.lastName && Boolean(formik.errors.lastName)
+                }
+                helperText={formik.touched.lastName && formik.errors.lastName}
+              />
+              <TextField
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                label="Username"
+                name="userName"
+                value={formik.values.userName}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.userName && Boolean(formik.errors.userName)
+                }
+                helperText={formik.touched.userName && formik.errors.userName}
               />
               <TextField
                 fullWidth
@@ -125,7 +172,9 @@ const RegisterScreen: React.FC = observer(() => {
                 name="password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
-                error={formik.touched.password && Boolean(formik.errors.password)}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
                 helperText={formik.touched.password && formik.errors.password}
                 InputProps={{
                   endAdornment: (
@@ -147,7 +196,11 @@ const RegisterScreen: React.FC = observer(() => {
             >
               Have an account? Log In
             </Link>
-            <Typography variant="body2" align="center" style={{ marginTop: 20 }}>
+            <Typography
+              variant="body2"
+              align="center"
+              style={{ marginTop: 20 }}
+            >
               Simplify Your Restaurant Management with Us!
             </Typography>
           </Grid>
